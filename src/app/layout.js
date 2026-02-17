@@ -5,6 +5,7 @@ import Navigation from "@/components/Navigation/Navigation";
 // app/layout.js
 import Script from "next/script";
 import Footer from "@/components/Footer/Footer";
+import WipBanner from "@/components/WipBanner/WipBanner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -48,9 +49,18 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <Navigation />
-        {children}
-        <Footer />
+        <div className="relative overflow-hidden bg-[#f5f5f5] font-satoshi text-[#484848]">
+          <div aria-hidden="true" className="noise-overlay" />
+          <div aria-hidden="true" className="blinds-overlay" />
+          <WipBanner />
+          <div className="flex w-full max-w-[1440px] flex-col pb-[160px] pt-10 mx-auto relative z-10">
+            <div className="mx-10 gap-[240px] flex flex-col pt-8">
+              <Navigation />
+              {children}
+              <Footer />
+            </div>
+          </div>
+        </div>
       </body>
       <Script src="https://scripts.simpleanalyticscdn.com/latest.js" />
     </html>
