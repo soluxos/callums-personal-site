@@ -17,6 +17,7 @@ const config = {
     extend: {
       fontFamily: {
         "departure-mono": ["DepartureMono", "departure_monoergular", "monospace"],
+        ppmondwest: ["ppmondwest", "serif"],
         satoshi: ["Satoshi-Variable", "Satoshi-Regular", "sans-serif"],
         "satoshi-light": ["Satoshi-Light", "sans-serif"],
         "satoshi-regular": ["Satoshi-Regular", "sans-serif"],

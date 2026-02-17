@@ -37,8 +37,8 @@
     height: 100%;
     margin: 0;
     padding: 0;
-    color: #ffffff;
-    background-color: #0a0d08;
+    color: #484848;
+    background-color: #f5f5f5;
   }
 
   body {
@@ -98,6 +98,17 @@
 
 @theme {
   --breakpoint-xs: 30rem;
+}
+
+/* PPMondwest Font */
+@font-face {
+  font-family: "ppmondwest";
+  src:
+    url("/fonts/ppmondwest-regular-webfont.woff2") format("woff2"),
+    url("/fonts/ppmondwest-regular-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
 }
 
 /* DepartureMono Font */
@@ -264,6 +275,10 @@
 
 /* Custom utilities using @layer for Tailwind v4 */
 @layer utilities {
+  .font-ppmondwest {
+    font-family: "ppmondwest", serif;
+  }
+
   .font-departure-mono {
     font-family: "DepartureMono", "departure_monoergular", monospace;
   }
@@ -311,4 +326,67 @@
   .nav-max-width {
     max-width: calc(100vw - 80px);
   }
+}
+
+@keyframes noiseShift {
+  0% {
+    transform: translate3d(0, 0, 0);
+    background-position: 0 0;
+  }
+  50% {
+    transform: translate3d(-2%, -1%, 0);
+    background-position: 40% 60%;
+  }
+  100% {
+    transform: translate3d(1%, 2%, 0);
+    background-position: 100% 0;
+  }
+}
+
+@keyframes blindsDrift {
+  0% {
+    transform: translate3d(0, -1%, 0) rotate(12deg) skewX(12deg);
+    opacity: 0.2;
+  }
+  50% {
+    transform: translate3d(0, 1%, 0) rotate(12deg) skewX(12deg);
+    opacity: 0.28;
+  }
+  100% {
+    transform: translate3d(0, -1%, 0) rotate(12deg) skewX(12deg);
+    opacity: 0.2;
+  }
+}
+
+.noise-overlay {
+  position: absolute;
+  inset: -25% -25% -25% -25%;
+  pointer-events: none;
+  z-index: 20;
+  opacity: 0.08;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 220px 220px;
+  animation: noiseShift 6s steps(2) infinite;
+}
+
+.blinds-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 0;
+  filter: blur(12px);
+  transform-origin: center;
+  background-image: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.22) 0px,
+    rgba(0, 0, 0, 0.22) 8px,
+    rgba(0, 0, 0, 0) 8px,
+    rgba(0, 0, 0, 0) 70px
+  );
+  animation: blindsDrift 10s ease-in-out infinite;
 }

@@ -1,244 +1,163 @@
 import Image from "next/image";
-import ImageGrid from "@/components/ImageGrid/SimpleImageGrid";
-import Link from "next/link";
-import WipBanner from "@/components/WipBanner/WipBanner";
 
 export default function Home() {
-  // Example usage
-  const imageArray = [
-    { src: "/images/hero-3.png", alt: "Image 1" },
-    { src: "/images/hero-2.png", alt: "Image 2" },
-    { src: "/images/hero.png", alt: "Image 3" },
+  const featuredProjects = [
+    { src: "/images/case-study-placeholders/2.png", alt: "The Acquia unification project" },
+    { src: "/images/case-study-placeholders/1.png", alt: "An Acquia AI Project" },
+    { src: "/images/case-study-placeholders/3.png", alt: "Drupal Canvas" },
+    { src: "/images/case-study-placeholders/4.png", alt: "Union Roasted Coffee" },
   ];
 
+  const experience = [
+    {
+      title: "Senior Product Designer",
+      meta: "Acquia /1 year",
+      description:
+        "This is the latest move in my eclectic career. I joined the design team after creating a design system. Since then I’ve been working on the largest initiative for Drupal in years; Drupal Canvas. I’ve also started working on a unified AI platform to bring all of our products together, with a sprinkling of AI to make it much more powerful.",
+    },
+    {
+      title: "Senior Software Engineer",
+      meta: "Acquia  / 6 years, 3 Months",
+      description: (
+        <>
+          <p className="mb-0">
+            There's way more to this story than what I'm about to write. For this role I initially
+            joined as 'Head of training' for a low-code site building tool in Drupal. But this was
+            for the startup that was acquired by Acquia. In this role I've designed websites,
+            designed new features for our product, pitched to and trained customers, taught design
+            systems, and worked as part of a two man team to migrate a 150k line of code Angular app
+            to React.
+          </p>
+          <p className="mb-0">&nbsp;</p>
+          <p>
+            There's also been a couple of insane stories like building a project over a weekend that
+            lead to us being acquired. Building an entire website on stage at Acquia Engage. Or
+            recording me building an entire website in a day to land a new customer.
+          </p>
+        </>
+      ),
+    },
+    {
+      title: "Front-end Web Designer",
+      meta: "We Make Websites  / 4 Months",
+      description: (
+        <>
+          Okay, it may look like I've not stuck at this job long, but it didn't stop me having a
+          brilliant impact. In this job I worked on multiple Shopify websites. I helped design new
+          features, and I worked on developing them too. I designed{" "}
+          <span className="underline">one of my favourite sites I've ever worked on</span> and
+          before leaving I was awarded with employee of the month (I still have the trophy to prove
+          it).
+        </>
+      ),
+    },
+    {
+      title: "UI/UX Designer & Developer",
+      meta: "Pragmatic / 1 year, 11 Months",
+      description:
+        "I moved to this company originally as a developer. I was experience with WordPress, and I helped create some brilliant websites using PHP, Advanced Custom Fields, and good ol' front-end development. After for doing this for around a year, I moved to the design team, as I worked with design outside of my day job. From here I worked with the likes of Bacardi on some fundamental UX work, still used today on all of their websites.",
+    },
+    {
+      title: "Web Developer",
+      meta: "UnitedUS  / 6 years, 3 Months",
+      description:
+        "I moved from engineering to the product design team as a Senior Product Designer. In this role I've worked on leading the design for the future editing experience of Drupal. The latest piece of work that I've been involved with, is an AI interface to allow our customers to use all o",
+    },
+  ];
   return (
-    <>
-      <div className="bg-[#0A0D08] font-satoshi flex flex-col items-center w-full">
-        {/* Hero Section */}
-        <section className="flex w-full h-[900px] relative flex-col md:flex-row">
-          {/* Left side - Dark */}
-          <div className="flex-1 bg-[#0A0D08] flex flex-col h-full p-10 md:p-15 lg:p-20 min-h-[480px]">
-            <div className="max-w-[750px] mt-auto">
-              <p className="text-[#626262] text-[12px] font-departure-mono uppercase">
-                A lovely little intro
+    <main className="flex flex-col gap-[240px]">
+      <section className="flex w-full flex-col gap-5">
+        <h1 className="w-full max-w-[591px] font-ppmondwest text-[48px] leading-[1.25]">
+          Hey, I’m Callum Harrod. I design and develop stuff.
+        </h1>
+        <p className="w-full max-w-[591px] text-[14px] font-medium leading-[1.5] text-[#656565]">
+          I’ve got over 10 years of experience working in design, development, and more for the web.
+          When I’m not working at Acquia, I’m tinkering with my side projects.
+        </p>
+      </section>
+
+      {/*
+      <section className="flex flex-col gap-4">
+        <div className="grid gap-4 md:grid-cols-2">
+          {featuredProjects.slice(0, 2).map((item, index) => (
+            <div key={`${item.src}-${index}`} className="flex flex-col gap-2">
+              <div className="relative h-[540px] w-full overflow-hidden rounded-[16px]">
+                <Image src={item.src} alt={item.alt} fill className="object-cover" />
+              </div>
+              <p className="w-[160px] font-ppmondwest text-[16px] leading-[1.5]">{item.alt}</p>
+            </div>
+          ))}
+        </div>
+        <div className="grid gap-4 md:grid-cols-2">
+          {featuredProjects.slice(2).map((item, index) => (
+            <div key={`${item.src}-bottom-${index}`} className="flex flex-col gap-2">
+              <div className="relative h-[540px] w-full overflow-hidden rounded-[16px]">
+                <Image src={item.src} alt={item.alt} fill className="object-cover" />
+              </div>
+              <p className="w-[160px] font-ppmondwest text-[16px] leading-[1.5]">{item.alt}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+      */}
+
+      <section className="flex flex-col gap-4">
+        <div className="grid gap-4 md:grid-cols-2">
+          {featuredProjects.map((item, index) => (
+            <div key={`coming-soon-${item.src}-${index}`} className="flex flex-col gap-2">
+              <div className="relative h-[540px] w-full overflow-hidden rounded-[16px]">
+                <Image src={item.src} alt={item.alt} fill className="object-cover" />
+              </div>
+              <p className="font-ppmondwest text-[16px] leading-[1.5] text-[#a8a8a8] line-through">
+                {item.alt}
               </p>
-              <h1 className="text-[#B1B1B1] font-medium text-[32px] leading-relaxed font-satoshi">
-                Hey, I’m Callum. I’m a designer & developer based in the south-east of the UK. I
-                currently work at Acquia as a Senior Product Designer.
-              </h1>
             </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="flex flex-col gap-6">
+        <h2 className="font-ppmondwest text-[24px] leading-[1.25]">Some side projects</h2>
+        <div className="grid gap-5 md:grid-cols-4">
+          {featuredProjects.map((item, index) => (
+            <div
+              key={`side-project-${item.src}-${index}`}
+              className="relative h-[360px] w-full overflow-hidden rounded-[8px]"
+            >
+              <Image src={item.src} alt={item.alt} fill className="object-cover" />
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="flex flex-col gap-5 lg:flex-row">
+        <p className="w-[345px] font-ppmondwest text-[20px] leading-[1.25]">Experience</p>
+        <div className="flex flex-1 flex-col gap-10">
+          <div className="flex flex-col gap-10">
+            <p className="font-ppmondwest text-[48px] leading-[1.25]">
+              My background is a mixture of <span className="text-[#b97800]">design</span> and{" "}
+              <span className="text-[#0053ee]">development</span>, used to create wonderful digital
+              experiences.
+            </p>
+            <div className="h-px w-[80px] bg-[#484848]" />
           </div>
-
-          <div className="lg:w-[41.75%] md:w-[41.75%] w-full h-[400px] md:h-full bg-[#000] bg-[url('/images/hero-2.png')] bg-cover bg-center overflow-hidden p-10 md:p-15 lg:p-20 items-end flex">
-            <div className="flex flex-col gap-1">
-              <p className="text-white text-[12px] font-departure-mono uppercase">
-                One of my happy places
-              </p>
-              <p className="text-white text-[16px] font-departure-mono uppercase">
-                waterstones cafe, lewes
-              </p>
-            </div>
+          <div className="flex flex-col gap-10">
+            {experience.map(item => (
+              <div key={item.title} className="flex flex-col gap-5 lg:flex-row">
+                <div className="w-[345px]">
+                  <p className="font-ppmondwest text-[24px] leading-[1.25]">{item.title}</p>
+                  <p className="font-ppmondwest text-[16px] leading-[1.25] text-[#656565]">
+                    {item.meta}
+                  </p>
+                </div>
+                <div className="flex-1 text-[14px] font-medium leading-[1.5] text-[#656565]">
+                  {item.description}
+                </div>
+              </div>
+            ))}
           </div>
-        </section>
-        <WipBanner />
-
-        {/* <ImageGrid images={imageArray} className="w-64 h-64" /> */}
-
-        {/* Recent Projects Section */}
-        <section className="w-full bg-[#11160E] p-10 md:p-15 lg:p-20 flex flex-col">
-          <div className="w-full flex flex-col gap-10">
-            {/* Title Section */}
-            <div className="gap-1">
-              <p className="text-[#626262] text-[12px] tracking-wide font-departure-mono uppercase">
-                These are just some
-              </p>
-              <h2 className="text-[#B1B1B1] text-3xl md:text-2xl sm:text-xl font-satoshi font-medium">
-                Recent projects
-              </h2>
-            </div>
-
-            {/* Projects Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 w-full">
-              {/* Project 1 - Experience builder */}
-              <div className="w-full flex flex-col gap-5">
-                <div className="w-full h-[40vh] md:h-96 lg:h-[400px] xl:h-[40vh] bg-[#191E16] rounded-lg flex items-center justify-center">
-                  <Image
-                    src="/images/projects/experience-builder.svg"
-                    alt="Experience Builder"
-                    width={120}
-                    height={120}
-                    unoptimized="true"
-                    priority
-                  />
-                </div>
-                <div className="flex flex-col gap-1">
-                  <p className="text-[#626262] text-[12px] tracking-wide font-departure-mono uppercase">
-                    Link coming soon...
-                  </p>
-                  <h3 className="text-[#B1B1B1] text-lg font-satoshi font-medium">
-                    Experience builder
-                  </h3>
-                  <p className="text-[#626262] text-sm font-satoshi">
-                    The low code site builder for Drupal.
-                  </p>
-                </div>
-              </div>
-
-              {/* Project 3 - Wzis.dog */}
-              <div className="w-full flex flex-col gap-5">
-                <div className="w-full h-[40vh] md:h-96 lg:h-[400px] xl:h-[40vh] bg-[#191E16] rounded-lg flex items-center justify-center">
-                  <Image
-                    src="/images/projects/wzis.png"
-                    alt="Experience Builder"
-                    width={120}
-                    height={120}
-                    unoptimized="true"
-                    priority
-                  />
-                </div>
-                <div className="flex flex-col gap-1">
-                  <p className="text-[#626262] text-[12px] tracking-wide font-departure-mono uppercase">
-                    Link coming soon...
-                  </p>
-                  <h3 className="text-[#B1B1B1] text-lg font-satoshi font-medium">Wzis.dog</h3>
-                  <p className="text-[#626262] text-sm font-satoshi">
-                    The trendiest dog treat company going.
-                  </p>
-                </div>
-              </div>
-
-              {/* Project 2 - Site Studio */}
-              <div className="w-full flex flex-col gap-5">
-                <div className="w-full h-[40vh] md:h-96 lg:h-[400px] xl:h-[40vh] bg-[#191E16] rounded-lg flex items-center justify-center">
-                  <Image
-                    src="/images/projects/site-studio.png"
-                    alt="Experience Builder"
-                    width={120}
-                    height={120}
-                    unoptimized="true"
-                    priority
-                  />
-                </div>
-                <div className="flex flex-col gap-1">
-                  <p className="text-[#626262] text-[12px] tracking-wide font-departure-mono uppercase">
-                    Link coming soon...
-                  </p>
-                  <h3 className="text-[#B1B1B1] text-lg font-satoshi font-medium">Site Studio</h3>
-                  <p className="text-[#626262] text-sm font-satoshi">
-                    A low code site builder used by the likes of Bayer Pharmaceutical.
-                  </p>
-                </div>
-              </div>
-
-              {/* Project 4 - Union Roasted */}
-              <div className="w-full flex flex-col gap-5">
-                <div className="w-full h-[40vh] md:h-96 lg:h-[400px] xl:h-[40vh] bg-[#191E16] rounded-lg flex items-center justify-center">
-                  <Image
-                    src="/images/projects/union.png"
-                    alt="Experience Builder"
-                    width={120}
-                    height={120}
-                    unoptimized="true"
-                    priority
-                  />
-                </div>
-                <div className="flex flex-col gap-1">
-                  <p className="text-[#626262] text-[12px] tracking-wide font-departure-mono uppercase">
-                    Link coming soon...
-                  </p>
-                  <h3 className="text-[#B1B1B1] text-lg font-satoshi font-medium">Union Roasted</h3>
-                  <p className="text-[#626262] text-sm font-satoshi">
-                    A website for one of the best coffee roasters around.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Currently Reading Section */}
-        <section className="bg-[linear-gradient(to_right,#1D211B_0%,#1D211B_50%,#1D241A_50%,#1D241A_100%)] w-full">
-          <div className="grid grid-cols-1 md:grid-cols-3">
-            {/* Currently Building */}
-            <div className="flex flex-col justify-between bg-[#1D211B] min-h-[600px] p-10 md:p-15 lg:p-20">
-              <div className="flex flex-col gap-1">
-                <p className="text-[#626262] text-[12px] font-departure-mono uppercase">
-                  So right now I&apos;m
-                </p>
-                <h2 className="text-[#B1B1B1] text-[24px] font-satoshi font-medium">Building</h2>
-              </div>
-              <Image
-                src="/images/your-next-tale.png"
-                alt="Your Next Tale"
-                width={746}
-                height={502}
-                className="w-full h-auto"
-                unoptimized="true"
-                priority
-              />
-              <div className="flex flex-col gap-1">
-                <p className="text-[#626262] text-[12px] font-departure-mono uppercase">
-                  Your Next Tale
-                </p>
-                <h4 className="text-[#B1B1B1] text-lg font-satoshi">
-                  A digital book case for fantasy and sci-fi novels.
-                </h4>
-              </div>
-            </div>
-
-            {/* Currently Reading */}
-            <div className="flex flex-col justify-between bg-[#2E312C] min-h-[600px] p-10 md:p-15 lg:p-20">
-              <div className="flex flex-col gap-1">
-                <p className="text-[#626262] text-[12px] font-departure-mono uppercase">
-                  If you must know I&apos;m
-                </p>
-                <h2 className="text-[#B1B1B1] text-[24px] font-satoshi font-medium">Reading</h2>
-              </div>
-
-              <Image
-                src="/images/books/book-group.png"
-                alt="Group of books"
-                width={380}
-                height={409}
-                className="w-full h-auto"
-                unoptimized="true"
-                priority
-              />
-              <div className="flex flex-col gap-1">
-                <p className="text-[#626262] text-[12px] font-departure-mono uppercase">
-                  Million Dollar Weekend
-                </p>
-                <h4 className="text-[#B1B1B1] text-lg font-satoshi">By Noah Kagan</h4>
-              </div>
-            </div>
-
-            {/* Currently Watching */}
-            <div className="flex flex-col justify-between bg-[#1D241A] min-h-[600px] p-10 md:p-15 lg:p-20">
-              <div className="flex flex-col gap-1">
-                <p className="text-[#626262] text-[12px] font-departure-mono uppercase">
-                  This is what I&apos;m
-                </p>
-                <h2 className="text-[#B1B1B1] text-[24px] font-satoshi font-medium">Watching</h2>
-              </div>
-
-              <Image
-                src="/images/tv/tv-group.png"
-                alt="Your Next Tale"
-                width={407}
-                height={271}
-                className="w-full h-auto"
-                unoptimized="true"
-                priority
-              />
-
-              <div className="flex flex-col gap-1">
-                <p className="text-[#626262] text-[12px] font-departure-mono uppercase">Berserk</p>
-                <h4 className="text-[#B1B1B1] text-lg font-satoshi">By Kentaro Miura</h4>
-              </div>
-            </div>
-          </div>
-        </section>
-      </div>
-    </>
+        </div>
+      </section>
+    </main>
   );
 }

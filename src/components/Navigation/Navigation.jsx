@@ -1,70 +1,65 @@
 "use client";
 
-import { AnimatePresence, motion } from "motion/react";
+import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 
 export default function Navigation() {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
-    <>
-      <div className="nav-block fixed top-0 xs:top-5 xs:left-10 md:left-15 lg:left-20 transform z-50 flex items-center gap-[10px]">
-        <motion.div
-          initial={{ opacity: 0, y: -50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{
-            type: "spring",
-            stiffness: 300,
-            damping: 20,
-            bounce: 0.5,
-            duration: 0.8,
-          }}
-          className="bg-[rgba(255,255,255,0.08)] backdrop-blur-sm h-12 xs:rounded-[8px] flex items-center gap-4 w-[100vw] xs:w-auto relative max-w-full justify-center xs:justify-start"
-        >
-          <a href="/" className="flex flex-col items-start pl-5">
-            <p className="font-departure-mono uppercase text-[#8D8D8D] text-[10px] whitespace-nowrap">
-              Hey I'm
-            </p>
-            <p className="font-departure-mono uppercase text-[12px]">
-              Callum <span className="hidden sm:inline">Harrod</span>
-            </p>
-          </a>
-          <nav className="flex items-center max-w-full">
-            <div className="separator w-[1px] h-6 bg-[rgba(255,255,255,0.1)]" />
-            <a href="/" className="flex flex-col items-start px-4 py-[10px]">
-              <p className="font-departure-mono uppercase text-[10px] text-[#8D8D8D]">Head</p>
-              <p className="font-departure-mono uppercase text-[12px] flex gap-1">
-                <span className="text-[#FF2B00]">♦</span> Home
-              </p>
-            </a>
-            <div className="separator w-[1px] h-6 bg-[rgba(255,255,255,0.1)]" />
-            <a
-              href="/about"
-              className="about flex flex-col items-start relative cursor-pointer px-4 py-[10px]"
-            >
-              <p className="font-departure-mono uppercase text-[10px] text-[#8D8D8D]">All</p>
-              <p className="font-departure-mono uppercase text-[12px] flex gap-1">
-                <span className="text-[#FF8C00]">✦</span> About
-              </p>
-            </a>
-            <div className="separator w-[1px] h-6 bg-[rgba(255,255,255,0.1)]" />
-            <a
-              href="/work"
-              className="about flex flex-col items-start relative cursor-pointer px-4 py-[10px]"
-            >
-              <p className="font-departure-mono uppercase text-[10px] text-[#8D8D8D]">View my</p>
-              <p className="font-departure-mono uppercase text-[12px] flex gap-1">
-                <span className="text-[#5E00FF]">♣</span> Work
-              </p>
-            </a>
-            <div className="separator w-[1px] h-6 bg-[rgba(255,255,255,0.1)]" />
-            <a href="/contact" className="flex flex-col items-start px-4 py-[10px]">
-              <p className="font-departure-mono uppercase text-[10px] text-[#8D8D8D]">Get In</p>
-              <p className="font-departure-mono uppercase text-[12px] flex gap-1">
-                <span className="text-[#008CFF]">♥</span> Contact
-              </p>
-            </a>
-          </nav>
-        </motion.div>
-      </div>
-    </>
+    <header className="relative flex w-full max-w-[600px] min-w-0 items-center justify-between">
+      <Link href="/" className="flex items-center gap-3">
+        <span className="text-[16px] font-medium leading-[1.25] text-[#484848]">Callum Harrod</span>
+      </Link>
+      <nav className="hidden items-center gap-6 text-[16px] font-medium leading-[24px] text-[#a8a8a8] sm:flex">
+        <Link href="/">Home</Link>
+        <Link href="/about" className="line-through">
+          About
+        </Link>
+        <Link href="/work" className="line-through">
+          Work
+        </Link>
+        <Link href="/projects" className="line-through">
+          Projects
+        </Link>
+        <Link href="/feed" className="line-through">
+          Feed
+        </Link>
+      </nav>
+      <button
+        type="button"
+        aria-label="Toggle navigation"
+        aria-expanded={isOpen}
+        onClick={() => setIsOpen(open => !open)}
+        className="flex h-8 w-8 items-center justify-center rounded-md border border-[#d9d9d9] text-[#484848] sm:hidden"
+      >
+        <span className="relative block h-[2px] w-4 bg-current">
+          <span className="absolute -top-[6px] left-0 h-[2px] w-4 bg-current" />
+          <span className="absolute top-[6px] left-0 h-[2px] w-4 bg-current" />
+        </span>
+      </button>
+      {isOpen ? (
+        <div className="absolute right-0 top-[52px] z-10 w-48 rounded-[8px] bg-white p-4 shadow-[0_12px_40px_rgba(0,0,0,0.12)] sm:hidden">
+          <div className="flex flex-col gap-3 text-[14px] font-medium text-[#484848]">
+            <Link href="/" onClick={() => setIsOpen(false)}>
+              Home
+            </Link>
+            <Link href="/about" onClick={() => setIsOpen(false)}>
+              <span className="line-through">About</span>
+            </Link>
+            <Link href="/work" onClick={() => setIsOpen(false)}>
+              <span className="line-through">Work</span>
+            </Link>
+            <Link href="/projects" onClick={() => setIsOpen(false)}>
+              <span className="line-through">Projects</span>
+            </Link>
+            <Link href="/feed" onClick={() => setIsOpen(false)}>
+              <span className="line-through">Feed</span>
+            </Link>
+          </div>
+        </div>
+      ) : null}
+    </header>
   );
 }
