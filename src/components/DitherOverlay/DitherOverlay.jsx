@@ -45,7 +45,7 @@ const CONFIG = {
 
   // ── Dot / Pixel Size ────────────────────────────────────────────────
   // Size of a single dither "pixel" in screen pixels (try 2–8)
-  pixelSize: 2,
+  pixelSize: 1,
 
   // How many pixels make up one dither cell (multiplied by pixelSize)
   // Higher = coarser / more chunky pattern.  8 = classic Bayer 8×8
@@ -104,7 +104,7 @@ precision highp float;
 
 uniform vec2  uResolution;
 uniform float uTime;
-uniform float uDPR;
+uniform float uPixelSize;
 
 const int MAX_WAVES = ${cfg.maxWaves};
 uniform vec2  uWavePos[MAX_WAVES];
@@ -112,10 +112,6 @@ uniform float uWaveTimes[MAX_WAVES];
 uniform float uWaveSpeeds[MAX_WAVES];
 uniform float uWaveStrengths[MAX_WAVES];
 uniform vec3  uWaveColors[MAX_WAVES];
-
-// Scale by DPR so the pattern looks the same physical size on any display
-float PIXEL_SIZE     = ${cfg.pixelSize.toFixed(1)} * uDPR;
-float CELL_PIXEL_SIZE = ${cfg.cellMultiplier.toFixed(1)} * PIXEL_SIZE;
 
 out vec4 fragColor;
 
@@ -128,6 +124,10 @@ float Bayer2(vec2 a) {
 #define Bayer8(a) (Bayer4(0.5 * (a)) * 0.25 + Bayer2(a))
 
 void main() {
+    // uPixelSize is pre-scaled by DPR on the JS side
+    float PIXEL_SIZE      = uPixelSize;
+    float CELL_PIXEL_SIZE = ${cfg.cellMultiplier.toFixed(1)} * PIXEL_SIZE;
+
     vec2 fragCoord = gl_FragCoord.xy - uResolution * 0.5;
     float aspectRatio = uResolution.x / uResolution.y;
 
@@ -215,7 +215,7 @@ export default function DitherOverlay() {
     const uniforms = {
       uResolution: { value: new THREE.Vector2() },
       uTime: { value: 0 },
-      uDPR: { value: window.devicePixelRatio || 1 },
+      uPixelSize: { value: CONFIG.pixelSize * (window.devicePixelRatio || 1) },
       uWavePos: {
         value: Array.from({ length: CONFIG.maxWaves }, () => new THREE.Vector2(-1, -1)),
       },
@@ -253,7 +253,7 @@ export default function DitherOverlay() {
       renderer.setSize(w, h, false);
       const dpr = window.devicePixelRatio || 1;
       renderer.setPixelRatio(dpr);
-      uniforms.uDPR.value = dpr;
+      uniforms.uPixelSize.value = CONFIG.pixelSize * dpr;
       uniforms.uResolution.value.set(w * dpr, h * dpr);
     };
 
