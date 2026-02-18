@@ -104,6 +104,7 @@ precision highp float;
 
 uniform vec2  uResolution;
 uniform float uTime;
+uniform float uDPR;
 
 const int MAX_WAVES = ${cfg.maxWaves};
 uniform vec2  uWavePos[MAX_WAVES];
@@ -112,8 +113,9 @@ uniform float uWaveSpeeds[MAX_WAVES];
 uniform float uWaveStrengths[MAX_WAVES];
 uniform vec3  uWaveColors[MAX_WAVES];
 
-const float PIXEL_SIZE     = ${cfg.pixelSize.toFixed(1)};
-const float CELL_PIXEL_SIZE = ${cfg.cellMultiplier.toFixed(1)} * PIXEL_SIZE;
+// Scale by DPR so the pattern looks the same physical size on any display
+float PIXEL_SIZE     = ${cfg.pixelSize.toFixed(1)} * uDPR;
+float CELL_PIXEL_SIZE = ${cfg.cellMultiplier.toFixed(1)} * PIXEL_SIZE;
 
 out vec4 fragColor;
 
@@ -213,6 +215,7 @@ export default function DitherOverlay() {
     const uniforms = {
       uResolution: { value: new THREE.Vector2() },
       uTime: { value: 0 },
+      uDPR: { value: window.devicePixelRatio || 1 },
       uWavePos: {
         value: Array.from({ length: CONFIG.maxWaves }, () => new THREE.Vector2(-1, -1)),
       },
@@ -248,8 +251,10 @@ export default function DitherOverlay() {
       const w = window.innerWidth;
       const h = window.innerHeight;
       renderer.setSize(w, h, false);
-      renderer.setPixelRatio(window.devicePixelRatio);
-      uniforms.uResolution.value.set(w * window.devicePixelRatio, h * window.devicePixelRatio);
+      const dpr = window.devicePixelRatio || 1;
+      renderer.setPixelRatio(dpr);
+      uniforms.uDPR.value = dpr;
+      uniforms.uResolution.value.set(w * dpr, h * dpr);
     };
 
     // ── Spawn a wave at a random position ──
