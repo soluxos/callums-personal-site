@@ -21,17 +21,17 @@ export default function Home() {
       description: (
         <>
           <p className="mb-0">
-            There&apos;s way more to this story than what I&apos;m about to write. For this role I initially
-            joined as &apos;Head of training&apos; for a low-code site building tool in Drupal. But this was
-            for the startup that was acquired by Acquia. In this role I&apos;ve designed websites,
-            designed new features for our product, pitched to and trained customers, taught design
-            systems, and worked as part of a two man team to migrate a 150k line of code Angular app
-            to React.
+            There&apos;s way more to this story than what I&apos;m about to write. For this role I
+            initially joined as &apos;Head of training&apos; for a low-code site building tool in
+            Drupal. But this was for the startup that was acquired by Acquia. In this role I&apos;ve
+            designed websites, designed new features for our product, pitched to and trained
+            customers, taught design systems, and worked as part of a two man team to migrate a 150k
+            line of code Angular app to React.
           </p>
           <p className="mb-0">&nbsp;</p>
           <p>
-            There&apos;s also been a couple of insane stories like building a project over a weekend that
-            lead to us being acquired. Building an entire website on stage at Acquia Engage. Or
+            There&apos;s also been a couple of insane stories like building a project over a weekend
+            that lead to us being acquired. Building an entire website on stage at Acquia Engage. Or
             recording me building an entire website in a day to land a new customer.
           </p>
         </>
@@ -42,9 +42,9 @@ export default function Home() {
       meta: "We Make Websites  / 4 Months",
       description: (
         <>
-          Okay, it may look like I&apos;ve not stuck at this job long, but it didn&apos;t stop me having a
-          brilliant impact. In this job I worked on multiple Shopify websites. I helped design new
-          features, and I worked on developing them too. I designed{" "}
+          Okay, it may look like I&apos;ve not stuck at this job long, but it didn&apos;t stop me
+          having a brilliant impact. In this job I worked on multiple Shopify websites. I helped
+          design new features, and I worked on developing them too. I designed{" "}
           <span className="underline">one of my favourite sites I&apos;ve ever worked on</span> and
           before leaving I was awarded with employee of the month (I still have the trophy to prove
           it).

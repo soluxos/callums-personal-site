@@ -13,19 +13,11 @@ export default function Navigation() {
         <span className="text-[16px] font-medium leading-[1.25] text-[#484848]">Callum Harrod</span>
       </Link>
       <nav className="hidden items-center gap-6 text-[16px] font-medium leading-[24px] text-[#a8a8a8] sm:flex">
-        <Link href="/">Home</Link>
-        <Link href="/about" className="line-through">
-          About
-        </Link>
-        <Link href="/work" className="line-through">
-          Work
-        </Link>
-        <Link href="/projects" className="line-through">
-          Projects
-        </Link>
-        <Link href="/feed" className="line-through">
-          Feed
-        </Link>
+        <p>Home</p>
+        <p className="line-through">About</p>
+        <p className="line-through">Work</p>
+        <p className="line-through">Projects</p>
+        <p className="line-through">Feed</p>
       </nav>
       <button
         type="button"
@@ -42,21 +34,19 @@ export default function Navigation() {
       {isOpen ? (
         <div className="absolute right-0 top-[52px] z-10 w-48 rounded-[8px] bg-white p-4 shadow-[0_12px_40px_rgba(0,0,0,0.12)] sm:hidden">
           <div className="flex flex-col gap-3 text-[14px] font-medium text-[#484848]">
-            <Link href="/" onClick={() => setIsOpen(false)}>
-              Home
-            </Link>
-            <Link href="/about" onClick={() => setIsOpen(false)}>
-              <span className="line-through">About</span>
-            </Link>
-            <Link href="/work" onClick={() => setIsOpen(false)}>
-              <span className="line-through">Work</span>
-            </Link>
-            <Link href="/projects" onClick={() => setIsOpen(false)}>
-              <span className="line-through">Projects</span>
-            </Link>
-            <Link href="/feed" onClick={() => setIsOpen(false)}>
-              <span className="line-through">Feed</span>
-            </Link>
+            <p onClick={() => setIsOpen(false)}>Home</p>
+            <p onClick={() => setIsOpen(false)} className="line-through">
+              About
+            </p>
+            <p onClick={() => setIsOpen(false)} className="line-through">
+              Work
+            </p>
+            <p onClick={() => setIsOpen(false)} className="line-through">
+              Projects
+            </p>
+            <p onClick={() => setIsOpen(false)} className="line-through">
+              Feed
+            </p>
           </div>
         </div>
       ) : null}
