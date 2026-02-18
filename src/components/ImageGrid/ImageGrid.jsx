@@ -192,7 +192,7 @@ const ImageGrid = ({ images = [], className = "" }) => {
           initial="hidden"
           animate="visible"
           whileHover="hover"
-          className="relative overflow-hidden cursor-pointer"
+          className="relative overflow-hidden cursor-pointer my-component"
         >
           {image.isPlaceholder || !image.src || !isValidImageSrc(image.src) ? (
             <Placeholder image={image} />

@@ -40,22 +40,19 @@ export default function DrupalCanvasCaseStudy() {
       description:
         "An atomic design system built using an existing UI library. Extended for our needs and evolved with a focus on ease of use.",
       media: (
-        <img alt="Design system" className="h-auto w-full object-contain" src={designSystemImage} />
+        <img
+          alt="Design system"
+          className="h-auto w-full object-contain max-h-full"
+          src={designSystemImage}
+        />
       ),
-      mediaWrapperClassName: "items-center justify-center pt-5 px-5",
+      variant: "designSystem",
     },
     {
       title: "Documented everything",
       description: "Every single component is clearly defined and explains it’s use.",
-      media: (
-        <img
-          alt="Documentation"
-          className="h-[343px] w-auto max-w-none object-contain"
-          src={leftPanelImage}
-        />
-      ),
-      mediaWrapperClassName: "relative overflow-hidden p-0 items-end justify-center",
-      mediaClassName: "absolute left-[32px] top-[-60px] rotate-[-15deg]",
+      media: <img alt="Documentation" className="w-[487px] !max-w-[487px]" src={leftPanelImage} />,
+      variant: "image-corner",
     },
     {
       title: "AI Native",
@@ -67,7 +64,7 @@ export default function DrupalCanvasCaseStudy() {
           src="/images/projects/drupal-canvas/ai-native-bubble.svg"
         />
       ),
-      mediaWrapperClassName: "flex-1 items-center justify-center",
+      variant: "centered",
     },
     {
       title: "Help and train designers",
@@ -80,7 +77,7 @@ export default function DrupalCanvasCaseStudy() {
           ))}
         </div>
       ),
-      mediaWrapperClassName: "flex-1 items-center justify-center",
+      variant: "centered",
     },
     {
       title: "Handled the small details",
@@ -92,7 +89,7 @@ export default function DrupalCanvasCaseStudy() {
           src="/images/projects/drupal-canvas/small-details.svg"
         />
       ),
-      mediaWrapperClassName: "flex-1 items-center justify-center",
+      variant: "centered",
     },
     {
       title: "New features",
@@ -105,7 +102,7 @@ export default function DrupalCanvasCaseStudy() {
           src="/images/projects/drupal-canvas/new-features.svg"
         />
       ),
-      mediaWrapperClassName: "flex-1 items-center justify-center",
+      variant: "centered",
     },
   ];
 

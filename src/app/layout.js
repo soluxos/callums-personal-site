@@ -1,6 +1,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navigation from "@/components/Navigation/Navigation";
+import DitherOverlay from "@/components/DitherOverlay/DitherOverlay";
 
 // app/layout.js
 import Script from "next/script";
@@ -51,7 +52,7 @@ export default function RootLayout({ children }) {
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <div className="relative overflow-hidden bg-[#f5f5f5] font-satoshi text-[#484848]">
           <div aria-hidden="true" className="noise-overlay" />
-          <div aria-hidden="true" className="blinds-overlay" />
+          <DitherOverlay />
           <WipBanner />
           <div className="flex w-full max-w-[1440px] flex-col pb-[160px] pt-10 mx-auto relative z-10">
             <div className="mx-10 gap-[240px] flex flex-col pt-8">

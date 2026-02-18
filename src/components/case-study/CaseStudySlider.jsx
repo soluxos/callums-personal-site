@@ -18,6 +18,8 @@ export default function CaseStudySlider({ images }) {
           slidesPerView={"auto"}
           centeredSlides={true}
           spaceBetween={20}
+          slideToClickedSlide={true}
+          watchSlidesProgress={true}
           modules={[Pagination]}
           pagination={{
             clickable: true,
