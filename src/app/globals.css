@@ -1,6 +1,21 @@
-@import "tailwindcss";
+@import "tailwindcss/theme.css";
+@import "tailwindcss/preflight.css";
+@import "tailwindcss/utilities.css";
 
-/* CSS Reset - Using @layer base so it doesn't override Tailwind utilities */
+/* Undo Preflight's heading reset — our utilities should control font-size */
+@layer base {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-size: revert;
+    font-weight: revert;
+  }
+}
+
+/* CSS Reset */
 @layer base {
   *,
   *::before,
