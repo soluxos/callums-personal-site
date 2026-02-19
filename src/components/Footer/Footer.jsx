@@ -6,54 +6,42 @@ export default function Footer() {
     <footer className="flex w-full flex-col gap-10 pt-10">
       <div className="flex flex-col justify-between gap-10 lg:flex-row">
         <div className="flex flex-1 flex-col gap-10 md:flex-row">
-          <div className="w-[223px]">
+          <div className="w-[223px] flex flex-col">
             <p className="font-ppmondwest text-[20px] leading-none">Side proejcts</p>
-            <p className="mt-5 text-[14px] font-medium leading-[1.5] text-[#a8a8a8] line-through">
-              Your Next Tale
-            </p>
-            <p className="mt-5 text-[14px] font-medium leading-[1.5] text-[#a8a8a8] line-through">
-              Maybe Framer Template
-            </p>
-            <p className="mt-5 text-[14px] font-medium leading-[1.5] text-[#a8a8a8] line-through">
-              Nifty Framer Template
-            </p>
-            <p className="mt-5 text-[14px] font-medium leading-[1.5] text-[#a8a8a8] line-through">
-              Crisp Framer Template
-            </p>
-          </div>
-          <div className="w-[223px]">
-            <p className="font-ppmondwest text-[20px] leading-none">Case studies</p>
-            <div className="mt-5 space-y-[14px] text-[14px] font-medium leading-[1.5] text-[#656565]">
-              <p className="flex gap-2">
-                <span className="text-[#a8a8a8] line-through">Drupal Canvas</span>
+            <div className="mt-5 space-y-[14px] text-[14px] font-medium leading-[1.5] text-[#656565] flex flex-col gap-3">
+              <p className="text-[14px] font-medium leading-[1.5] underline">Your Next Tale</p>
+              <p className="text-[14px] font-medium leading-[1.5] underline">
+                Maybe Framer Template
               </p>
-              <p className="flex gap-2">
-                <span className="text-[#a8a8a8] line-through">Site Studio</span>
+              <p className="text-[14px] font-medium leading-[1.5] underline">
+                Nifty Framer Template
               </p>
-              <p className="flex gap-2">
-                <span className="text-[#a8a8a8] line-through">Wzis Store Locator</span>
-              </p>
-              <p className="flex gap-2">
-                <span className="text-[#a8a8a8] line-through">Union Roasted</span>
-              </p>
-              <p className="flex gap-2">
-                <span className="text-[#a8a8a8] line-through">Southdowns Unleashed</span>
-              </p>
-              <p className="flex gap-2">
-                <span className="text-[#a8a8a8] line-through">Bacardi UX</span>
+              <p className="text-[14px] font-medium leading-[1.5] underline">
+                Crisp Framer Template
               </p>
             </div>
           </div>
           <div className="w-[223px]">
+            <p className="font-ppmondwest text-[20px] leading-none">Case studies</p>
+            <div className="mt-5 space-y-[14px] text-[14px] font-medium leading-[1.5] text-[#656565] flex flex-col gap-3">
+              <p className="flex gap-2 underline">Drupal Canvas</p>
+              <p className="flex gap-2 underline">Site Studio</p>
+              <p className="flex gap-2 underline">Wzis Store Locator</p>
+              <p className="flex gap-2 underline">Union Roasted</p>
+              <p className="flex gap-2 underline">Southdowns Unleashed</p>
+              <p className="flex gap-2 underline">Bacardi UX</p>
+            </div>
+          </div>
+          <div className="w-[223px]">
             <p className="font-ppmondwest text-[20px] leading-none">Recent blog posts</p>
-            <div className="mt-5 space-y-[14px] text-[14px] font-medium leading-[1.5] text-[#a8a8a8]">
-              <p className="line-through">A blog post</p>
-              <p className="line-through">Another blog post</p>
-              <p className="line-through">A fresh post</p>
-              <p className="line-through">New thoughts</p>
-              <p className="line-through">More writing</p>
-              <p className="line-through">Next article</p>
-              <p className="line-through">Latest post</p>
+            <div className="mt-5 space-y-[14px] text-[14px] font-medium leading-[1.5] text-[#656565] flex flex-col gap-3">
+              <p className="underline">A blog post</p>
+              <p className="underline">Another blog post</p>
+              <p className="underline">A fresh post</p>
+              <p className="underline">New thoughts</p>
+              <p className="underline">More writing</p>
+              <p className="underline">Next article</p>
+              <p className="underline">Latest post</p>
             </div>
           </div>
         </div>

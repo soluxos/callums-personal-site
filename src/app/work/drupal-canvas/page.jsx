@@ -4,7 +4,7 @@ import CaseStudyMetaGrid from "@/components/case-study/CaseStudyMetaGrid";
 import CaseStudySection from "@/components/case-study/CaseStudySection";
 import CaseStudySlider from "@/components/case-study/CaseStudySlider";
 
-const workFrameImage = "/images/projects/drupal-canvas/work-frame.png";
+const workFrameImage = "/images/case-studies/drupal-canvas/drupal-canvas-hero.png";
 const designSystemImage = "/images/projects/drupal-canvas/design-system.png";
 const leftPanelImage = "/images/projects/drupal-canvas/left-panel.png";
 const ellipse16 = "/images/projects/drupal-canvas/ellipse-16.png";

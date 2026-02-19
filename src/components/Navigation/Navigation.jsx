@@ -8,16 +8,20 @@ export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <header className="relative flex w-full max-w-[600px] min-w-0 items-center justify-between">
+    <header className="relative flex w-full max-w-[600px] min-w-0 items-center justify-start gap-20">
       <Link href="/" className="flex items-center gap-3">
         <span className="text-[16px] font-medium leading-[1.25] text-[#484848]">Callum Harrod</span>
       </Link>
       <nav className="hidden items-center gap-6 text-[16px] font-medium leading-[24px] text-[#a8a8a8] sm:flex">
-        <p>Home</p>
-        <p className="line-through">About</p>
-        <p className="line-through">Work</p>
-        <p className="line-through">Projects</p>
-        <p className="line-through">Feed</p>
+        <Link href="/" className="text-[14px] text-[#656565] underline">
+          Home
+        </Link>
+        <Link href="/about" className="text-[14px] text-[#656565] underline">
+          About
+        </Link>
+        <Link href="/work" className="text-[14px] text-[#656565] underline">
+          Work
+        </Link>
       </nav>
       <button
         type="button"

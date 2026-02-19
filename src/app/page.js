@@ -1,13 +1,7 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
-  const featuredProjects = [
-    { src: "/images/case-study-placeholders/2.png", alt: "The Acquia unification project" },
-    { src: "/images/case-study-placeholders/1.png", alt: "An Acquia AI Project" },
-    { src: "/images/case-study-placeholders/3.png", alt: "Drupal Canvas" },
-    { src: "/images/case-study-placeholders/4.png", alt: "Union Roasted Coffee" },
-  ];
-
   const experience = [
     {
       title: "Senior Product Designer",
@@ -103,30 +97,94 @@ export default function Home() {
 
       <section className="flex flex-col gap-4">
         <div className="grid gap-4 md:grid-cols-2">
-          {featuredProjects.map((item, index) => (
-            <div key={`coming-soon-${item.src}-${index}`} className="flex flex-col gap-2">
-              <div className="relative h-[540px] w-full overflow-hidden rounded-[16px]">
-                <Image src={item.src} alt={item.alt} fill className="object-cover" />
-              </div>
-              <p className="font-ppmondwest text-[16px] leading-[1.5] text-[#a8a8a8] line-through">
-                {item.alt}
-              </p>
+          <div className="flex flex-col gap-2">
+            <div className="relative h-[540px] w-full overflow-hidden rounded-[16px]">
+              <Image
+                src="/images/case-study-placeholders/2.png"
+                alt="The Acquia unification project"
+                fill
+                className="object-cover"
+              />
             </div>
-          ))}
+            <p className="font-ppmondwest text-[16px] leading-[1.5] text-[#a8a8a8] line-through">
+              The Acquia unification project
+            </p>
+          </div>
+          <div className="flex flex-col gap-2">
+            <div className="relative h-[540px] w-full overflow-hidden rounded-[16px]">
+              <Image
+                src="/images/case-study-placeholders/1.png"
+                alt="An Acquia AI Project"
+                fill
+                className="object-cover"
+              />
+            </div>
+            <p className="font-ppmondwest text-[16px] leading-[1.5] text-[#a8a8a8] line-through">
+              An Acquia AI Project
+            </p>
+          </div>
+          <Link href="/work/drupal-canvas" className="flex flex-col gap-2">
+            <div className="relative h-[540px] w-full overflow-hidden rounded-[16px]">
+              <Image
+                src="/images/case-study-placeholders/3.png"
+                alt="Drupal Canvas"
+                fill
+                className="object-cover"
+              />
+            </div>
+            <p className="font-ppmondwest text-[16px] leading-[1.5] underline">Drupal Canvas</p>
+          </Link>
+          <div className="flex flex-col gap-2">
+            <div className="relative h-[540px] w-full overflow-hidden rounded-[16px]">
+              <Image
+                src="/images/case-study-placeholders/4.png"
+                alt="Union Roasted Coffee"
+                fill
+                className="object-cover"
+              />
+            </div>
+            <p className="font-ppmondwest text-[16px] leading-[1.5] text-[#a8a8a8] line-through">
+              Union Roasted Coffee
+            </p>
+          </div>
         </div>
       </section>
 
       <section className="flex flex-col gap-6">
         <h2 className="font-ppmondwest text-[24px] leading-[1.25]">Some side projects</h2>
         <div className="grid gap-5 md:grid-cols-4">
-          {featuredProjects.map((item, index) => (
-            <div
-              key={`side-project-${item.src}-${index}`}
-              className="relative h-[360px] w-full overflow-hidden rounded-[8px]"
-            >
-              <Image src={item.src} alt={item.alt} fill className="object-cover" />
-            </div>
-          ))}
+          <div className="relative h-[360px] w-full overflow-hidden rounded-[8px]">
+            <Image
+              src="/images/case-study-placeholders/2.png"
+              alt="The Acquia unification project"
+              fill
+              className="object-cover"
+            />
+          </div>
+          <div className="relative h-[360px] w-full overflow-hidden rounded-[8px]">
+            <Image
+              src="/images/case-study-placeholders/1.png"
+              alt="An Acquia AI Project"
+              fill
+              className="object-cover"
+            />
+          </div>
+          <div className="relative h-[360px] w-full overflow-hidden rounded-[8px]">
+            <Image
+              src="/images/case-study-placeholders/3.png"
+              alt="Drupal Canvas"
+              fill
+              className="object-cover"
+            />
+          </div>
+          <div className="relative h-[360px] w-full overflow-hidden rounded-[8px]">
+            <Image
+              src="/images/case-study-placeholders/4.png"
+              alt="Union Roasted Coffee"
+              fill
+              className="object-cover"
+            />
+          </div>
         </div>
       </section>
 
