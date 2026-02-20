@@ -372,3 +372,16 @@
   transform: translateZ(0);
   animation: noiseShift 0.4s steps(2) infinite;
 }
+
+*::selection {
+  background: #00000070;
+  color: #ffffff;
+}
+*::-moz-selection {
+  background: #00000070;
+  color: #ffffff;
+}
+*::-webkit-selection {
+  background: #00000070;
+  color: #ffffff;
+}
