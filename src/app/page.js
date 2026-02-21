@@ -189,7 +189,7 @@ export default function Home() {
       </section>
 
       <section className="flex flex-col gap-5 lg:flex-row">
-        <p className="w-[345px] font-ppmondwest text-[20px] leading-[1.25]">Experience</p>
+        <h2 className="w-[345px] font-ppmondwest text-[24px] leading-[1.25]">Experience</h2>
         <div className="flex flex-1 flex-col gap-10">
           <div className="flex flex-col gap-10">
             <p className="font-ppmondwest text-[48px] leading-[1.25]">
