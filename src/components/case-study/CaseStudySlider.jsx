@@ -32,7 +32,7 @@ export default function CaseStudySlider({ images }) {
               <div className="flex h-[800px] w-full items-end justify-center overflow-hidden rounded-[8px]">
                 <img
                   alt={image.alt}
-                  className="h-full w-auto max-w-full object-contain"
+                  className="h-full w-auto max-w-full object-contain rounded-[8px]"
                   src={image.src}
                 />
               </div>

@@ -110,7 +110,7 @@ export default function Home() {
               The Acquia unification project
             </p>
           </div>
-          <div className="flex flex-col gap-2">
+          <Link href="/work/acquia-ai" className="flex flex-col gap-2">
             <div className="relative h-[540px] w-full overflow-hidden rounded-[16px]">
               <Image
                 src="/images/case-study-placeholders/1.png"
@@ -119,10 +119,10 @@ export default function Home() {
                 className="object-cover"
               />
             </div>
-            <p className="font-ppmondwest text-[16px] leading-[1.5] text-[#a8a8a8] line-through">
+            <p className="font-ppmondwest text-[16px] leading-[1.5] underline">
               An Acquia AI Project
             </p>
-          </div>
+          </Link>
           <Link href="/work/drupal-canvas" className="flex flex-col gap-2">
             <div className="relative h-[540px] w-full overflow-hidden rounded-[16px]">
               <Image

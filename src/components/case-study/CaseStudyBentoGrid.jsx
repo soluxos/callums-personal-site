@@ -10,9 +10,9 @@ const mergeClassName = (base, extra) => {
 
 const DEFAULT_VARIANTS = {
   default: {
-    cardClassName: "",
-    mediaAreaClassName: "",
-    mediaWrapperClassName: "",
+    cardClassName: "gap-4 p-5",
+    mediaAreaClassName: "flex-1 min-h-0",
+    mediaWrapperClassName: "flex-1 min-h-0",
     mediaClassName: "",
     contentAreaClassName: "",
     contentClassName: "",
@@ -20,15 +20,27 @@ const DEFAULT_VARIANTS = {
     descriptionClassName: "",
   },
   designSystem: {
-    mediaWrapperClassName: "",
+    cardClassName: "gap-4 p-5",
+    mediaAreaClassName: "flex-1 min-h-0",
+    mediaWrapperClassName: "flex-1 min-h-0",
   },
   "image-corner": {
+    cardClassName: "gap-4 p-5",
+    mediaAreaClassName: "flex-1 min-h-0",
     mediaWrapperClassName:
-      "overflow-hidden p-0 items-center justify-center sm:items-end sm:justify-center",
+      "flex-1 min-h-0 overflow-hidden p-0 items-center justify-center sm:items-end sm:justify-center",
     mediaClassName: "sm:absolute sm:left-[20%] sm:bottom-[35%] sm:rotate-[-15deg]",
   },
   centered: {
-    mediaWrapperClassName: "flex-1 items-center justify-center",
+    cardClassName: "gap-4 p-5",
+    mediaAreaClassName: "flex-1 min-h-0",
+    mediaWrapperClassName: "flex-1 min-h-0 items-center justify-center",
+  },
+  "image-full": {
+    cardClassName: "",
+    mediaAreaClassName: "flex-1 min-h-0",
+    mediaWrapperClassName: "h-full w-full overflow-hidden",
+    contentAreaClassName: "p-5 shrink-0",
   },
 };
 
@@ -48,23 +60,20 @@ const buildElement = (item, variants) => {
   return (
     <div
       className={mergeClassName(
-        mergeClassName("flex h-full flex-col gap-4", variant.cardClassName),
+        mergeClassName("flex h-full flex-col", variant.cardClassName),
         item.cardClassName
       )}
     >
       <div
         data-area="media"
         className={mergeClassName(
-          mergeClassName("flex flex-1 min-h-0", variant.mediaAreaClassName),
+          mergeClassName("flex", variant.mediaAreaClassName),
           item.mediaAreaClassName
         )}
       >
         <div
           className={mergeClassName(
-            mergeClassName(
-              "flex flex-1 min-h-0 items-center justify-center",
-              variant.mediaWrapperClassName
-            ),
+            mergeClassName("flex", variant.mediaWrapperClassName),
             item.mediaWrapperClassName
           )}
         >
@@ -150,7 +159,8 @@ export default function CaseStudyBentoGrid({
   }, [gridCols, rowHeight]);
 
   const bentoItems = items.map((item, index) => {
-    const isLarge = index === 0 || index === 1;
+    const isImageFull = item.variant === "image-full";
+    const isLarge = !isImageFull && (index === 0 || index === 1);
 
     return {
       id: index + 1,
@@ -169,7 +179,7 @@ export default function CaseStudyBentoGrid({
       classNames={{
         container: mergeClassName("w-full gap-5 p-0", containerClassName),
         elementContainer: mergeClassName(
-          "relative rounded-[8px] bg-[#ededed] overflow-hidden",
+          "relative rounded-[8px] bg-[#ededed] overflow-hidden !p-0",
           elementContainerClassName
         ),
       }}
