@@ -23,56 +23,73 @@ export default function Home() {
         </section>
         <section className="flex flex-col gap-4">
           <div className="grid gap-4 md:grid-cols-2">
-            <div className="flex flex-col gap-2">
-              <div className="relative h-[540px] w-full overflow-hidden rounded-[16px]">
-                <Image
-                  src="/images/case-study-placeholders/2.png"
-                  alt="The Acquia unification project"
-                  fill
-                  className="object-cover"
+            <Link href="/case-studies/drupal-canvas" className="flex flex-col gap-2 md:col-span-2">
+              <div className="relative h-[540px] w-full overflow-hidden rounded-[16px] bg-[#6f6f6f]">
+                <DitherBackground
+                  className="h-full w-full"
+                  dotColor="#cccccc"
+                  pixelSize={1}
+                  cellMultiplier={2}
+                  waveSpeed={0.2}
+                  ringThickness={1}
+                  waveProfile="gaussian"
+                  waveShape="circle"
                 />
+                <div className="absolute z-10 bottom-5 left-5 w-[calc(100%-2.5rem)] flex flex-col gap-2">
+                  <p className="font-satoshi font-bold uppercase text-[12px] leading-[1.5] bg-white text-[#656565] px-2 rounded-full self-start">
+                    Public
+                  </p>
+                  <p className="font-ppmondwest text-[32px] leading-[1.5] text-white">
+                    How I designed and shipped an MVP for a new brand new product in 2 months
+                  </p>
+                </div>
               </div>
-              <p className="font-ppmondwest text-[16px] leading-[1.5] text-[#a8a8a8] line-through">
-                The Acquia unification project
-              </p>
-            </div>
-            <Link href="/work/acquia-ai" className="flex flex-col gap-2">
-              <div className="relative h-[540px] w-full overflow-hidden rounded-[16px]">
-                <Image
-                  src="/images/case-study-placeholders/1.png"
-                  alt="An Acquia AI Project"
-                  fill
-                  className="object-cover"
-                />
-              </div>
-              <p className="font-ppmondwest text-[16px] leading-[1.5] underline">
-                An Acquia AI Project
-              </p>
             </Link>
-            <Link href="/work/drupal-canvas" className="flex flex-col gap-2">
-              <div className="relative h-[540px] w-full overflow-hidden rounded-[16px]">
-                <Image
-                  src="/images/case-study-placeholders/3.png"
-                  alt="Drupal Canvas"
-                  fill
-                  className="object-cover"
+            <Link href="/case-studies/acquia-unification" className="flex flex-col gap-2">
+              <div className="relative h-[540px] w-full overflow-hidden rounded-[16px] bg-[#2e2e2e]">
+                <DitherBackground
+                  className="h-full w-full"
+                  dotColor="#484848"
+                  pixelSize={1}
+                  cellMultiplier={1}
+                  waveSpeed={0.4}
+                  ringThickness={0.5}
+                  waveProfile="gaussian"
+                  waveShape="diamond"
                 />
+                <div className="absolute z-10 bottom-5 left-5 w-[calc(100%-2.5rem)] flex flex-col gap-2">
+                  <p className="font-satoshi font-bold uppercase text-[12px] leading-[1.5] bg-white text-[#656565] px-2 rounded-full self-start">
+                    Password protected
+                  </p>
+                  <p className="font-ppmondwest text-[32px] leading-[1.5] text-white">
+                    What I'm working on at the moment. A challenging design problem that is the
+                    focus of Acquia.
+                  </p>
+                </div>
               </div>
-              <p className="font-ppmondwest text-[16px] leading-[1.5] underline">Drupal Canvas</p>
             </Link>
-            <div className="flex flex-col gap-2">
-              <div className="relative h-[540px] w-full overflow-hidden rounded-[16px]">
-                <Image
-                  src="/images/case-study-placeholders/4.png"
-                  alt="Union Roasted Coffee"
-                  fill
-                  className="object-cover"
+            <Link href="/case-studies/acquia-ai" className="flex flex-col gap-2">
+              <div className="relative h-[540px] w-full overflow-hidden rounded-[16px] bg-[#686868]">
+                <DitherBackground
+                  className="h-full w-full"
+                  dotColor="#999999"
+                  pixelSize={1}
+                  cellMultiplier={1}
+                  waveSpeed={0.2}
+                  ringThickness={1}
+                  waveProfile="sharp"
+                  waveShape="square"
                 />
+                <div className="absolute z-10 bottom-5 left-5 w-[calc(100%-2.5rem)] flex flex-col gap-2">
+                  <p className="font-satoshi font-bold uppercase text-[12px] leading-[1.5] bg-white text-[#656565] px-2 rounded-full self-start">
+                    Password protected
+                  </p>
+                  <p className="font-ppmondwest text-[32px] leading-[1.5] text-white">
+                    How I designed and shipped an MVP for a new brand new product in 2 months
+                  </p>
+                </div>
               </div>
-              <p className="font-ppmondwest text-[16px] leading-[1.5] text-[#a8a8a8] line-through">
-                Union Roasted Coffee
-              </p>
-            </div>
+            </Link>
           </div>
         </section>
       </main>
