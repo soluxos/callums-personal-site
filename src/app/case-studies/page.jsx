@@ -1,6 +1,7 @@
 import Image from "next/image";
 import ImageGrid from "@/components/ImageGrid/SimpleImageGrid";
 import Link from "next/link";
+import DitherBackground from "@/components/DitherBackground/DitherBackground";
 
 export default function Home() {
   // Example usage

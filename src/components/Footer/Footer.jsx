@@ -9,30 +9,47 @@ export default function Footer() {
           <div className="w-[223px] flex flex-col">
             <p className="font-ppmondwest text-[20px] leading-none">Side proejcts</p>
             <div className="mt-5 space-y-[14px] text-[14px] font-medium leading-[1.5] text-[#656565] flex flex-col gap-3">
-              <p className="text-[14px] font-medium leading-[1.5] underline">Your Next Tale</p>
-              <p className="text-[14px] font-medium leading-[1.5] underline">
+              <Link
+                href="https://yournexttale.com"
+                className="text-[14px] font-medium leading-[1.5] underline"
+              >
+                Your Next Tale
+              </Link>
+              <Link
+                href="https://maybe.framer.website"
+                className="text-[14px] font-medium leading-[1.5] underline"
+              >
                 Maybe Framer Template
-              </p>
-              <p className="text-[14px] font-medium leading-[1.5] underline">
+              </Link>
+              <Link
+                href="https://nifty.framer.website"
+                className="text-[14px] font-medium leading-[1.5] underline"
+              >
                 Nifty Framer Template
-              </p>
-              <p className="text-[14px] font-medium leading-[1.5] underline">
+              </Link>
+              <Link
+                href="https://crisp.framer.website"
+                className="text-[14px] font-medium leading-[1.5] underline"
+              >
                 Crisp Framer Template
-              </p>
+              </Link>
             </div>
           </div>
           <div className="w-[223px]">
             <p className="font-ppmondwest text-[20px] leading-none">Case studies</p>
             <div className="mt-5 space-y-[14px] text-[14px] font-medium leading-[1.5] text-[#656565] flex flex-col gap-3">
-              <p className="flex gap-2 underline">Drupal Canvas</p>
-              <p className="flex gap-2 underline">Site Studio</p>
-              <p className="flex gap-2 underline">Wzis Store Locator</p>
-              <p className="flex gap-2 underline">Union Roasted</p>
-              <p className="flex gap-2 underline">Southdowns Unleashed</p>
-              <p className="flex gap-2 underline">Bacardi UX</p>
+              <Link href="/case-studies/drupal-canvas" className="flex gap-2 underline">
+                Drupal Canvas
+              </Link>
+              <Link href="/case-studies/acquia-unification" className="flex gap-2 underline">
+                Acquia Unification
+              </Link>
+              <Link href="/case-studies/acquia-ai" className="flex gap-2 underline">
+                Acquia AI
+              </Link>
             </div>
           </div>
-          <div className="w-[223px]">
+          {/* <div className="w-[223px]">
             <p className="font-ppmondwest text-[20px] leading-none">Recent blog posts</p>
             <div className="mt-5 space-y-[14px] text-[14px] font-medium leading-[1.5] text-[#656565] flex flex-col gap-3">
               <p className="underline">A blog post</p>
@@ -43,7 +60,7 @@ export default function Footer() {
               <p className="underline">Next article</p>
               <p className="underline">Latest post</p>
             </div>
-          </div>
+          </div> */}
         </div>
         <div className="flex flex-col items-end gap-2">
           <Link href="/" className="flex items-end gap-3">
