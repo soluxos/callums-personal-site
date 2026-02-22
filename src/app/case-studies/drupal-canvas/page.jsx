@@ -134,98 +134,96 @@ export default function DrupalCanvasCaseStudy() {
   ];
 
   return (
-    <PasswordGate password={process.env.NEXT_PUBLIC_PASSWORD}>
-      <main className="flex flex-col gap-[120px]">
-        <div className="flex flex-col gap-20">
-          <CaseStudyHero
-            title="Drupal Canvas"
-            description="Earlier this year I joined the Product Design team to help create the future of building and editing websites with Drupal. This is a case study on how I helped to create the future of Drupal."
+    <main className="flex flex-col gap-[120px]">
+      <div className="flex flex-col gap-20">
+        <CaseStudyHero
+          title="Drupal Canvas"
+          description="Earlier this year I joined the Product Design team to help create the future of building and editing websites with Drupal. This is a case study on how I helped to create the future of Drupal."
+        />
+        <CaseStudyMetaGrid items={metaItems} />
+      </div>
+
+      <section className="w-full">
+        <div className="flex flex-col rounded-[16px] bg-[#ededed] p-10">
+          <img
+            alt="Drupal Canvas interface"
+            className="h-auto w-full rounded-[12px] object-cover"
+            src={workFrameImage}
           />
-          <CaseStudyMetaGrid items={metaItems} />
         </div>
+      </section>
 
-        <section className="w-full">
-          <div className="flex flex-col rounded-[16px] bg-[#ededed] p-10">
-            <img
-              alt="Drupal Canvas interface"
-              className="h-auto w-full rounded-[12px] object-cover"
-              src={workFrameImage}
-            />
+      <CaseStudySection title="The problem">
+        <p className="max-w-[588px] text-[14px] font-medium leading-[1.5] text-[#656565]">
+          We created this product to solve an issue within Drupal; how could we make the editing
+          experience and the site builder experience better for anyone using Drupal? On top of
+          creating this, we had to ensure that what we were building aligned with the existing
+          paradigms within Drupal, keeping the open source community happy, and building something
+          that could become the foundation of Drupal.
+        </p>
+      </CaseStudySection>
+
+      <CaseStudySection title="My involvement">
+        <div className="grid gap-10 lg:grid-cols-2">
+          <div className="space-y-4 text-[14px] font-medium leading-[1.5] text-[#656565]">
+            <p>
+              This isn’t a typical design project, usually you’d be there from the start, but I was
+              late to the party. Originally I was going to be a front-end engineer on this, but I
+              noticed that there wasn’t a design system in place for us to build out the necessary
+              UI. This is where I started collating everything that was available from the original
+              designers, and started to create a design system.
+            </p>
+            <p>
+              This is how I was offered the job of Senior Product G at Acquia. I was making strides
+              on the design system, and bringing order to what were some pretty chaotic design
+              files. From here I organised everything into a clear atomic design system.
+            </p>
           </div>
-        </section>
+          <div className="space-y-4 text-[14px] font-medium leading-[1.5] text-[#656565]">
+            <p>
+              While organising I improved on the UI of each of our components. Due to the deep
+              technical complexity of the product, there were some aspects of our UI that weren’t
+              very intuitive, or just weren’t fit for the job.
+            </p>
+            <p>
+              Since then I have redesigned the entire UI, worked with developers closely on the
+              interaction design, designed multiple new features that required turning very complex
+              workflows into simple processes, helping new designers work on new features by guiding
+              them through complex engineering requirements, and a lot more.
+            </p>
+          </div>
+        </div>
+      </CaseStudySection>
 
-        <CaseStudySection title="The problem">
-          <p className="max-w-[588px] text-[14px] font-medium leading-[1.5] text-[#656565]">
-            We created this product to solve an issue within Drupal; how could we make the editing
-            experience and the site builder experience better for anyone using Drupal? On top of
-            creating this, we had to ensure that what we were building aligned with the existing
-            paradigms within Drupal, keeping the open source community happy, and building something
-            that could become the foundation of Drupal.
+      <CaseStudySection title="What I’ve done">
+        <CaseStudyBentoGrid items={bentoItems} />
+      </CaseStudySection>
+
+      <CaseStudySection title="What it looks like">
+        <CaseStudySlider images={sliderImages} />
+      </CaseStudySection>
+
+      <CaseStudySection title="End notes">
+        <div className="max-w-[588px] space-y-4 text-[14px] font-medium leading-[1.5] text-[#656565]">
+          <p>
+            As you can probably tell, this isn’t a typical case study where I go into absolutely
+            everything. If you want to know more about the project, I’ll happily show you how I’ve
+            created everything listed above and more. This has been created as a way of showing the
+            value I’ve generated for this product.
           </p>
-        </CaseStudySection>
-
-        <CaseStudySection title="My involvement">
-          <div className="grid gap-10 lg:grid-cols-2">
-            <div className="space-y-4 text-[14px] font-medium leading-[1.5] text-[#656565]">
-              <p>
-                This isn’t a typical design project, usually you’d be there from the start, but I
-                was late to the party. Originally I was going to be a front-end engineer on this,
-                but I noticed that there wasn’t a design system in place for us to build out the
-                necessary UI. This is where I started collating everything that was available from
-                the original designers, and started to create a design system.
-              </p>
-              <p>
-                This is how I was offered the job of Senior Product G at Acquia. I was making
-                strides on the design system, and bringing order to what were some pretty chaotic
-                design files. From here I organised everything into a clear atomic design system.
-              </p>
-            </div>
-            <div className="space-y-4 text-[14px] font-medium leading-[1.5] text-[#656565]">
-              <p>
-                While organising I improved on the UI of each of our components. Due to the deep
-                technical complexity of the product, there were some aspects of our UI that weren’t
-                very intuitive, or just weren’t fit for the job.
-              </p>
-              <p>
-                Since then I have redesigned the entire UI, worked with developers closely on the
-                interaction design, designed multiple new features that required turning very
-                complex workflows into simple processes, helping new designers work on new features
-                by guiding them through complex engineering requirements, and a lot more.
-              </p>
-            </div>
-          </div>
-        </CaseStudySection>
-
-        <CaseStudySection title="What I’ve done">
-          <CaseStudyBentoGrid items={bentoItems} />
-        </CaseStudySection>
-
-        <CaseStudySection title="What it looks like">
-          <CaseStudySlider images={sliderImages} />
-        </CaseStudySection>
-
-        <CaseStudySection title="End notes">
-          <div className="max-w-[588px] space-y-4 text-[14px] font-medium leading-[1.5] text-[#656565]">
-            <p>
-              As you can probably tell, this isn’t a typical case study where I go into absolutely
-              everything. If you want to know more about the project, I’ll happily show you how I’ve
-              created everything listed above and more. This has been created as a way of showing
-              the value I’ve generated for this product.
-            </p>
-            <p>
-              However, this project isn’t a typical design process. Many times I’ve had to work as a
-              product manager to figure out the requirements, or I’ve had to work as an engineer to
-              solve technical limitations. None of this fits into the regular design workflow, but
-              that’s fine!
-            </p>
-            <p>
-              Ultimately, I solve problems, but I don’t let anything get in the way of that. I think
-              you need to be a nerd to solve this stuff, and if that means working outside of the
-              realms of a typical product designer. So be it.
-            </p>
-          </div>
-        </CaseStudySection>
-      </main>
-    </PasswordGate>
+          <p>
+            However, this project isn’t a typical design process. Many times I’ve had to work as a
+            product manager to figure out the requirements, or I’ve had to work as an engineer to
+            solve technical limitations. None of this fits into the regular design workflow, but
+            that’s fine!
+          </p>
+          <p>
+            Ultimately, I solve problems, but I don’t let anything get in the way of that. I think
+            you need to be a nerd to solve this stuff, and if that means working outside of the
+            realms of a typical product designer. So be it.
+          </p>
+        </div>
+      </CaseStudySection>
+    </main>
   );
 }

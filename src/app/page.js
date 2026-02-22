@@ -40,9 +40,11 @@ export default function Home() {
           Okay, it may look like I&apos;ve not stuck at this job long, but it didn&apos;t stop me
           having a brilliant impact. In this job I worked on multiple Shopify websites. I helped
           design new features, and I worked on developing them too. I designed{" "}
-          <span className="underline">one of my favourite sites I&apos;ve ever worked on</span> and
-          before leaving I was awarded with employee of the month (I still have the trophy to prove
-          it).
+          <a href="https://unionroasted.com" className="underline">
+            one of my favourite sites I&apos;ve ever worked on
+          </a>{" "}
+          and before leaving I was awarded with employee of the month (I still have the trophy to
+          prove it).
         </>
       ),
     },
@@ -161,7 +163,7 @@ export default function Home() {
                   Password protected
                 </p>
                 <p className="font-ppmondwest text-[32px] leading-[1.5] text-white">
-                  How I designed and shipped an MVP for a new brand new product in 2 months
+                  How I designed and shipped an MVP for a brand new product in 2 months
                 </p>
               </div>
             </div>
@@ -215,7 +217,7 @@ export default function Home() {
               <source src="/videos/nifty.mp4" type="video/mp4" />
             </video>
             <p className="font-ppmondwest text-[16px] leading-[1.5] underline">
-              Maybe Framer Template
+              Nifty Framer Template
             </p>
           </Link>
           <Link
