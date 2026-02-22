@@ -103,7 +103,7 @@ export default function Home() {
               <DitherBackground
                 className="h-full w-full"
                 dotColor="#cccccc"
-                pixelSize={0.5}
+                pixelSize={1}
                 cellMultiplier={2}
                 waveSpeed={0.2}
                 ringThickness={1}
