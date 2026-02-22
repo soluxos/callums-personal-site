@@ -19,8 +19,8 @@ export default function Navigation() {
         <Link href="/about" className="text-[14px] text-[#656565] underline">
           About
         </Link>
-        <Link href="/work" className="text-[14px] text-[#656565] underline">
-          Work
+        <Link href="/case-studies" className="text-[14px] text-[#656565] underline">
+          Case studies
         </Link>
       </nav>
       <button

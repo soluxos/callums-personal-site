@@ -5,33 +5,35 @@ import CaseStudySection from "@/components/case-study/CaseStudySection";
 import CaseStudySlider from "@/components/case-study/CaseStudySlider";
 import PasswordGate from "@/components/PasswordGate/PasswordGate";
 
-const heroImage = "/images/case-studies/acquia-ai/hero.png";
-const whatIveDone1 = "/images/case-studies/acquia-ai/what-ive-done-1.png";
-const whatIveDone2 = "/images/case-studies/acquia-ai/what-ive-done-2.png";
-const whatIveDone3 = "/images/case-studies/acquia-ai/what-ive-done-3.png";
-const whatIveDone4 = "/images/case-studies/acquia-ai/what-ive-done-4.png";
+const heroImage = "/images/case-studies/acquia-unification/hero.png";
+const whatIveDone1 = "/images/case-studies/acquia-unification/what-ive-done-1.png";
+const whatIveDone2 = "/images/case-studies/acquia-unification/what-ive-done-2.png";
+const whatIveDone3 = "/images/case-studies/acquia-unification/what-ive-done-3.png";
+const whatIveDone4 = "/images/case-studies/acquia-unification/what-ive-done-4.png";
+const whatIveDone5 = "/images/case-studies/acquia-unification/what-ive-done-5.png";
 
-export default function AcquiaAICaseStudy() {
+export default function AcquiaUnificationCaseStudy() {
   return (
     <PasswordGate password={process.env.NEXT_PUBLIC_PASSWORD}>
       <main className="flex flex-col gap-[120px]">
         <div className="flex flex-col gap-20">
           <CaseStudyHero
-            title="Acquia Prospero"
-            description="Imagine a world where we don't need real people to complete tasks within your business anymore, you ask your digital teammate instead. That's where Prospero comes to play. Use AI teammates, simple workflows, and harness the power of Acquia's products, all in one place."
+            title="Acquia Command Center"
+            description="As a business, Acquia has wanted to go after the DXP market. Acquia also has many separated business units, such as hosted Drupal applications, SasS Drupal, digital asset management and more. This project is Acquia’s huge undertaking to unify these projects into a single cohesive interface."
           />
           <CaseStudyMetaGrid
             items={[
-              { label: "Role", value: "Senior Product Designer" },
+              { label: "Role", value: "Senior Product Designer (Lead)" },
               {
                 label: "Outcome",
-                value: "An AI product on having synthetic teammates complete business tasks",
+                value: "A product that could house all existing Acquia products",
               },
               {
                 label: "Deliverables",
-                value: "Design system, User Flows, UI design, new features",
+                value:
+                  "Design system, User Flows, UI design, new features, existing product design changes",
               },
-              { label: "Timeline", value: "August 2025 - December 2025" },
+              { label: "Timeline", value: "Jan 2026 - Now" },
             ]}
           />
         </div>
@@ -39,7 +41,7 @@ export default function AcquiaAICaseStudy() {
         <section className="w-full">
           <div className="flex flex-col rounded-[16px] bg-[#ededed] p-10">
             <img
-              alt="Acquia Prospero interface"
+              alt="Acquia Command Center interface"
               className="h-auto w-full rounded-[12px] object-cover"
               src={heroImage}
             />
@@ -99,20 +101,19 @@ export default function AcquiaAICaseStudy() {
 
         <CaseStudySection title="What I’ve done">
           <CaseStudyBentoGrid
-            rowHeight={474}
+            rowHeight={227}
             items={[
               {
-                title: "Redesigned an entire UI",
-                description:
-                  "I took a prototype that was clearly made by developers and turned it into a piece of work that brought smile to users faces.",
+                title: "Unified the UX from all our products",
+                description: "Taking multiple products and unifying the experience between them.",
                 media: (
                   <img
                     alt="Redesigned UI"
-                    className="h-full w-full object-cover"
+                    className="h-auto w-full object-contain"
                     src={whatIveDone1}
                   />
                 ),
-                variant: "image-full",
+                variant: "half-card",
               },
               {
                 title: "User testing",
@@ -121,24 +122,26 @@ export default function AcquiaAICaseStudy() {
                 media: (
                   <img
                     alt="User Testing"
-                    className="h-full w-full object-cover"
-                    src={whatIveDone2}
-                  />
-                ),
-                variant: "image-full",
-              },
-              {
-                title: "Influenced our product requirements",
-                description:
-                  "By thinking of the UX, I ensured that the requirements solved real user needs. Through small interactions came big changes.",
-                media: (
-                  <img
-                    alt="Product Requirements"
-                    className="h-full w-full object-cover"
+                    className="h-full w-full object-contain"
                     src={whatIveDone3}
                   />
                 ),
                 variant: "image-full",
+                height: 2,
+              },
+              {
+                title: "Created a full prototype with AI",
+                description:
+                  "With nearly 1000 prompts I've created a full working prototype for engineers and designers to work with.",
+                media: (
+                  <img
+                    alt="AI Prototype"
+                    className="h-full w-full object-contain"
+                    src={whatIveDone4}
+                  />
+                ),
+                variant: "image-full",
+                height: 2,
               },
               {
                 title: "Shipped our MVP",
@@ -147,11 +150,25 @@ export default function AcquiaAICaseStudy() {
                 media: (
                   <img
                     alt="Shipped MVP"
-                    className="h-full w-full object-cover"
-                    src={whatIveDone4}
+                    className="h-full w-full object-contain"
+                    src={whatIveDone5}
                   />
                 ),
                 variant: "image-full",
+                height: 2,
+              },
+              {
+                title: "Worked on tech architecture",
+                description:
+                  "Helped solve the best way to approach the engineering for this project.",
+                media: (
+                  <img
+                    alt="Tech Architecture"
+                    className="h-auto w-full object-contain"
+                    src={whatIveDone2}
+                  />
+                ),
+                variant: "half-card",
               },
             ]}
           />

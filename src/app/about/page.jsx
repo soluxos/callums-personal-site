@@ -52,7 +52,7 @@ export default function About() {
               fill
               className="object-cover"
               sizes="(max-width: 1024px) 50vw, 25vw"
-              quality={90}
+              quality={100}
             />
           </div>
         ))}

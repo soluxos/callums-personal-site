@@ -42,6 +42,12 @@ const DEFAULT_VARIANTS = {
     mediaWrapperClassName: "h-full w-full overflow-hidden",
     contentAreaClassName: "p-5 shrink-0",
   },
+  "half-card": {
+    cardClassName: "gap-0",
+    mediaAreaClassName: "flex-1 min-h-0",
+    mediaWrapperClassName: "h-full w-full overflow-hidden",
+    contentAreaClassName: "p-5 pt-0 shrink-0",
+  },
 };
 
 const getVariant = (variants, variantName) => variants[variantName] ?? variants.default;
@@ -159,15 +165,16 @@ export default function CaseStudyBentoGrid({
   }, [gridCols, rowHeight]);
 
   const bentoItems = items.map((item, index) => {
+    const isHalfCard = item.variant === "half-card";
     const isImageFull = item.variant === "image-full";
-    const isLarge = !isImageFull && (index === 0 || index === 1);
+    const isLarge = !isImageFull && !isHalfCard && (index === 0 || index === 1);
 
     return {
       id: index + 1,
       title: item.title,
       element: buildElement(item, variants),
-      width: 1,
-      height: isLarge ? 2 : 1,
+      width: item.width ?? 1,
+      height: item.height ?? (isHalfCard ? 1 : isLarge ? 2 : 1),
     };
   });
 

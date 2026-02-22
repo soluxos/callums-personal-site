@@ -15,10 +15,10 @@ export default function Home() {
       <main className="flex flex-col gap-[240px]">
         <section className="flex w-full flex-col gap-5">
           <h1 className="w-full max-w-[591px] font-ppmondwest text-[48px] leading-[1.25]">
-            My work
+            Case studies
           </h1>
           <p className="w-full max-w-[591px] text-[14px] font-medium leading-[1.5] text-[#656565]">
-            Well, it's the work I've created case studies for...
+            A short selection of some projects I've worked on...
           </p>
         </section>
         <section className="flex flex-col gap-4">
