@@ -21,6 +21,7 @@ export default function Home() {
             A short selection of some projects I've worked on...
           </p>
         </section>
+
         <section className="flex flex-col gap-4">
           <div className="grid gap-4 md:grid-cols-2">
             <Link href="/case-studies/drupal-canvas" className="flex flex-col gap-2 md:col-span-2">
@@ -40,7 +41,8 @@ export default function Home() {
                     Public
                   </p>
                   <p className="font-ppmondwest text-[32px] leading-[1.5] text-white">
-                    How I designed and shipped an MVP for a new brand new product in 2 months
+                    How I designed and helped ship the future of building and editing websites with
+                    Drupal
                   </p>
                 </div>
               </div>

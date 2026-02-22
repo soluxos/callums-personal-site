@@ -115,7 +115,8 @@ export default function Home() {
                   Public
                 </p>
                 <p className="font-ppmondwest text-[32px] leading-[1.5] text-white">
-                  How I designed and shipped an MVP for a new brand new product in 2 months
+                  How I designed and helped ship the future of building and editing websites with
+                  Drupal
                 </p>
               </div>
             </div>
