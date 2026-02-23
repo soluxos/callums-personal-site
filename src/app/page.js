@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import DitherBackground from "@/components/DitherBackground/DitherBackground";
 import Image from "next/image";
 import Link from "next/link";
@@ -20,9 +21,14 @@ export default function Home() {
         <div className="grid gap-4 md:grid-cols-2">
           <Link href="/case-studies/drupal-canvas" className="flex flex-col gap-2 md:col-span-2">
             <div className="relative h-[540px] w-full overflow-hidden rounded-[16px] bg-[#6f6f6f]">
+              <img
+                src="/images/case-studies/drupal-canvas/drupal-canvas-hero.png"
+                alt="Drupal Canvas"
+                className="absolute inset-0 w-full h-full object-cover z-0 transition-all"
+              />
               <DitherBackground
-                className="h-full w-full"
-                dotColor="#cccccc"
+                className="h-full w-full bg-[#19191984] transition-colors"
+                dotColor="#999999"
                 pixelSize={1}
                 cellMultiplier={2}
                 waveSpeed={0.2}

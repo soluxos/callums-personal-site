@@ -208,6 +208,20 @@ export default function DrupalCanvasCaseStudy() {
         />
       </CaseStudySection>
 
+      <CaseStudySection title="Breaking tasks down into clear user flows">
+        <p className="max-w-[588px] text-[14px] font-medium leading-[1.5] text-[#656565]">
+          Each one of the features that I worked on were extensively broken down into clear user
+          flows. This was to ensure that the engineers and other designers working on the project
+          could understand the complex workflows that we had to create, and how we turned these into
+          simple processes for our users.
+        </p>
+        <img
+          src={"/images/case-studies/drupal-canvas/design-system.png"}
+          alt="Design system"
+          className="h-auto w-full object-contain max-h-full rounded-[16px]"
+        />
+      </CaseStudySection>
+
       <CaseStudySection title="What I’ve done">
         <CaseStudyBentoGrid items={bentoItems} />
       </CaseStudySection>
