@@ -178,19 +178,23 @@ export default function AcquiaUnificationCaseStudy() {
           <CaseStudySlider
             images={[
               {
-                src: "/images/case-studies/acquia-ai/what-ive-done-1.png",
+                src: "/images/case-studies/acquia-unification/slide-1.png",
                 alt: "Acquia Prospero redesigned UI",
               },
               {
-                src: "/images/case-studies/acquia-ai/what-ive-done-2.png",
+                src: "/images/case-studies/acquia-unification/slide-2.png",
                 alt: "Acquia Prospero user testing",
               },
               {
-                src: "/images/case-studies/acquia-ai/what-ive-done-3.png",
+                src: "/images/case-studies/acquia-unification/slide-3.png",
                 alt: "Acquia Prospero product requirements",
               },
               {
-                src: "/images/case-studies/acquia-ai/what-ive-done-4.png",
+                src: "/images/case-studies/acquia-unification/slide-4.png",
+                alt: "Acquia Prospero shipped MVP",
+              },
+              {
+                src: "/images/case-studies/acquia-unification/slide-5.png",
                 alt: "Acquia Prospero shipped MVP",
               },
             ]}
