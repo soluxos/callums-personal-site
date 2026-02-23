@@ -267,10 +267,10 @@ export default function Home() {
                 </p>
               </div>
               <div className="flex-1 text-[14px] font-medium leading-[1.5] text-[#656565]">
-                I moved from engineering to the product design team as a Senior Product Designer. In
-                this role I&apos;ve worked on leading the design for the future editing experience
-                of Drupal. The latest piece of work that I&apos;ve been involved with, is an AI
-                interface to allow our customers to use all o
+                My first job out of University! Here I worked on some incredible sites for small and
+                large businesses alike. Here I worked on full-stack WordPress development (not divi
+                builder, don&apos;t worry). Here I was shown how important good design was in making
+                brilliant websites. This was a perfect place to start my career.
               </div>
             </div>
           </div>
