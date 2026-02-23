@@ -27,7 +27,7 @@ export default function Home() {
                 className="absolute inset-0 w-full h-full object-cover z-0 transition-all"
               />
               <DitherBackground
-                className="h-full w-full bg-[#19191984] transition-colors"
+                className="h-full w-full bg-[#19191984] bg-linear-180 transition-colors"
                 dotColor="#999999"
                 pixelSize={1}
                 cellMultiplier={2}

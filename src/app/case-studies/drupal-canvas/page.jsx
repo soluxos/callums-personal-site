@@ -216,7 +216,7 @@ export default function DrupalCanvasCaseStudy() {
           simple processes for our users.
         </p>
         <img
-          src={"/images/case-studies/drupal-canvas/design-system.png"}
+          src={"/images/case-studies/drupal-canvas/user-flows.png"}
           alt="Design system"
           className="h-auto w-full object-contain max-h-full rounded-[16px]"
         />
