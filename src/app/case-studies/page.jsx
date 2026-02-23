@@ -13,7 +13,7 @@ export default function Home() {
 
   return (
     <>
-      <main className="flex flex-col gap-[240px]">
+      <main className="flex flex-col gap-[80px]">
         <section className="flex w-full flex-col gap-5">
           <h1 className="w-full max-w-[591px] font-ppmondwest text-[48px] leading-[1.25]">
             Case studies

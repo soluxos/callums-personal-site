@@ -2,19 +2,35 @@ import Image from "next/image";
 
 export default function About() {
   return (
-    <main className="flex flex-col gap-[120px]">
-      <section className="w-full max-w-[591px]">
+    <main className="flex flex-col gap-[80px]">
+      <section className="w-full max-w-full">
         <div className="space-y-4 text-[14px] font-medium leading-[1.5] text-[#656565]">
-          <p>
-            Originally I started out with development, as I wanted to bring my ideas to life. I
-            quickly faced the reality that if I ever wanted to make something successful, it would
-            have to not only work (duh) but it would have to look great, and feel as intuitive as
-            possible to use.
-          </p>
-          <p>
-            Since then I’ve been on a journey of both design and development. In my job roles I’ve
-            had to handle everything from design, development, marketing, and more.
-          </p>
+          <h1 className="w-full max-w-[591px] font-ppmondwest text-[48px] leading-[1.25]">
+            A little bit about me
+          </h1>
+          <div className="grid gap-10 lg:grid-cols-2">
+            <div className="space-y-4 text-[14px] font-medium leading-[1.5] text-[#656565]">
+              <p>
+                Hey, thanks for checking my about page out! So, a bit about me. I&apos;m someone
+                that has always loved tech. When I was around 10, I got my first laptop. Very
+                quickly I was messing about trying to make my own applications and websites. Ever
+                since then I knew that I wanted to work with computers. From that point I carried on
+                nerding out about how things were made so that I could do it myself.
+              </p>
+              <p>
+                I like to think that I sit pretty evenly between design and development. I have a
+                strong technical background, but I also know that to make anything good, it needs to
+                look and feel good to use too.
+              </p>
+            </div>
+            <div className="space-y-4 text-[14px] font-medium leading-[1.5] text-[#656565]">
+              <p>
+                Outside of being a nerd and making stuff, I'm a huge gamer and spend far too long
+                playing games, and keeping up with gaming news. I love to read fantasy and sci-fi
+                books. I also love exploring the world with my wife!
+              </p>
+            </div>
+          </div>
         </div>
       </section>
 

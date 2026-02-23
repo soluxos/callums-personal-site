@@ -32,7 +32,7 @@ export default function PasswordGate({ password, children }) {
   if (unlocked) return children;
 
   return (
-    <div className="flex min-h-[60vh] flex-col items-center justify-center gap-8 px-4">
+    <div className="flex flex-col items-center justify-center gap-8 px-4">
       <div className="flex flex-col items-center gap-2 text-center">
         <h1 className="text-[22px] font-semibold tracking-tight text-[#1a1a1a]">
           Password protected
