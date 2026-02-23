@@ -3,7 +3,7 @@ import CaseStudyHero from "@/components/case-study/CaseStudyHero";
 import CaseStudyMetaGrid from "@/components/case-study/CaseStudyMetaGrid";
 import CaseStudySection from "@/components/case-study/CaseStudySection";
 import CaseStudySlider from "@/components/case-study/CaseStudySlider";
-import PasswordGate from "@/components/PasswordGate/PasswordGate";
+import Image from "next/image";
 
 const workFrameImage = "/images/case-studies/drupal-canvas/drupal-canvas-hero.png";
 
@@ -138,7 +138,7 @@ export default function DrupalCanvasCaseStudy() {
       <div className="flex flex-col gap-20">
         <CaseStudyHero
           title="Drupal Canvas"
-          description="Earlier this year I joined the Product Design team to help create the future of building and editing websites with Drupal. This is a case study on how I helped to create the future of Drupal."
+          description="Early 2025 I joined the Product Design team to help create the future of building and editing websites with Drupal. This is a case study on how I helped to create the future of Drupal."
         />
         <CaseStudyMetaGrid items={metaItems} />
       </div>
@@ -174,9 +174,9 @@ export default function DrupalCanvasCaseStudy() {
               designers, and started to create a design system.
             </p>
             <p>
-              This is how I was offered the job of Senior Product G at Acquia. I was making strides
-              on the design system, and bringing order to what were some pretty chaotic design
-              files. From here I organised everything into a clear atomic design system.
+              This is how I was offered the job of Senior Product at Acquia. I was making strides on
+              the design system, and bringing order to what were some pretty chaotic design files.
+              From here I organised everything into a clear atomic design system.
             </p>
           </div>
           <div className="space-y-4 text-[14px] font-medium leading-[1.5] text-[#656565]">
@@ -193,6 +193,19 @@ export default function DrupalCanvasCaseStudy() {
             </p>
           </div>
         </div>
+      </CaseStudySection>
+
+      <CaseStudySection title="Crafting a design system">
+        <p className="max-w-[588px] text-[14px] font-medium leading-[1.5] text-[#656565]">
+          As I said above, there wasn’t a design system in place for us to build out the necessary
+          UI. This is where I started to take inventory of what we had and bring this into a
+          sensible system. Take a look at what things looked like, and how it is now:
+        </p>
+        <img
+          src={"/images/case-studies/drupal-canvas/design-system.png"}
+          alt="Design system"
+          className="h-auto w-full object-contain max-h-full rounded-[16px]"
+        />
       </CaseStudySection>
 
       <CaseStudySection title="What I’ve done">
