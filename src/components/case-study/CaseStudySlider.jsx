@@ -13,7 +13,7 @@ export default function CaseStudySlider({ images }) {
 
   return (
     <section className="flex flex-col gap-6">
-      <div className="w-full rounded-[8px] bg-[#ededed] px-10 pb-10 pt-10">
+      <div className="w-full rounded-[8px] bg-[#ededed] p-5 md:p-10">
         <Swiper
           slidesPerView={"auto"}
           centeredSlides={true}
@@ -29,7 +29,7 @@ export default function CaseStudySlider({ images }) {
         >
           {images.map((image, index) => (
             <SwiperSlide key={`${image.src}-${index}`}>
-              <div className="flex h-[800px] w-full items-end justify-center overflow-hidden rounded-[8px]">
+              <div className="flex h-[auto] w-full items-end justify-center overflow-hidden rounded-[8px]">
                 <img
                   alt={image.alt}
                   className="h-full w-auto max-w-full object-contain rounded-[8px]"
@@ -45,7 +45,9 @@ export default function CaseStudySlider({ images }) {
       </div>
       <style jsx global>{`
         .case-study-swiper .swiper-slide {
-          width: calc(100% - 160px);
+          @media (min-width: 768px) {
+            width: calc(100% - 160px);
+          }
           box-sizing: border-box;
         }
         .case-study-pagination {

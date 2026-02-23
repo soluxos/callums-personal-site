@@ -49,24 +49,25 @@ export default function Footer() {
               </Link>
             </div>
           </div>
-          {/* <div className="w-[223px]">
-            <p className="font-ppmondwest text-[20px] leading-none">Recent blog posts</p>
+          <div className="w-[223px]">
+            <p className="font-ppmondwest text-[20px] leading-none">Useful links</p>
             <div className="mt-5 space-y-[14px] text-[14px] font-medium leading-[1.5] text-[#656565] flex flex-col gap-3">
-              <p className="underline">A blog post</p>
-              <p className="underline">Another blog post</p>
-              <p className="underline">A fresh post</p>
-              <p className="underline">New thoughts</p>
-              <p className="underline">More writing</p>
-              <p className="underline">Next article</p>
-              <p className="underline">Latest post</p>
+              <Link href="https://www.linkedin.com/in/callumharrod/" className="underline">
+                LinkedIn
+              </Link>
+              <Link href="https://github.com/soluxos" className="underline">
+                Github
+              </Link>
             </div>
-          </div> */}
+          </div>
         </div>
-        <div className="flex flex-col items-end gap-2">
-          <Link href="/" className="flex items-end gap-3">
-            <span className="text-[16px] text-right font-medium leading-[1.25]">Callum Harrod</span>
+        <div className="flex flex-col md:items-end gap-2">
+          <Link href="/" className="flex md:items-end gap-3">
+            <span className="text-[16px] md:text-right font-medium leading-[1.25]">
+              Callum Harrod
+            </span>
           </Link>
-          <span className="text-[14px] text-right font-medium leading-none text-[#656565]">
+          <span className="text-[14px] md:text-right font-medium leading-none text-[#656565]">
             © 2025 Callum Harrod
           </span>
         </div>

@@ -180,7 +180,7 @@ export default function Home() {
           </div>
           <div className="flex flex-col gap-10">
             <div className="flex flex-col gap-5 lg:flex-row">
-              <div className="w-[345px]">
+              <div className="w-[345px] min-w-[345px]">
                 <p className="font-ppmondwest text-[24px] leading-[1.25]">
                   Senior Product Designer
                 </p>
