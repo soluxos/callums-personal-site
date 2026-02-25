@@ -20,7 +20,7 @@ export default function ImageSlideshow({ images, interval = 2500, className = ""
           key={src}
           src={src}
           alt=""
-          className="absolute inset-0 w-full h-full object-cover transition-opacity duration-[800ms]"
+          className="absolute inset-0 w-full h-full object-contain transition-opacity duration-[800ms]"
           style={{ opacity: i === activeIndex ? 1 : 0 }}
         />
       ))}

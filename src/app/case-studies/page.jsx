@@ -3,6 +3,7 @@ import ImageGrid from "@/components/ImageGrid/SimpleImageGrid";
 import Link from "next/link";
 import DitherBackground from "@/components/DitherBackground/DitherBackground";
 import ImageSlideshow from "@/components/ImageSlideshow/ImageSlideshow";
+import ImageMarquee from "@/components/ImageMarquee/ImageMarquee";
 
 export default function Home() {
   // Example usage
@@ -27,22 +28,39 @@ export default function Home() {
         <section className="flex flex-col gap-4">
           <div className="grid gap-4 md:grid-cols-2">
             <Link href="/case-studies/drupal-canvas" className="flex flex-col gap-2 md:col-span-2">
-              <div className="relative h-[540px] w-full overflow-hidden rounded-[16px] bg-[#6f6f6f]">
-                <ImageSlideshow
-                  images={[
-                    "/images/case-studies/drupal-canvas/drupal-canvas-hero.png",
-                    "/images/case-studies/drupal-canvas/cms-content.png",
-                    "/images/case-studies/drupal-canvas/content-canvas.png",
-                    "/images/case-studies/drupal-canvas/design-system.png",
-                    "/images/case-studies/drupal-canvas/code-editor.png",
-                    "/images/case-studies/drupal-canvas/user-flows.png",
-                  ]}
-                  interval={2500}
-                  className="absolute inset-0 z-0"
-                />
+              <div className="relative h-[540px] w-full overflow-hidden rounded-[16px] bg-[#EDEDED]">
+                {/* <ImageSlideshow
+                images={[
+                  "/images/case-studies/drupal-canvas/drupal-canvas-hero.png",
+                  "/images/case-studies/drupal-canvas/cms-content.png",
+                  "/images/case-studies/drupal-canvas/content-canvas.png",
+                  "/images/case-studies/drupal-canvas/design-system.png",
+                  "/images/case-studies/drupal-canvas/code-editor.png",
+                  "/images/case-studies/drupal-canvas/user-flows.png",
+                ]}
+                interval={2500}
+                className="absolute bottom-40 left-20 z-0"
+              /> */}
+                <div className="h-full w-full flex flex-col items-center justify-center pb-30">
+                  <ImageMarquee
+                    images={[
+                      "/images/case-studies/drupal-canvas/drupal-canvas-hero.png",
+                      "/images/case-studies/drupal-canvas/cms-content.png",
+                      "/images/case-studies/drupal-canvas/content-canvas.png",
+                      "/images/case-studies/drupal-canvas/design-system.png",
+                      "/images/case-studies/drupal-canvas/code-editor.png",
+                      "/images/case-studies/drupal-canvas/user-flows.png",
+                    ]}
+                    speed={40} // pixels per second
+                    imageWidth={600} // px
+                    imageHeight={360} // px
+                    gap={16} // px between images
+                    className="w-full max-w-full"
+                  />
+                </div>
                 <DitherBackground
-                  className="h-full w-full bg-[#19191984] bg-linear-180 transition-colors"
-                  dotColor="#999999"
+                  className="h-full w-full bg-[#19191928] bg-linear-180 transition-colors"
+                  dotColor="#bbbbbb"
                   pixelSize={1}
                   cellMultiplier={2}
                   waveSpeed={0.2}
@@ -55,8 +73,8 @@ export default function Home() {
                     Public
                   </p>
                   <div className="flex flex-col gap-0">
-                    <p className="font-satoshi text-[16px] text-white">Drupal Canvas</p>
-                    <p className="font-ppmondwest text-[32px] leading-[1.5] text-white">
+                    <p className="font-satoshi text-[16px] text-[#656565]">Drupal Canvas</p>
+                    <p className="font-ppmondwest text-[32px] leading-[1.5] text-[#656565]">
                       How I designed and helped ship the future of building and editing websites
                       with Drupal
                     </p>
