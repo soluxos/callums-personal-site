@@ -2,6 +2,7 @@ import Image from "next/image";
 import ImageGrid from "@/components/ImageGrid/SimpleImageGrid";
 import Link from "next/link";
 import DitherBackground from "@/components/DitherBackground/DitherBackground";
+import ImageSlideshow from "@/components/ImageSlideshow/ImageSlideshow";
 
 export default function Home() {
   // Example usage
@@ -27,9 +28,21 @@ export default function Home() {
           <div className="grid gap-4 md:grid-cols-2">
             <Link href="/case-studies/drupal-canvas" className="flex flex-col gap-2 md:col-span-2">
               <div className="relative h-[540px] w-full overflow-hidden rounded-[16px] bg-[#6f6f6f]">
+                <ImageSlideshow
+                  images={[
+                    "/images/case-studies/drupal-canvas/drupal-canvas-hero.png",
+                    "/images/case-studies/drupal-canvas/cms-content.png",
+                    "/images/case-studies/drupal-canvas/content-canvas.png",
+                    "/images/case-studies/drupal-canvas/design-system.png",
+                    "/images/case-studies/drupal-canvas/code-editor.png",
+                    "/images/case-studies/drupal-canvas/user-flows.png",
+                  ]}
+                  interval={2500}
+                  className="absolute inset-0 z-0"
+                />
                 <DitherBackground
-                  className="h-full w-full"
-                  dotColor="#cccccc"
+                  className="h-full w-full bg-[#19191984] bg-linear-180 transition-colors"
+                  dotColor="#999999"
                   pixelSize={1}
                   cellMultiplier={2}
                   waveSpeed={0.2}
@@ -38,13 +51,16 @@ export default function Home() {
                   waveShape="circle"
                 />
                 <div className="absolute z-10 bottom-5 left-5 w-[calc(100%-2.5rem)] flex flex-col gap-2">
-                  <p className="font-satoshi font-bold uppercase text-[12px] leading-[1.5] bg-white text-[#656565] px-2 rounded-full self-start">
+                  <p className="font-satoshi font-bold uppercase text-[10px] leading-[1.5] bg-white text-[#656565] px-2 rounded-full self-start">
                     Public
                   </p>
-                  <p className="font-ppmondwest text-[32px] leading-[1.5] text-white">
-                    How I designed and helped ship the future of building and editing websites with
-                    Drupal
-                  </p>
+                  <div className="flex flex-col gap-0">
+                    <p className="font-satoshi text-[16px] text-white">Drupal Canvas</p>
+                    <p className="font-ppmondwest text-[32px] leading-[1.5] text-white">
+                      How I designed and helped ship the future of building and editing websites
+                      with Drupal
+                    </p>
+                  </div>
                 </div>
               </div>
             </Link>
@@ -61,13 +77,16 @@ export default function Home() {
                   waveShape="diamond"
                 />
                 <div className="absolute z-10 bottom-5 left-5 w-[calc(100%-2.5rem)] flex flex-col gap-2">
-                  <p className="font-satoshi font-bold uppercase text-[12px] leading-[1.5] bg-white text-[#656565] px-2 rounded-full self-start">
+                  <p className="font-satoshi font-bold uppercase text-[10px] leading-[1.5] bg-white text-[#656565] px-2 rounded-full self-start">
                     Password protected
                   </p>
-                  <p className="font-ppmondwest text-[32px] leading-[1.5] text-white">
-                    What I'm working on at the moment. A challenging design problem that is the
-                    focus of Acquia.
-                  </p>
+                  <div className="flex flex-col gap-0">
+                    <p className="font-satoshi text-[16px] text-white">Acquia Unification</p>
+                    <p className="font-ppmondwest text-[32px] leading-[1.5] text-white">
+                      How I&apos;m designing the future of Acquia, a challenging design problem that
+                      is the focus of Acquia at the moment
+                    </p>
+                  </div>
                 </div>
               </div>
             </Link>
@@ -84,12 +103,15 @@ export default function Home() {
                   waveShape="square"
                 />
                 <div className="absolute z-10 bottom-5 left-5 w-[calc(100%-2.5rem)] flex flex-col gap-2">
-                  <p className="font-satoshi font-bold uppercase text-[12px] leading-[1.5] bg-white text-[#656565] px-2 rounded-full self-start">
+                  <p className="font-satoshi font-bold uppercase text-[10px] leading-[1.5] bg-white text-[#656565] px-2 rounded-full self-start">
                     Password protected
                   </p>
-                  <p className="font-ppmondwest text-[32px] leading-[1.5] text-white">
-                    How I designed and shipped an MVP for a new brand new product in 2 months
-                  </p>
+                  <div className="flex flex-col gap-0">
+                    <p className="font-satoshi text-[16px] text-white">Acquia AI</p>
+                    <p className="font-ppmondwest text-[32px] leading-[1.5] text-white">
+                      How I designed and shipped an MVP for a brand new product in 2 months
+                    </p>
+                  </div>
                 </div>
               </div>
             </Link>

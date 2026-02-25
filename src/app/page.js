@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import DitherBackground from "@/components/DitherBackground/DitherBackground";
+import ImageSlideshow from "@/components/ImageSlideshow/ImageSlideshow";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -21,10 +22,17 @@ export default function Home() {
         <div className="grid gap-4 md:grid-cols-2">
           <Link href="/case-studies/drupal-canvas" className="flex flex-col gap-2 md:col-span-2">
             <div className="relative h-[540px] w-full overflow-hidden rounded-[16px] bg-[#6f6f6f]">
-              <img
-                src="/images/case-studies/drupal-canvas/drupal-canvas-hero.png"
-                alt="Drupal Canvas"
-                className="absolute inset-0 w-full h-full object-cover z-0 transition-all"
+              <ImageSlideshow
+                images={[
+                  "/images/case-studies/drupal-canvas/drupal-canvas-hero.png",
+                  "/images/case-studies/drupal-canvas/cms-content.png",
+                  "/images/case-studies/drupal-canvas/content-canvas.png",
+                  "/images/case-studies/drupal-canvas/design-system.png",
+                  "/images/case-studies/drupal-canvas/code-editor.png",
+                  "/images/case-studies/drupal-canvas/user-flows.png",
+                ]}
+                interval={2500}
+                className="absolute inset-0 z-0"
               />
               <DitherBackground
                 className="h-full w-full bg-[#19191984] bg-linear-180 transition-colors"
