@@ -49,7 +49,7 @@ export default function About() {
           />
         </div>
         {[
-          "/images/about/37.jpg",
+          "/images/random/37.jpg",
           "/images/about/image-2.jpg",
           "/images/random/38.jpg",
           "/images/random/11.jpg",
