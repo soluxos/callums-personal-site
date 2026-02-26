@@ -24,27 +24,13 @@ export default function Home() {
           <div className="grid gap-4 md:grid-cols-2">
             <Link href="/case-studies/drupal-canvas" className="flex flex-col gap-2 md:col-span-2">
               <div className="relative h-[540px] w-full overflow-hidden rounded-[16px] bg-[#EDEDED]">
-                {/* <ImageSlideshow
-                images={[
-                  "/images/case-studies/drupal-canvas/drupal-canvas-hero.png",
-                  "/images/case-studies/drupal-canvas/cms-content.png",
-                  "/images/case-studies/drupal-canvas/content-canvas.png",
-                  "/images/case-studies/drupal-canvas/design-system.png",
-                  "/images/case-studies/drupal-canvas/code-editor.png",
-                  "/images/case-studies/drupal-canvas/user-flows.png",
-                ]}
-                interval={2500}
-                className="absolute bottom-40 left-20 z-0"
-              /> */}
                 <div className="h-full w-full flex flex-col items-center justify-center pb-30">
                   <ImageMarquee
                     images={[
                       "/images/case-studies/drupal-canvas/drupal-canvas-hero.png",
                       "/images/case-studies/drupal-canvas/cms-content.png",
-                      "/images/case-studies/drupal-canvas/content-canvas.png",
-                      "/images/case-studies/drupal-canvas/design-system.png",
+                      "/images/case-studies/drupal-canvas/highlighted-component.png",
                       "/images/case-studies/drupal-canvas/code-editor.png",
-                      "/images/case-studies/drupal-canvas/user-flows.png",
                     ]}
                     speed={40} // pixels per second
                     imageWidth={600} // px
@@ -53,7 +39,7 @@ export default function Home() {
                     className="w-full max-w-full"
                   />
                 </div>
-                <DitherBackground
+                {/* <DitherBackground
                   className="h-full w-full bg-[#19191928] bg-linear-180 transition-colors"
                   dotColor="#bbbbbb"
                   pixelSize={1}
@@ -62,7 +48,7 @@ export default function Home() {
                   ringThickness={1}
                   waveProfile="gaussian"
                   waveShape="circle"
-                />
+                /> */}
                 <div className="absolute z-10 bottom-5 left-5 w-[calc(100%-2.5rem)] flex flex-col gap-2">
                   <p className="font-satoshi font-bold uppercase text-[10px] leading-[1.5] bg-white text-[#656565] px-2 rounded-full self-start">
                     Public
@@ -204,9 +190,8 @@ export default function Home() {
         <div className="flex flex-1 flex-col gap-10">
           <div className="flex flex-col gap-10">
             <p className="font-ppmondwest text-[48px] leading-[1.25]">
-              My background is a mixture of{" "}
-              <span className="text-[oklch(0.71_0.18_71.62)]">design</span> and{" "}
-              <span className="text-[oklch(0.71_0.18_-138.38)]">development</span>, used to create
+              My background is a mixture of <span className="text-[#0090FF]">design</span> and{" "}
+              <span className="text-[oklch(0.65_0.19_74.79)]">development</span>, used to create
               wonderful digital experiences.
             </p>
             <div className="h-px w-[80px] bg-[#484848]" />
