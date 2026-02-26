@@ -61,8 +61,8 @@ export default function Footer() {
             </div>
           </div>
         </div>
-        <div className="flex flex-col md:items-end gap-2">
-          <Link href="/" className="flex md:items-end gap-5">
+        <div className="flex flex-col md:items-end gap-5">
+          <Link href="/" className="flex md:items-end gap-2">
             <span className="text-[16px] md:text-right font-medium leading-[1.25]">
               Callum Harrod
             </span>
