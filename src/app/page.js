@@ -11,12 +11,12 @@ export default function Home() {
       <div className="flex flex-col gap-[80px]">
         <section className="flex w-full flex-col gap-5">
           <h1 className="w-full max-w-[591px] font-ppmondwest text-[48px] leading-[1.25]">
-            Hey, I&apos;m Callum Harrod. I design and develop things.
+            Hey, I&apos;m Callum. I'm a designer and engineer.
           </h1>
           <p className="w-full max-w-[591px] text-[14px] font-medium leading-[1.5] text-[#656565]">
-            I&apos;ve got over 10 years of experience working in design, development. I&apos;m
-            currently the lead designer for two projects at Acquia. When I&apos;m not working at
-            Acquia, I&apos;m tinkering with my side projects.
+            I'm a designer and engineer with over 10 years of experience in solving complex problems
+            for the web. At Acquia I'm the lead designer for the two largest projects in the
+            company. Outside of work I'm working on making cool stuff for the web.
           </p>
         </section>
 

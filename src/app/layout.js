@@ -51,7 +51,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <div className="relative overflow-hidden bg-[#f5f5f5] font-satoshi text-[#484848]">
+        <div className="relative overflow-clip bg-[#f5f5f5] font-satoshi text-[#484848]">
           <div aria-hidden="true" className="noise-overlay" />
           <DitherOverlay />
           <WipBanner />
