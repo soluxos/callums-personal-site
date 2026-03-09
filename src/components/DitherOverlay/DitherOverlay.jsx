@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import * as THREE from "three";
 
 // ╔════════════════════════════════════════════════════════════════════╗
 // ║  DITHER OVERLAY CONTROLS                                         ║
@@ -105,6 +104,7 @@ precision highp float;
 uniform vec2  uResolution;
 uniform float uTime;
 uniform float uPixelSize;
+uniform vec3  uDotColor;
 
 const int MAX_WAVES = ${cfg.maxWaves};
 uniform vec2  uWavePos[MAX_WAVES];
@@ -174,8 +174,8 @@ void main() {
     float bayerValue = Bayer8(fragCoord / PIXEL_SIZE) - 0.5;
     float bw = step(0.5, feed + bayerValue);
 
-    // Pick colour: per-wave colour in rainbow mode, fixed colour otherwise
-    vec3 baseColor = ${cfg.rainbowMode ? "uWaveColors[dominantWave]" : `vec3(${hexToGL(cfg.dotColor).r.toFixed(4)}, ${hexToGL(cfg.dotColor).g.toFixed(4)}, ${hexToGL(cfg.dotColor).b.toFixed(4)})`};
+    // Pick colour: per-wave colour in rainbow mode, uniform colour otherwise
+    vec3 baseColor = ${cfg.rainbowMode ? "uWaveColors[dominantWave]" : "uDotColor"};
 
     // Premultiplied alpha output
     float alpha = bw * ${cfg.dotOpacity.toFixed(4)};
@@ -183,154 +183,203 @@ void main() {
 }
 `;
 
-export default function DitherOverlay() {
+export default function DitherOverlay({
+  className,
+  style,
+  staticPreview = false,
+  color = CONFIG.dotColor,
+} = {}) {
   const containerRef = useRef(null);
   const rendererRef = useRef(null);
   const uniformsRef = useRef(null);
   const animRef = useRef(null);
   const waveIndexRef = useRef(0);
   const nextSpawnRef = useRef(0);
+  const colorRef = useRef(color);
 
   useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
+    if (staticPreview) return undefined;
 
-    // ── WebGL2 renderer ──
-    const canvas = document.createElement("canvas");
-    const gl = canvas.getContext("webgl2", { alpha: true });
-    const renderer = new THREE.WebGLRenderer({
-      canvas,
-      context: gl,
-      alpha: true,
-    });
-    renderer.setClearColor(0x000000, 0);
-    container.appendChild(canvas);
-    rendererRef.current = renderer;
+    let cleanup;
+    let cancelled = false;
 
-    // ── Scene ──
-    const scene = new THREE.Scene();
-    const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+    const init = async () => {
+      const THREE = await import("three");
+      if (cancelled) return;
 
-    // ── Uniforms ──
-    const uniforms = {
-      uResolution: { value: new THREE.Vector2() },
-      uTime: { value: 0 },
-      uPixelSize: { value: CONFIG.pixelSize * (window.devicePixelRatio || 1) },
-      uWavePos: {
-        value: Array.from({ length: CONFIG.maxWaves }, () => new THREE.Vector2(-1, -1)),
-      },
-      uWaveTimes: { value: new Float32Array(CONFIG.maxWaves) },
-      uWaveSpeeds: { value: new Float32Array(CONFIG.maxWaves).fill(1.0) },
-      uWaveStrengths: { value: new Float32Array(CONFIG.maxWaves).fill(1.0) },
-      uWaveColors: {
-        value: Array.from({ length: CONFIG.maxWaves }, () => new THREE.Vector3(0, 0, 0)),
-      },
-    };
-    uniformsRef.current = uniforms;
+      const container = containerRef.current;
+      if (!container) return;
 
-    const material = new THREE.ShaderMaterial({
-      vertexShader,
-      fragmentShader: buildFragmentShader(CONFIG),
-      uniforms,
-      glslVersion: THREE.GLSL3,
-      transparent: true,
-      depthTest: false,
-      depthWrite: false,
-      blending: THREE.CustomBlending,
-      blendSrc: THREE.OneFactor,
-      blendDst: THREE.OneMinusSrcAlphaFactor,
-      blendSrcAlpha: THREE.OneFactor,
-      blendDstAlpha: THREE.OneMinusSrcAlphaFactor,
-    });
-
-    const quad = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), material);
-    scene.add(quad);
-
-    // ── Resize ──
-    const resize = () => {
-      const w = window.innerWidth;
-      const h = window.innerHeight;
-      renderer.setSize(w, h, false);
-      const dpr = window.devicePixelRatio || 1;
-      renderer.setPixelRatio(dpr);
-      uniforms.uPixelSize.value = CONFIG.pixelSize * dpr;
-      uniforms.uResolution.value.set(w * dpr, h * dpr);
-    };
-
-    // ── Spawn a wave at a random position ──
-    const spawnWave = time => {
-      const idx = waveIndexRef.current;
-      const w = uniforms.uResolution.value.x;
-      const h = uniforms.uResolution.value.y;
-
-      // Random position across the full canvas
-      const x = Math.random() * w;
-      const y = Math.random() * h;
-
-      uniforms.uWavePos.value[idx].set(x, y);
-      uniforms.uWaveTimes.value[idx] = time;
-      uniforms.uWaveSpeeds.value[idx] =
-        CONFIG.waveSpeedVarianceMin +
-        Math.random() * (CONFIG.waveSpeedVarianceMax - CONFIG.waveSpeedVarianceMin);
-      uniforms.uWaveStrengths.value[idx] =
-        CONFIG.waveStrengthMin + Math.random() * (CONFIG.waveStrengthMax - CONFIG.waveStrengthMin);
-
-      // Assign colour: cycle through rainbow or use fixed dotColor
-      if (CONFIG.rainbowMode) {
-        const hue = (idx / CONFIG.maxWaves + Math.random() * 0.08) % 1.0;
-        const rgb = hslToRGB(hue, 0.75, 0.55);
-        uniforms.uWaveColors.value[idx].set(rgb.r, rgb.g, rgb.b);
-      } else {
-        const c = hexToGL(CONFIG.dotColor);
-        uniforms.uWaveColors.value[idx].set(c.r, c.g, c.b);
+      const canvas = document.createElement("canvas");
+      const gl =
+        canvas.getContext("webgl2", { alpha: true }) || canvas.getContext("webgl", { alpha: true });
+      if (!gl) {
+        console.warn("DitherOverlay: WebGL not supported in this environment.");
+        return;
       }
 
-      waveIndexRef.current = (idx + 1) % CONFIG.maxWaves;
-    };
-
-    // ── Render loop ──
-    const clock = new THREE.Clock();
-
-    const loop = () => {
-      const elapsed = clock.getElapsedTime();
-      uniforms.uTime.value = elapsed;
-
-      // Auto-spawn waves at random intervals
-      if (elapsed >= nextSpawnRef.current) {
-        spawnWave(elapsed);
-        nextSpawnRef.current =
-          elapsed +
-          CONFIG.spawnIntervalMin +
-          Math.random() * (CONFIG.spawnIntervalMax - CONFIG.spawnIntervalMin);
+      let renderer;
+      try {
+        renderer = new THREE.WebGLRenderer({
+          canvas,
+          context: gl,
+          alpha: true,
+        });
+      } catch (error) {
+        console.warn("DitherOverlay: Failed to initialize WebGL renderer.", error);
+        return;
       }
 
-      renderer.render(scene, camera);
+      renderer.setClearColor(0x000000, 0);
+      container.appendChild(canvas);
+      rendererRef.current = renderer;
+
+      const scene = new THREE.Scene();
+      const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+
+      const initialColor = hexToGL(colorRef.current);
+      const uniforms = {
+        uResolution: { value: new THREE.Vector2() },
+        uTime: { value: 0 },
+        uPixelSize: { value: CONFIG.pixelSize * (window.devicePixelRatio || 1) },
+        uDotColor: { value: new THREE.Vector3(initialColor.r, initialColor.g, initialColor.b) },
+        uWavePos: {
+          value: Array.from({ length: CONFIG.maxWaves }, () => new THREE.Vector2(-1, -1)),
+        },
+        uWaveTimes: { value: new Float32Array(CONFIG.maxWaves) },
+        uWaveSpeeds: { value: new Float32Array(CONFIG.maxWaves).fill(1.0) },
+        uWaveStrengths: { value: new Float32Array(CONFIG.maxWaves).fill(1.0) },
+        uWaveColors: {
+          value: Array.from({ length: CONFIG.maxWaves }, () => new THREE.Vector3(0, 0, 0)),
+        },
+      };
+      uniformsRef.current = uniforms;
+
+      const material = new THREE.ShaderMaterial({
+        vertexShader,
+        fragmentShader: buildFragmentShader(CONFIG),
+        uniforms,
+        glslVersion: THREE.GLSL3,
+        transparent: true,
+        depthTest: false,
+        depthWrite: false,
+        blending: THREE.CustomBlending,
+        blendSrc: THREE.OneFactor,
+        blendDst: THREE.OneMinusSrcAlphaFactor,
+        blendSrcAlpha: THREE.OneFactor,
+        blendDstAlpha: THREE.OneMinusSrcAlphaFactor,
+      });
+
+      const quad = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), material);
+      scene.add(quad);
+
+      const resize = () => {
+        const rect = container.getBoundingClientRect();
+        const w = rect.width;
+        const h = rect.height;
+        renderer.setSize(w, h, false);
+        const dpr = window.devicePixelRatio || 1;
+        renderer.setPixelRatio(dpr);
+        uniforms.uPixelSize.value = CONFIG.pixelSize * dpr;
+        uniforms.uResolution.value.set(w * dpr, h * dpr);
+      };
+
+      const spawnWave = time => {
+        const idx = waveIndexRef.current;
+        const w = uniforms.uResolution.value.x;
+        const h = uniforms.uResolution.value.y;
+
+        const x = Math.random() * w;
+        const y = Math.random() * h;
+
+        uniforms.uWavePos.value[idx].set(x, y);
+        uniforms.uWaveTimes.value[idx] = time;
+        uniforms.uWaveSpeeds.value[idx] =
+          CONFIG.waveSpeedVarianceMin +
+          Math.random() * (CONFIG.waveSpeedVarianceMax - CONFIG.waveSpeedVarianceMin);
+        uniforms.uWaveStrengths.value[idx] =
+          CONFIG.waveStrengthMin +
+          Math.random() * (CONFIG.waveStrengthMax - CONFIG.waveStrengthMin);
+
+        if (CONFIG.rainbowMode) {
+          const hue = (idx / CONFIG.maxWaves + Math.random() * 0.08) % 1.0;
+          const rgb = hslToRGB(hue, 0.75, 0.55);
+          uniforms.uWaveColors.value[idx].set(rgb.r, rgb.g, rgb.b);
+        } else {
+          const c = hexToGL(CONFIG.dotColor);
+          uniforms.uWaveColors.value[idx].set(c.r, c.g, c.b);
+        }
+
+        waveIndexRef.current = (idx + 1) % CONFIG.maxWaves;
+      };
+
+      const clock = new THREE.Clock();
+
+      const loop = () => {
+        const elapsed = clock.getElapsedTime();
+        uniforms.uTime.value = elapsed;
+
+        if (elapsed >= nextSpawnRef.current) {
+          spawnWave(elapsed);
+          nextSpawnRef.current =
+            elapsed +
+            CONFIG.spawnIntervalMin +
+            Math.random() * (CONFIG.spawnIntervalMax - CONFIG.spawnIntervalMin);
+        }
+
+        renderer.render(scene, camera);
+        animRef.current = requestAnimationFrame(loop);
+      };
+
+      resize();
+      for (let i = 0; i < CONFIG.initialWaveCount; i++) {
+        spawnWave(-(i * 1.5 + Math.random()));
+      }
+      nextSpawnRef.current = 0.5 + Math.random();
+
+      window.addEventListener("resize", resize);
       animRef.current = requestAnimationFrame(loop);
+
+      cleanup = () => {
+        window.removeEventListener("resize", resize);
+        if (animRef.current) cancelAnimationFrame(animRef.current);
+        renderer.dispose();
+        material.dispose();
+        if (canvas.parentNode) canvas.parentNode.removeChild(canvas);
+      };
     };
 
-    resize();
-    // Seed initial waves so the effect is immediately visible
-    for (let i = 0; i < CONFIG.initialWaveCount; i++) {
-      spawnWave(-(i * 1.5 + Math.random()));
-    }
-    nextSpawnRef.current = 0.5 + Math.random();
-
-    window.addEventListener("resize", resize);
-    animRef.current = requestAnimationFrame(loop);
+    init();
 
     return () => {
-      window.removeEventListener("resize", resize);
-      if (animRef.current) cancelAnimationFrame(animRef.current);
-      renderer.dispose();
-      material.dispose();
-      if (canvas.parentNode) canvas.parentNode.removeChild(canvas);
+      cancelled = true;
+      if (cleanup) cleanup();
     };
-  }, []);
+  }, [staticPreview]);
+
+  // Update color uniform when color prop changes
+  useEffect(() => {
+    colorRef.current = color;
+    if (uniformsRef.current && uniformsRef.current.uDotColor) {
+      const c = hexToGL(color);
+      uniformsRef.current.uDotColor.value.set(c.r, c.g, c.b);
+    }
+  }, [color]);
+
+  const previewCell = Math.max(CONFIG.pixelSize * 6, 6);
+  const previewStyle = staticPreview
+    ? {
+        backgroundImage: "radial-gradient(circle, rgba(72,72,72,0.28) 1px, transparent 1px)",
+        backgroundSize: `${previewCell}px ${previewCell}px`,
+        backgroundColor: "rgba(0, 0, 0, 0.04)",
+      }
+    : {};
 
   return (
     <div
       ref={containerRef}
       aria-hidden="true"
+      className={className}
       style={{
         position: "fixed",
         top: 0,
@@ -341,6 +390,8 @@ export default function DitherOverlay() {
         pointerEvents: "none",
         zIndex: CONFIG.zIndex,
         opacity: CONFIG.overlayOpacity,
+        ...previewStyle,
+        ...style,
       }}
     />
   );

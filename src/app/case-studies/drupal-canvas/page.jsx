@@ -167,13 +167,118 @@ export default function DrupalCanvasCaseStudy() {
         </section>
 
         <CaseStudySection title="The problem">
-          <p className="max-w-[588px] text-[14px] font-medium leading-[1.5] text-[#656565]">
-            We created this product to solve an issue within Drupal; how could we make the editing
-            experience and the site builder experience better for anyone using Drupal? On top of
-            creating this, we had to ensure that what we were building aligned with the existing
-            paradigms within Drupal, keeping the open source community happy, and building something
-            that could become the foundation of Drupal.
-          </p>
+          <div className="flex flex-col gap-5 max-w-[710px]">
+            {/* Left bubble */}
+            <div className="flex flex-col items-start">
+              <div className="relative bg-[#d4d4d4] rounded-[8px] px-4 py-2 max-w-[467px]">
+                <p className="font-satoshi text-[14px] font-medium leading-[1.25] text-[#484848]">
+                  Drupal, as it stands today isn&apos;t very intuitive for building websites.
+                  <br />
+                  <br />
+                  How do we make it easier for site builders, especially when PHP/Drupal developers
+                  are difficult to find, and JavaScript developers are on the rise?
+                </p>
+                <svg
+                  className="absolute -bottom-[6px] left-[16px]"
+                  width="10"
+                  height="6"
+                  viewBox="0 0 10 6"
+                  fill="none"
+                >
+                  <path d="M0 0L10 0L0 6Z" fill="#d4d4d4" />
+                </svg>
+              </div>
+            </div>
+            {/* Right bubble */}
+            <div className="flex justify-end">
+              <div className="relative bg-[#0090ff] rounded-[8px] px-4 py-2 max-w-[467px]">
+                <p className="font-satoshi text-[14px] font-medium leading-[1.25] text-white">
+                  We ensure that JavaScript developers can render their code within our system. We
+                  also support the Drupal developers by allowing them control through the use of
+                  Blocks and SDC&apos;s.
+                </p>
+                <svg
+                  className="absolute -bottom-[6px] right-[16px]"
+                  width="10"
+                  height="6"
+                  viewBox="0 0 10 6"
+                  fill="none"
+                >
+                  <path d="M10 0L0 0L10 6Z" fill="#0090ff" />
+                </svg>
+              </div>
+            </div>
+            {/* Left bubble */}
+            <div className="flex flex-col items-start">
+              <div className="relative bg-[#d4d4d4] rounded-[8px] px-4 py-2 max-w-[467px]">
+                <p className="font-satoshi text-[14px] font-medium leading-[1.25] text-[#484848]">
+                  How can we make it easier for the users that are managing these sites, editing
+                  content, and building out pages?
+                </p>
+                <svg
+                  className="absolute -bottom-[6px] left-[16px]"
+                  width="10"
+                  height="6"
+                  viewBox="0 0 10 6"
+                  fill="none"
+                >
+                  <path d="M0 0L10 0L0 6Z" fill="#d4d4d4" />
+                </svg>
+              </div>
+            </div>
+            {/* Right bubble */}
+            <div className="flex justify-end">
+              <div className="relative bg-[#0090ff] rounded-[8px] px-4 py-2 max-w-[467px]">
+                <p className="font-satoshi text-[14px] font-medium leading-[1.25] text-white">
+                  By ensuring that our UX and UI are flawless, everything should be simple.
+                </p>
+                <svg
+                  className="absolute -bottom-[6px] right-[16px]"
+                  width="10"
+                  height="6"
+                  viewBox="0 0 10 6"
+                  fill="none"
+                >
+                  <path d="M10 0L0 0L10 6Z" fill="#0090ff" />
+                </svg>
+              </div>
+            </div>
+            {/* Left bubble */}
+            <div className="flex flex-col items-start">
+              <div className="relative bg-[#d4d4d4] rounded-[8px] px-4 py-2 max-w-[467px]">
+                <p className="font-satoshi text-[14px] font-medium leading-[1.25] text-[#656565]">
+                  How can we make it as appealing to work with as Webflow, Framer, or other low-code
+                  site builders?
+                </p>
+                <svg
+                  className="absolute -bottom-[6px] left-[16px]"
+                  width="10"
+                  height="6"
+                  viewBox="0 0 10 6"
+                  fill="none"
+                >
+                  <path d="M0 0L10 0L0 6Z" fill="#d4d4d4" />
+                </svg>
+              </div>
+            </div>
+            {/* Right bubble */}
+            <div className="flex justify-end">
+              <div className="relative bg-[#0090ff] rounded-[8px] px-4 py-2">
+                <p className="font-satoshi text-[14px] font-medium leading-[1.25] text-white">
+                  By focusing on the site builders and site editors experiences
+                </p>
+                <svg
+                  className="absolute -bottom-[6px] right-[16px]"
+                  width="10"
+                  height="6"
+                  viewBox="0 0 10 6"
+                  fill="none"
+                >
+                  <path d="M10 0L0 0L10 6Z" fill="#0090ff" />
+                </svg>
+              </div>
+            </div>
+          </div>
         </CaseStudySection>
 
         <CaseStudySection title="My involvement">

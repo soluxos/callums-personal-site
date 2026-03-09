@@ -4,6 +4,7 @@ import Link from "next/link";
 import DitherBackground from "@/components/DitherBackground/DitherBackground";
 import ImageSlideshow from "@/components/ImageSlideshow/ImageSlideshow";
 import ImageMarquee from "@/components/ImageMarquee/ImageMarquee";
+import AnimatedGradientBackground from "@/components/AnimatedGradientBackground/AnimatedGradientBackground";
 
 export default function Home() {
   // Example usage

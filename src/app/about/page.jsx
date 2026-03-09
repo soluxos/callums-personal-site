@@ -4,12 +4,12 @@ export default function About() {
   return (
     <main className="flex flex-col gap-[80px]">
       <section className="w-full max-w-full">
-        <div className="space-y-4 text-[14px] font-medium leading-[1.5] text-[#656565]">
+        <div className="space-y-4 text-[14px] font-medium leading-[1.5]">
           <h1 className="w-full max-w-[591px] font-ppmondwest text-[48px] leading-[1.25]">
             A little bit about me
           </h1>
           <div className="grid gap-10 lg:grid-cols-2">
-            <div className="space-y-4 text-[14px] font-medium leading-[1.5] text-[#656565]">
+            <div className="space-y-4 text-[14px] font-medium leading-[1.5] text-[#929292]">
               <p>
                 Hey, thanks for checking my about page out! So, a bit about me. I&apos;m someone
                 that has always loved tech. When I was around 10, I got my first laptop. Very
@@ -23,7 +23,7 @@ export default function About() {
                 look and feel good to use too.
               </p>
             </div>
-            <div className="space-y-4 text-[14px] font-medium leading-[1.5] text-[#656565]">
+            <div className="space-y-4 text-[14px] font-medium leading-[1.5] text-[#929292]">
               <p>
                 Outside of being a nerd and making stuff, I'm a huge gamer and spend far too long
                 playing games, and keeping up with gaming news. I love to read fantasy and sci-fi
