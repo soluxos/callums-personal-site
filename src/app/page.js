@@ -18,7 +18,7 @@ export default function Home() {
               <HeroBubbles
                 messages={[
                   "I'm currently leading design at Acquia",
-                  "Oh, I'm also building a neat bookshelf website",
+                  "Oh, I'm also building a neat bookshelf web app on the side",
                   "I'm designing an AI tool for Acquia at the moment",
                   "One of two engineers that created the frontend of Site Studio, a product with $50m ARR",
                   "I'm also building a platform for all Acquia products",
