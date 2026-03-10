@@ -4,6 +4,7 @@ import CaseStudyLayout from "@/components/case-study/CaseStudyLayout";
 import CaseStudyMetaGrid from "@/components/case-study/CaseStudyMetaGrid";
 import CaseStudySection from "@/components/case-study/CaseStudySection";
 import CaseStudySlider from "@/components/case-study/CaseStudySlider";
+import FadeInUp from "@/components/FadeInUp/FadeInUp";
 import Image from "next/image";
 
 const workFrameImage = "/images/case-studies/drupal-canvas/drupal-canvas-hero.png";
@@ -26,11 +27,11 @@ const pagination = "http://localhost:3845/assets/ec5b9cba23aca00c8cb38ae680cca85
 export default function DrupalCanvasCaseStudy() {
   const sections = [
     { label: "Overview", id: "overview" },
+    "What I've done",
     "The problem",
     "My involvement",
     "Crafting a design system",
     "Breaking tasks down into clear user flows",
-    "What I've done",
     "What it looks like",
     "End notes",
   ];
@@ -148,227 +149,239 @@ export default function DrupalCanvasCaseStudy() {
   return (
     <CaseStudyLayout sections={sections}>
       <main className="flex flex-col gap-[120px]">
-        <div id="overview" className="flex flex-col gap-20 scroll-mt-8">
-          <CaseStudyHero
-            title="Drupal Canvas"
-            description="Early 2025 I joined the Product Design team to help create the future of building and editing websites with Drupal. This is a case study on how I helped to create the future of Drupal."
-          />
-          <CaseStudyMetaGrid items={metaItems} />
-        </div>
-
-        <section className="w-full">
-          <div className="flex flex-col rounded-[16px] bg-[#ededed] p-10">
-            <img
-              alt="Drupal Canvas interface"
-              className="h-auto w-full rounded-[12px] object-cover"
-              src={workFrameImage}
+        <FadeInUp>
+          <div id="overview" className="flex flex-col gap-20 scroll-mt-8">
+            <CaseStudyHero
+              title="Drupal Canvas"
+              description="Early 2025 I joined the Product Design team to help create the future of building and editing websites with Drupal. This is a case study on how I helped to create the future of Drupal."
             />
+            <CaseStudyMetaGrid items={metaItems} />
           </div>
-        </section>
+        </FadeInUp>
 
-        <CaseStudySection title="The problem">
-          <div className="flex flex-col gap-5 max-w-[710px]">
-            {/* Left bubble */}
-            <div className="flex flex-col items-start">
-              <div className="relative bg-[#ededed] rounded-[8px] px-4 py-2 max-w-[467px]">
-                <p className="font-satoshi text-[14px] font-medium leading-[1.25] text-[#656565]">
-                  Drupal, as it stands today isn&apos;t very intuitive for building websites.
-                  <br />
-                  <br />
-                  How do we make it easier for site builders, especially when PHP/Drupal developers
-                  are difficult to find, and JavaScript developers are on the rise?
-                </p>
-                <svg
-                  className="absolute -bottom-[6px] left-[16px]"
-                  width="10"
-                  height="6"
-                  viewBox="0 0 10 6"
-                  fill="none"
-                >
-                  <path d="M0 0L10 0L0 6Z" fill="#ededed" />
-                </svg>
+        <FadeInUp delay={0.1}>
+          <section className="w-full">
+            <CaseStudySlider images={sliderImages} />
+          </section>
+        </FadeInUp>
+
+        <FadeInUp>
+          <CaseStudySection title="What I've done">
+            <CaseStudyBentoGrid items={bentoItems} />
+          </CaseStudySection>
+        </FadeInUp>
+
+        <FadeInUp>
+          <CaseStudySection title="The problem">
+            <div className="flex flex-col gap-5 max-w-[710px]">
+              {/* Left bubble */}
+              <div className="flex flex-col items-start">
+                <div className="relative bg-[#ededed] rounded-[8px] px-4 py-2 max-w-[467px]">
+                  <p className="font-satoshi text-[14px] font-medium leading-[1.25] text-[#656565]">
+                    Drupal, as it stands today isn&apos;t very intuitive for building websites.
+                    <br />
+                    <br />
+                    How do we make it easier for site builders, especially when PHP/Drupal
+                    developers are difficult to find, and JavaScript developers are on the rise?
+                  </p>
+                  <svg
+                    className="absolute -bottom-[6px] left-[16px]"
+                    width="10"
+                    height="6"
+                    viewBox="0 0 10 6"
+                    fill="none"
+                  >
+                    <path d="M0 0L10 0L0 6Z" fill="#ededed" />
+                  </svg>
+                </div>
+              </div>
+              {/* Right bubble */}
+              <div className="flex justify-end">
+                <div className="relative bg-[#0090ff] rounded-[8px] px-4 py-2 max-w-[467px]">
+                  <p className="font-satoshi text-[14px] font-medium leading-[1.25] text-white">
+                    We ensure that JavaScript developers can render their code within our system. We
+                    also support the Drupal developers by allowing them control through the use of
+                    Blocks and SDC&apos;s.
+                  </p>
+                  <svg
+                    className="absolute -bottom-[6px] right-[16px]"
+                    width="10"
+                    height="6"
+                    viewBox="0 0 10 6"
+                    fill="none"
+                  >
+                    <path d="M10 0L0 0L10 6Z" fill="#0090ff" />
+                  </svg>
+                </div>
+              </div>
+              {/* Left bubble */}
+              <div className="flex flex-col items-start">
+                <div className="relative bg-[#ededed] rounded-[8px] px-4 py-2 max-w-[467px]">
+                  <p className="font-satoshi text-[14px] font-medium leading-[1.25] text-[#656565]">
+                    How can we make it easier for the users that are managing these sites, editing
+                    content, and building out pages?
+                  </p>
+                  <svg
+                    className="absolute -bottom-[6px] left-[16px]"
+                    width="10"
+                    height="6"
+                    viewBox="0 0 10 6"
+                    fill="none"
+                  >
+                    <path d="M0 0L10 0L0 6Z" fill="#ededed" />
+                  </svg>
+                </div>
+              </div>
+              {/* Right bubble */}
+              <div className="flex justify-end">
+                <div className="relative bg-[#0090ff] rounded-[8px] px-4 py-2 max-w-[467px]">
+                  <p className="font-satoshi text-[14px] font-medium leading-[1.25] text-white">
+                    By ensuring that our UX and UI are flawless, everything should be simple.
+                  </p>
+                  <svg
+                    className="absolute -bottom-[6px] right-[16px]"
+                    width="10"
+                    height="6"
+                    viewBox="0 0 10 6"
+                    fill="none"
+                  >
+                    <path d="M10 0L0 0L10 6Z" fill="#0090ff" />
+                  </svg>
+                </div>
+              </div>
+              {/* Left bubble */}
+              <div className="flex flex-col items-start">
+                <div className="relative bg-[#ededed] rounded-[8px] px-4 py-2 max-w-[467px]">
+                  <p className="font-satoshi text-[14px] font-medium leading-[1.25] text-[#656565]">
+                    How can we make it as appealing to work with as Webflow, Framer, or other
+                    low-code site builders?
+                  </p>
+                  <svg
+                    className="absolute -bottom-[6px] left-[16px]"
+                    width="10"
+                    height="6"
+                    viewBox="0 0 10 6"
+                    fill="none"
+                  >
+                    <path d="M0 0L10 0L0 6Z" fill="#ededed" />
+                  </svg>
+                </div>
+              </div>
+              {/* Right bubble */}
+              <div className="flex justify-end">
+                <div className="relative bg-[#0090ff] rounded-[8px] px-4 py-2">
+                  <p className="font-satoshi text-[14px] font-medium leading-[1.25] text-white">
+                    By focusing on the site builders and site editors experiences
+                  </p>
+                  <svg
+                    className="absolute -bottom-[6px] right-[16px]"
+                    width="10"
+                    height="6"
+                    viewBox="0 0 10 6"
+                    fill="none"
+                  >
+                    <path d="M10 0L0 0L10 6Z" fill="#0090ff" />
+                  </svg>
+                </div>
               </div>
             </div>
-            {/* Right bubble */}
-            <div className="flex justify-end">
-              <div className="relative bg-[#0090ff] rounded-[8px] px-4 py-2 max-w-[467px]">
-                <p className="font-satoshi text-[14px] font-medium leading-[1.25] text-white">
-                  We ensure that JavaScript developers can render their code within our system. We
-                  also support the Drupal developers by allowing them control through the use of
-                  Blocks and SDC&apos;s.
+          </CaseStudySection>
+        </FadeInUp>
+
+        <FadeInUp>
+          <CaseStudySection title="My involvement">
+            <div className="grid gap-10 lg:grid-cols-2">
+              <div className="space-y-4 text-[14px] font-medium leading-[1.5] text-[#656565]">
+                <p>
+                  This isn’t a typical design project, usually you’d be there from the start, but I
+                  was late to the party. Originally I was going to be a front-end engineer on this,
+                  but I noticed that there wasn’t a design system in place for us to build out the
+                  necessary UI. This is where I started collating everything that was available from
+                  the original designers, and started to create a design system.
                 </p>
-                <svg
-                  className="absolute -bottom-[6px] right-[16px]"
-                  width="10"
-                  height="6"
-                  viewBox="0 0 10 6"
-                  fill="none"
-                >
-                  <path d="M10 0L0 0L10 6Z" fill="#0090ff" />
-                </svg>
+                <p>
+                  This is how I was offered the job of Senior Product at Acquia. I was making
+                  strides on the design system, and bringing order to what were some pretty chaotic
+                  design files. From here I organised everything into a clear atomic design system.
+                </p>
+              </div>
+              <div className="space-y-4 text-[14px] font-medium leading-[1.5] text-[#656565]">
+                <p>
+                  While organising I improved on the UI of each of our components. Due to the deep
+                  technical complexity of the product, there were some aspects of our UI that
+                  weren’t very intuitive, or just weren’t fit for the job.
+                </p>
+                <p>
+                  Since then I have redesigned the entire UI, worked with developers closely on the
+                  interaction design, designed multiple new features that required turning very
+                  complex workflows into simple processes, helping new designers work on new
+                  features by guiding them through complex engineering requirements, and a lot more.
+                </p>
               </div>
             </div>
-            {/* Left bubble */}
-            <div className="flex flex-col items-start">
-              <div className="relative bg-[#ededed] rounded-[8px] px-4 py-2 max-w-[467px]">
-                <p className="font-satoshi text-[14px] font-medium leading-[1.25] text-[#656565]">
-                  How can we make it easier for the users that are managing these sites, editing
-                  content, and building out pages?
-                </p>
-                <svg
-                  className="absolute -bottom-[6px] left-[16px]"
-                  width="10"
-                  height="6"
-                  viewBox="0 0 10 6"
-                  fill="none"
-                >
-                  <path d="M0 0L10 0L0 6Z" fill="#ededed" />
-                </svg>
-              </div>
-            </div>
-            {/* Right bubble */}
-            <div className="flex justify-end">
-              <div className="relative bg-[#0090ff] rounded-[8px] px-4 py-2 max-w-[467px]">
-                <p className="font-satoshi text-[14px] font-medium leading-[1.25] text-white">
-                  By ensuring that our UX and UI are flawless, everything should be simple.
-                </p>
-                <svg
-                  className="absolute -bottom-[6px] right-[16px]"
-                  width="10"
-                  height="6"
-                  viewBox="0 0 10 6"
-                  fill="none"
-                >
-                  <path d="M10 0L0 0L10 6Z" fill="#0090ff" />
-                </svg>
-              </div>
-            </div>
-            {/* Left bubble */}
-            <div className="flex flex-col items-start">
-              <div className="relative bg-[#ededed] rounded-[8px] px-4 py-2 max-w-[467px]">
-                <p className="font-satoshi text-[14px] font-medium leading-[1.25] text-[#656565]">
-                  How can we make it as appealing to work with as Webflow, Framer, or other low-code
-                  site builders?
-                </p>
-                <svg
-                  className="absolute -bottom-[6px] left-[16px]"
-                  width="10"
-                  height="6"
-                  viewBox="0 0 10 6"
-                  fill="none"
-                >
-                  <path d="M0 0L10 0L0 6Z" fill="#ededed" />
-                </svg>
-              </div>
-            </div>
-            {/* Right bubble */}
-            <div className="flex justify-end">
-              <div className="relative bg-[#0090ff] rounded-[8px] px-4 py-2">
-                <p className="font-satoshi text-[14px] font-medium leading-[1.25] text-white">
-                  By focusing on the site builders and site editors experiences
-                </p>
-                <svg
-                  className="absolute -bottom-[6px] right-[16px]"
-                  width="10"
-                  height="6"
-                  viewBox="0 0 10 6"
-                  fill="none"
-                >
-                  <path d="M10 0L0 0L10 6Z" fill="#0090ff" />
-                </svg>
-              </div>
-            </div>
-          </div>
-        </CaseStudySection>
+          </CaseStudySection>
+        </FadeInUp>
 
-        <CaseStudySection title="My involvement">
-          <div className="grid gap-10 lg:grid-cols-2">
-            <div className="space-y-4 text-[14px] font-medium leading-[1.5] text-[#656565]">
-              <p>
-                This isn’t a typical design project, usually you’d be there from the start, but I
-                was late to the party. Originally I was going to be a front-end engineer on this,
-                but I noticed that there wasn’t a design system in place for us to build out the
-                necessary UI. This is where I started collating everything that was available from
-                the original designers, and started to create a design system.
-              </p>
-              <p>
-                This is how I was offered the job of Senior Product at Acquia. I was making strides
-                on the design system, and bringing order to what were some pretty chaotic design
-                files. From here I organised everything into a clear atomic design system.
-              </p>
-            </div>
-            <div className="space-y-4 text-[14px] font-medium leading-[1.5] text-[#656565]">
-              <p>
-                While organising I improved on the UI of each of our components. Due to the deep
-                technical complexity of the product, there were some aspects of our UI that weren’t
-                very intuitive, or just weren’t fit for the job.
-              </p>
-              <p>
-                Since then I have redesigned the entire UI, worked with developers closely on the
-                interaction design, designed multiple new features that required turning very
-                complex workflows into simple processes, helping new designers work on new features
-                by guiding them through complex engineering requirements, and a lot more.
-              </p>
-            </div>
-          </div>
-        </CaseStudySection>
-
-        <CaseStudySection title="Crafting a design system">
-          <p className="max-w-[588px] text-[14px] font-medium leading-[1.5] text-[#656565]">
-            As I said above, there wasn’t a design system in place for us to build out the necessary
-            UI. This is where I started to take inventory of what we had and bring this into a
-            sensible system. Take a look at what things looked like, and how it is now:
-          </p>
-          <img
-            src={"/images/case-studies/drupal-canvas/design-system.png"}
-            alt="Design system"
-            className="h-auto w-full object-contain max-h-full rounded-[16px]"
-          />
-        </CaseStudySection>
-
-        <CaseStudySection title="Breaking tasks down into clear user flows">
-          <p className="max-w-[588px] text-[14px] font-medium leading-[1.5] text-[#656565]">
-            Each one of the features that I worked on were extensively broken down into clear user
-            flows. This was to ensure that the engineers and other designers working on the project
-            could understand the complex workflows that we had to create, and how we turned these
-            into simple processes for our users.
-          </p>
-          <img
-            src={"/images/case-studies/drupal-canvas/user-flows.png"}
-            alt="Design system"
-            className="h-auto w-full object-contain max-h-full rounded-[16px]"
-          />
-        </CaseStudySection>
-
-        <CaseStudySection title="What I’ve done">
-          <CaseStudyBentoGrid items={bentoItems} />
-        </CaseStudySection>
-
-        <CaseStudySection title="What it looks like">
-          <CaseStudySlider images={sliderImages} />
-        </CaseStudySection>
-
-        <CaseStudySection title="End notes">
-          <div className="max-w-[588px] space-y-4 text-[14px] font-medium leading-[1.5] text-[#656565]">
-            <p>
-              As you can probably tell, this isn’t a typical case study where I go into absolutely
-              everything. If you want to know more about the project, I’ll happily show you how I’ve
-              created everything listed above and more. This has been created as a way of showing
-              the value I’ve generated for this product.
+        <FadeInUp>
+          <CaseStudySection title="Crafting a design system">
+            <p className="max-w-[588px] text-[14px] font-medium leading-[1.5] text-[#656565]">
+              As I said above, there wasn’t a design system in place for us to build out the
+              necessary UI. This is where I started to take inventory of what we had and bring this
+              into a sensible system. Take a look at what things looked like, and how it is now:
             </p>
-            <p>
-              However, this project isn’t a typical design process. Many times I’ve had to work as a
-              product manager to figure out the requirements, or I’ve had to work as an engineer to
-              solve technical limitations. None of this fits into the regular design workflow, but
-              that’s fine!
+            <img
+              src={"/images/case-studies/drupal-canvas/design-system.png"}
+              alt="Design system"
+              className="h-auto w-full object-contain max-h-full rounded-[16px]"
+            />
+          </CaseStudySection>
+        </FadeInUp>
+
+        <FadeInUp>
+          <CaseStudySection title="Breaking tasks down into clear user flows">
+            <p className="max-w-[588px] text-[14px] font-medium leading-[1.5] text-[#656565]">
+              Each one of the features that I worked on were extensively broken down into clear user
+              flows. This was to ensure that the engineers and other designers working on the
+              project could understand the complex workflows that we had to create, and how we
+              turned these into simple processes for our users.
             </p>
-            <p>
-              Ultimately, I solve problems, but I don’t let anything get in the way of that. I think
-              you need to be a nerd to solve this stuff, and if that means working outside of the
-              realms of a typical product designer. So be it.
-            </p>
-          </div>
-        </CaseStudySection>
+            <img
+              src={"/images/case-studies/drupal-canvas/user-flows.png"}
+              alt="Design system"
+              className="h-auto w-full object-contain max-h-full rounded-[16px]"
+            />
+          </CaseStudySection>
+        </FadeInUp>
+
+        <FadeInUp>
+          <CaseStudySection title="What it looks like">
+            <CaseStudySlider images={sliderImages} />
+          </CaseStudySection>
+        </FadeInUp>
+
+        <FadeInUp>
+          <CaseStudySection title="End notes">
+            <div className="max-w-[588px] space-y-4 text-[14px] font-medium leading-[1.5] text-[#656565]">
+              <p>
+                As you can probably tell, this isn’t a typical case study where I go into absolutely
+                everything. If you want to know more about the project, I’ll happily show you how
+                I’ve created everything listed above and more. This has been created as a way of
+                showing the value I’ve generated for this product.
+              </p>
+              <p>
+                However, this project isn’t a typical design process. Many times I’ve had to work as
+                a product manager to figure out the requirements, or I’ve had to work as an engineer
+                to solve technical limitations. None of this fits into the regular design workflow,
+                but that’s fine!
+              </p>
+              <p>
+                Ultimately, I solve problems, but I don’t let anything get in the way of that. I
+                think you need to be a nerd to solve this stuff, and if that means working outside
+                of the realms of a typical product designer. So be it.
+              </p>
+            </div>
+          </CaseStudySection>
+        </FadeInUp>
       </main>
     </CaseStudyLayout>
   );

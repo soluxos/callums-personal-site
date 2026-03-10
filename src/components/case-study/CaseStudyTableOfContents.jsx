@@ -8,7 +8,7 @@ const N_BETWEEN = 14;
 const TICK_SPACING = 20;
 const TICK_H = 20;
 const LABEL_H = 20;
-const SIDE_PAD = 120;
+const SIDE_PAD = 40;
 
 function normalise(section) {
   if (typeof section === "string") return { label: section, id: slugify(section) };
@@ -94,106 +94,129 @@ export default function CaseStudyTableOfContents({ sections = [] }) {
         backdropFilter: "blur(8px)",
       }}
     >
-      {/* Clipping viewport — the "window" into the wider ruler */}
-      <div ref={containerRef} style={{ overflow: "hidden", width: "100%", height: "100%" }}>
-        {/* Draggable ruler */}
-        <motion.div
-          drag="x"
-          dragConstraints={containerRef}
-          dragElastic={0.08}
-          dragTransition={{ power: 0.4, timeConstant: 300 }}
-          style={{
-            x,
-            width: rulerWidth,
-            height: "100%",
-            cursor: "grab",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "flex-end",
-            paddingBottom: 12,
-          }}
-          whileDrag={{ cursor: "grabbing" }}
-        >
-          {/* Labels row */}
-          <div style={{ position: "relative", height: LABEL_H, marginBottom: 6 }}>
-            {ticks.map((tick, i) => {
-              if (tick.type !== "section") return null;
-              const { label, id } = items[tick.sectionIndex];
-              const isActive = tick.sectionIndex === activeIndex;
-              const isHovered = hoveredSection === tick.sectionIndex;
-              const centreX = SIDE_PAD + i * TICK_SPACING + TICK_SPACING / 2;
-              return (
-                <button
-                  key={`lbl-${i}`}
-                  onClick={() => handleClick(id)}
-                  onMouseEnter={() => setHoveredSection(tick.sectionIndex)}
-                  onMouseLeave={() => setHoveredSection(null)}
-                  aria-current={isActive ? "location" : undefined}
-                  style={{
-                    position: "absolute",
-                    bottom: 0,
-                    left: centreX,
-                    transform: "translateX(-50%)",
-                    fontSize: 12,
-                    fontFamily: "var(--font-satoshi), Satoshi, sans-serif",
-                    fontWeight: isActive ? 600 : 500,
-                    lineHeight: 1,
-                    color: isActive ? "#2a2a2a" : filled[i] ? "#888" : "#c9c9c9",
-                    background: "none",
-                    border: "none",
-                    padding: "0 4px",
-                    cursor: "pointer",
-                    whiteSpace: "nowrap",
-                    opacity: isActive || isHovered ? 1 : 0.7,
-                    transition: "color 200ms ease, opacity 200ms ease",
-                  }}
-                >
-                  {label}
-                </button>
-              );
-            })}
-          </div>
-
-          {/* Tick row */}
-          <div
+      {/* Centering wrapper */}
+      <div style={{ maxWidth: 1400, margin: "0 auto", height: "100%" }}>
+        {/* Clipping viewport — the "window" into the wider ruler */}
+        <div ref={containerRef} style={{ overflow: "visible", width: "100%", height: "100%" }}>
+          {/* Draggable ruler */}
+          <motion.div
+            drag="x"
+            dragConstraints={containerRef}
+            dragElastic={0.08}
+            dragTransition={{ power: 0.4, timeConstant: 300 }}
             style={{
+              x,
+              width: rulerWidth,
+              height: "100%",
+              cursor: "grab",
               display: "flex",
-              alignItems: "flex-end",
-              height: TICK_H,
-              paddingInline: SIDE_PAD,
+              flexDirection: "column",
+              justifyContent: "flex-end",
+              paddingBottom: 12,
             }}
+            whileDrag={{ cursor: "grabbing" }}
           >
-            {ticks.map((tick, i) => {
-              const isTall = tick.type === "section";
-              const height = isTall ? TICK_H : Math.round(TICK_H / 2);
-              const color = filled[i]
-                ? isTall
-                  ? "#656565"
-                  : "#b0b0b0"
-                : isTall
-                  ? "#d0d0d0"
-                  : "#e5e5e5";
-
-              const line = (
-                <div
-                  style={{
-                    width: 1,
-                    height,
-                    background: color,
-                    transition: "background 200ms ease",
-                  }}
-                />
-              );
-
-              if (isTall) {
+            {/* Labels row */}
+            <div style={{ position: "relative", height: LABEL_H, marginBottom: 6 }}>
+              {ticks.map((tick, i) => {
+                if (tick.type !== "section") return null;
                 const { label, id } = items[tick.sectionIndex];
+                const isActive = tick.sectionIndex === activeIndex;
+                const isHovered = hoveredSection === tick.sectionIndex;
+                const centreX = SIDE_PAD + i * TICK_SPACING + TICK_SPACING / 2;
                 return (
                   <button
-                    key={`tick-${i}`}
+                    key={`lbl-${i}`}
                     onClick={() => handleClick(id)}
                     onMouseEnter={() => setHoveredSection(tick.sectionIndex)}
                     onMouseLeave={() => setHoveredSection(null)}
-                    aria-label={`Jump to ${label}`}
+                    aria-current={isActive ? "location" : undefined}
+                    style={{
+                      position: "absolute",
+                      bottom: 0,
+                      left: centreX,
+                      transform: "translateX(-50%)",
+                      fontSize: 14,
+                      fontFamily: "var(--font-satoshi), Satoshi, sans-serif",
+                      fontWeight: isActive ? 600 : 500,
+                      lineHeight: 1,
+                      color: isActive || isHovered ? "#2a2a2a" : filled[i] ? "#888" : "#c9c9c9",
+                      background: "none",
+                      border: "none",
+                      padding: "0 4px",
+                      cursor: "pointer",
+                      whiteSpace: "nowrap",
+                      opacity: isActive || isHovered ? 1 : 0.7,
+                      transition: "color 200ms ease, opacity 200ms ease",
+                    }}
+                  >
+                    {label}
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Tick row */}
+            <div
+              style={{
+                display: "flex",
+                alignItems: "flex-end",
+                height: TICK_H,
+                paddingInline: SIDE_PAD,
+              }}
+            >
+              {ticks.map((tick, i) => {
+                const isTall = tick.type === "section";
+                const height = isTall ? TICK_H : Math.round(TICK_H / 2);
+                const color = filled[i]
+                  ? isTall
+                    ? "#656565"
+                    : "#FF4006"
+                  : isTall
+                    ? "#d0d0d0"
+                    : "#e5e5e5";
+
+                const line = (
+                  <div
+                    style={{
+                      width: 1,
+                      height,
+                      background: color,
+                      transition: "background 200ms ease",
+                    }}
+                  />
+                );
+
+                if (isTall) {
+                  const { label, id } = items[tick.sectionIndex];
+                  return (
+                    <button
+                      key={`tick-${i}`}
+                      onClick={() => handleClick(id)}
+                      onMouseEnter={() => setHoveredSection(tick.sectionIndex)}
+                      onMouseLeave={() => setHoveredSection(null)}
+                      aria-label={`Jump to ${label}`}
+                      style={{
+                        width: TICK_SPACING,
+                        height: TICK_H,
+                        flexShrink: 0,
+                        display: "flex",
+                        alignItems: "flex-end",
+                        justifyContent: "center",
+                        background: "none",
+                        border: "none",
+                        padding: 0,
+                        cursor: "pointer",
+                      }}
+                    >
+                      {line}
+                    </button>
+                  );
+                }
+
+                return (
+                  <div
+                    key={`tick-${i}`}
                     style={{
                       width: TICK_SPACING,
                       height: TICK_H,
@@ -201,35 +224,15 @@ export default function CaseStudyTableOfContents({ sections = [] }) {
                       display: "flex",
                       alignItems: "flex-end",
                       justifyContent: "center",
-                      background: "none",
-                      border: "none",
-                      padding: 0,
-                      cursor: "pointer",
                     }}
                   >
                     {line}
-                  </button>
+                  </div>
                 );
-              }
-
-              return (
-                <div
-                  key={`tick-${i}`}
-                  style={{
-                    width: TICK_SPACING,
-                    height: TICK_H,
-                    flexShrink: 0,
-                    display: "flex",
-                    alignItems: "flex-end",
-                    justifyContent: "center",
-                  }}
-                >
-                  {line}
-                </div>
-              );
-            })}
-          </div>
-        </motion.div>
+              })}
+            </div>
+          </motion.div>
+        </div>
       </div>
     </nav>
   );
