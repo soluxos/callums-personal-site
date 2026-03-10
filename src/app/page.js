@@ -205,7 +205,7 @@ export default function Home() {
           <div className="grid gap-5 md:grid-cols-4">
             <Link
               href="https://yournexttale.com"
-              className="relative h-auto w-full flex flex-col gap-2"
+              className="relative h-auto w-full flex flex-col gap-2 overflow-hidden"
             >
               <video
                 className="h-[240px] w-full object-cover overflow-hidden rounded-[8px]"
@@ -221,7 +221,7 @@ export default function Home() {
             </Link>
             <Link
               href="https://crisp.framer.website"
-              className="relative h-auto w-full flex flex-col gap-2"
+              className="relative h-auto w-full flex flex-col gap-2 overflow-hidden"
             >
               <video
                 className="h-[240px] w-full object-cover overflow-hidden rounded-[8px]"
@@ -237,7 +237,7 @@ export default function Home() {
             </Link>
             <Link
               href="https://nifty.framer.website"
-              className="relative h-auto w-full flex flex-col gap-2"
+              className="relative h-auto w-full flex flex-col gap-2 overflow-hidden"
             >
               <video
                 className="h-[240px] w-full object-cover overflow-hidden rounded-[8px]"
@@ -253,7 +253,7 @@ export default function Home() {
             </Link>
             <Link
               href="https://maybe.framer.website"
-              className="relative h-auto w-full flex flex-col gap-2"
+              className="relative h-auto w-full flex flex-col gap-2 overflow-hidden"
             >
               <video
                 className="h-[240px] w-full object-cover overflow-hidden rounded-[8px]"
