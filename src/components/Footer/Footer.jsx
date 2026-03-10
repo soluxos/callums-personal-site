@@ -47,6 +47,9 @@ export default function Footer() {
               <Link href="/case-studies/acquia-ai" className="flex gap-2 ">
                 Acquia AI
               </Link>
+              <Link href="/case-studies/union-roasted" className="flex gap-2 ">
+                Union Roasted
+              </Link>
             </div>
           </div>
           <div className="w-[223px]">

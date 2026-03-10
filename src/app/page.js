@@ -289,8 +289,13 @@ export default function Home() {
                   I&apos;m currently leading two design projects at Acquia. One is to do with AI,
                   the other is about the unification of Acquia&apos;s products. Before these
                   projects I was leading the design of Drupal Canvas, the largest Drupal initiative
-                  in years. As a product designer, I create intuitive digital experiences in deeply
-                  complex problem spaces.
+                  in years.
+                  <br />
+                  <br />
+                  In my current role I&apos;m having to understand every single part of our
+                  products, and design solutions that work across them all. On top of being an IC,
+                  I&apos;m also having to train and mentor other designers to ensure cohesion
+                  between all of our products.
                 </div>
               </div>
               <div className="flex flex-col gap-5 lg:flex-row">
@@ -304,12 +309,17 @@ export default function Home() {
                 </div>
                 <div className="flex-1 text-[14px] font-medium leading-[1.5] text-[#929292]">
                   <p className="mb-0">
-                    There&apos;s way more to this story than what I&apos;m about to write. For this
-                    role I initially joined as &apos;Head of training&apos; for a low-code site
-                    building tool in Drupal. But this was for the startup that was acquired by
-                    Acquia. In this role I&apos;ve designed websites, designed new features for our
-                    product, pitched to and trained customers, taught design systems, and worked as
-                    part of a two man team to migrate a 150k line of code Angular app to React.
+                    As a Senior Software Engineer, I primarily worked with React. I was one of the
+                    two engineers that built the frontend of Site Studio, a product with $50m ARR.
+                    This included building a front-end visual building and editing interface to
+                    facilitate content editors and site builders alike.
+                    <br />
+                    <br />
+                    Prior to being a Senior Software Engineer, I was actually the Head of Training
+                    for Site Studio. In this role I was responsible for training customers on how to
+                    use the product, how to design websites, and how to build them. This was a very
+                    unique role that had me working across design, development, and customer
+                    success. It also led to us being acquired by Acquia, which is a story in itself.
                   </p>
                   <p className="mb-0">&nbsp;</p>
                   <p>
@@ -330,15 +340,18 @@ export default function Home() {
                   </p>
                 </div>
                 <div className="flex-1 text-[14px] font-medium leading-[1.5] text-[#929292]">
-                  Okay, it may look like I&apos;ve not stuck at this job long, but it didn&apos;t
-                  stop me having a brilliant impact. In this job I worked on multiple Shopify
-                  websites. I helped design new features, and I worked on developing them too. I
-                  designed{" "}
+                  In this role I was responsible for designing and building websites for a variety
+                  of very cool clients (at least I thought they were cool). It may look like
+                  I&apos;ve not stuck at this job long, but it didn&apos;t stop me having a
+                  brilliant impact. In this job I worked on multiple Shopify websites. I helped
+                  design new features, and I worked on developing them too.
+                  <br /> <br />I designed{" "}
                   <a href="https://unionroasted.com" className="underline">
                     one of my favourite sites I&apos;ve ever worked on
                   </a>{" "}
-                  and before leaving I was awarded with employee of the month (I still have the
-                  trophy to prove it).
+                  , before leaving I was awarded with employee of the month (I still have the trophy
+                  to prove it), they desperately wanted to keep me, but at the time I wasn&apsos;t
+                  able to keeo commuting 5 hours a day.
                 </div>
               </div>
               <div className="flex flex-col gap-5 lg:flex-row">

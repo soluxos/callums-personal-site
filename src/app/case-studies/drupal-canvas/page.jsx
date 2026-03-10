@@ -170,8 +170,8 @@ export default function DrupalCanvasCaseStudy() {
           <div className="flex flex-col gap-5 max-w-[710px]">
             {/* Left bubble */}
             <div className="flex flex-col items-start">
-              <div className="relative bg-[#d4d4d4] rounded-[8px] px-4 py-2 max-w-[467px]">
-                <p className="font-satoshi text-[14px] font-medium leading-[1.25] text-[#484848]">
+              <div className="relative bg-[#ededed] rounded-[8px] px-4 py-2 max-w-[467px]">
+                <p className="font-satoshi text-[14px] font-medium leading-[1.25] text-[#656565]">
                   Drupal, as it stands today isn&apos;t very intuitive for building websites.
                   <br />
                   <br />
@@ -185,7 +185,7 @@ export default function DrupalCanvasCaseStudy() {
                   viewBox="0 0 10 6"
                   fill="none"
                 >
-                  <path d="M0 0L10 0L0 6Z" fill="#d4d4d4" />
+                  <path d="M0 0L10 0L0 6Z" fill="#ededed" />
                 </svg>
               </div>
             </div>
@@ -210,8 +210,8 @@ export default function DrupalCanvasCaseStudy() {
             </div>
             {/* Left bubble */}
             <div className="flex flex-col items-start">
-              <div className="relative bg-[#d4d4d4] rounded-[8px] px-4 py-2 max-w-[467px]">
-                <p className="font-satoshi text-[14px] font-medium leading-[1.25] text-[#484848]">
+              <div className="relative bg-[#ededed] rounded-[8px] px-4 py-2 max-w-[467px]">
+                <p className="font-satoshi text-[14px] font-medium leading-[1.25] text-[#656565]">
                   How can we make it easier for the users that are managing these sites, editing
                   content, and building out pages?
                 </p>
@@ -222,7 +222,7 @@ export default function DrupalCanvasCaseStudy() {
                   viewBox="0 0 10 6"
                   fill="none"
                 >
-                  <path d="M0 0L10 0L0 6Z" fill="#d4d4d4" />
+                  <path d="M0 0L10 0L0 6Z" fill="#ededed" />
                 </svg>
               </div>
             </div>
@@ -245,7 +245,7 @@ export default function DrupalCanvasCaseStudy() {
             </div>
             {/* Left bubble */}
             <div className="flex flex-col items-start">
-              <div className="relative bg-[#d4d4d4] rounded-[8px] px-4 py-2 max-w-[467px]">
+              <div className="relative bg-[#ededed] rounded-[8px] px-4 py-2 max-w-[467px]">
                 <p className="font-satoshi text-[14px] font-medium leading-[1.25] text-[#656565]">
                   How can we make it as appealing to work with as Webflow, Framer, or other low-code
                   site builders?
@@ -257,7 +257,7 @@ export default function DrupalCanvasCaseStudy() {
                   viewBox="0 0 10 6"
                   fill="none"
                 >
-                  <path d="M0 0L10 0L0 6Z" fill="#d4d4d4" />
+                  <path d="M0 0L10 0L0 6Z" fill="#ededed" />
                 </svg>
               </div>
             </div>

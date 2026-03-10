@@ -1,10 +1,6 @@
-import Image from "next/image";
-import ImageGrid from "@/components/ImageGrid/SimpleImageGrid";
 import Link from "next/link";
-import DitherBackground from "@/components/DitherBackground/DitherBackground";
-import ImageSlideshow from "@/components/ImageSlideshow/ImageSlideshow";
-import ImageMarquee from "@/components/ImageMarquee/ImageMarquee";
 import AnimatedGradientBackground from "@/components/AnimatedGradientBackground/AnimatedGradientBackground";
+import FadeInUp from "@/components/FadeInUp/FadeInUp";
 
 export default function Home() {
   // Example usage
@@ -21,107 +17,169 @@ export default function Home() {
           <h1 className="w-full max-w-[591px] font-ppmondwest text-[48px] leading-[1.25]">
             Case studies
           </h1>
-          <p className="w-full max-w-[591px] text-[14px] font-medium leading-[1.5] text-[#656565]">
+          <p className="w-full max-w-[591px] text-[14px] font-medium leading-[1.5] text-[#929292]">
             A short selection of some projects I've worked on...
           </p>
         </section>
 
-        <section className="flex flex-col gap-4">
-          <div className="grid gap-4 md:grid-cols-2">
-            <Link href="/case-studies/drupal-canvas" className="flex flex-col gap-2 md:col-span-2">
-              <div className="relative h-[540px] w-full overflow-hidden rounded-[16px] bg-[#EDEDED]">
-                <div className="h-full w-full flex flex-col items-center justify-center pb-30">
-                  <ImageMarquee
-                    images={[
-                      "/images/case-studies/drupal-canvas/drupal-canvas-hero.png",
-                      "/images/case-studies/drupal-canvas/cms-content.png",
-                      "/images/case-studies/drupal-canvas/highlighted-component.png",
-                      "/images/case-studies/drupal-canvas/code-editor.png",
-                    ]}
-                    speed={40} // pixels per second
-                    imageWidth={600} // px
-                    imageHeight={360} // px
-                    gap={16} // px between images
-                    className="w-full max-w-full"
+        <FadeInUp delay={0.1}>
+          <section className="flex flex-col gap-4">
+            <div className="grid gap-4 md:grid-cols-2">
+              <Link href="/case-studies/drupal-canvas" className="flex flex-col gap-2">
+                <div className="relative h-[540px] w-full overflow-hidden rounded-[16px] bg-[#929292]">
+                  <AnimatedGradientBackground
+                    preset="ocean"
+                    animationDuration={50}
+                    blurAmount={50}
+                    opacity={1}
+                    grain={true}
+                    grainOpacity={0.015}
+                    dither={true}
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      minHeight: "100%",
+                      position: "absolute",
+                      top: 0,
+                      left: 0,
+                    }}
                   />
-                </div>
-                {/* <DitherBackground
-                  className="h-full w-full bg-[#19191928] bg-linear-180 transition-colors"
-                  dotColor="#bbbbbb"
-                  pixelSize={1}
-                  cellMultiplier={2}
-                  waveSpeed={0.2}
-                  ringThickness={1}
-                  waveProfile="gaussian"
-                  waveShape="circle"
-                /> */}
-                <div className="absolute z-10 bottom-5 left-5 w-[calc(100%-2.5rem)] flex flex-col gap-2">
-                  <p className="font-satoshi font-bold uppercase text-[10px] leading-[1.5] bg-white text-[#656565] px-2 rounded-full self-start">
-                    Public
-                  </p>
-                  <div className="flex flex-col gap-0">
-                    <p className="font-satoshi text-[16px] text-[#656565]">Drupal Canvas</p>
-                    <p className="font-ppmondwest text-[32px] leading-[1.5] text-[#656565]">
-                      How I designed and helped ship the future of building and editing websites
-                      with Drupal
+                  <div className="relative z-10 p-5 pb-10 w-full h-full flex flex-col justify-center items-center">
+                    <p className="absolute top-5 left-5 font-satoshi font-bold uppercase text-[10px] leading-[1.5] bg-white text-[#929292] px-2 rounded-full self-start">
+                      Public
                     </p>
+                    <div className="relative flex flex-col items-center justify-center text-center">
+                      <div className="h-10 flex items-end justify-center mb-2">
+                        <img
+                          src="/images/logos/acquia-logo.svg"
+                          alt="Acquia logo"
+                          className="max-w-[80px]"
+                        />
+                      </div>
+                      <p className="font-ppmondwest text-[40px] leading-[1.5] text-[#fff]">
+                        Drupal Canvas
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </Link>
-            <Link href="/case-studies/acquia-unification" className="flex flex-col gap-2">
-              <div className="relative h-[540px] w-full overflow-hidden rounded-[16px] bg-[#2e2e2e]">
-                <DitherBackground
-                  className="h-full w-full"
-                  dotColor="#484848"
-                  pixelSize={1}
-                  cellMultiplier={1}
-                  waveSpeed={0.4}
-                  ringThickness={0.5}
-                  waveProfile="gaussian"
-                  waveShape="diamond"
-                />
-                <div className="absolute z-10 bottom-5 left-5 w-[calc(100%-2.5rem)] flex flex-col gap-2">
-                  <p className="font-satoshi font-bold uppercase text-[10px] leading-[1.5] bg-white text-[#656565] px-2 rounded-full self-start">
-                    Password protected
-                  </p>
-                  <div className="flex flex-col gap-0">
-                    <p className="font-satoshi text-[16px] text-white">Acquia Unification</p>
-                    <p className="font-ppmondwest text-[32px] leading-[1.5] text-white">
-                      How I&apos;m designing the future of Acquia, a challenging design problem that
-                      is the focus of Acquia at the moment
+              </Link>
+              <Link href="/case-studies/union-roasted" className="flex flex-col gap-2">
+                <div className="relative h-[540px] w-full overflow-hidden rounded-[16px] bg-[#929292]">
+                  <AnimatedGradientBackground
+                    preset="rachelChen"
+                    animationDuration={50}
+                    blurAmount={50}
+                    opacity={1}
+                    grain={true}
+                    grainOpacity={0.015}
+                    dither={true}
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      minHeight: "100%",
+                      position: "absolute",
+                      top: 0,
+                      left: 0,
+                    }}
+                  />
+                  <div className="relative z-10 p-5 pb-10 w-full h-full flex flex-col justify-center items-center">
+                    <p className="absolute top-5 left-5 font-satoshi font-bold uppercase text-[10px] leading-[1.5] bg-white text-[#929292] px-2 rounded-full self-start">
+                      Public
                     </p>
+                    <div className="relative flex flex-col items-center justify-center text-center">
+                      <div className="h-10 flex items-end justify-center mb-2">
+                        <img
+                          src="/images/logos/union-logo.png"
+                          alt="Union Roasted logo"
+                          className="max-w-[80px]"
+                        />
+                      </div>
+                      <p className="font-ppmondwest text-[40px] leading-[1.5] text-[#fff]">
+                        Union Roasted
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </Link>
-            <Link href="/case-studies/acquia-ai" className="flex flex-col gap-2">
-              <div className="relative h-[540px] w-full overflow-hidden rounded-[16px] bg-[#686868]">
-                <DitherBackground
-                  className="h-full w-full"
-                  dotColor="#999999"
-                  pixelSize={1}
-                  cellMultiplier={1}
-                  waveSpeed={0.2}
-                  ringThickness={1}
-                  waveProfile="sharp"
-                  waveShape="square"
-                />
-                <div className="absolute z-10 bottom-5 left-5 w-[calc(100%-2.5rem)] flex flex-col gap-2">
-                  <p className="font-satoshi font-bold uppercase text-[10px] leading-[1.5] bg-white text-[#656565] px-2 rounded-full self-start">
-                    Password protected
-                  </p>
-                  <div className="flex flex-col gap-0">
-                    <p className="font-satoshi text-[16px] text-white">Acquia AI</p>
-                    <p className="font-ppmondwest text-[32px] leading-[1.5] text-white">
-                      How I designed and shipped an MVP for a brand new product in 2 months
+              </Link>
+              <Link href="/case-studies/acquia-unification" className="flex flex-col gap-2">
+                <div className="relative h-[540px] w-full overflow-hidden rounded-[16px] bg-[#929292]">
+                  <AnimatedGradientBackground
+                    preset="tropical"
+                    animationDuration={50}
+                    blurAmount={50}
+                    opacity={1}
+                    grain={true}
+                    grainOpacity={0.015}
+                    dither={true}
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      minHeight: "100%",
+                      position: "absolute",
+                      top: 0,
+                      left: 0,
+                    }}
+                  />
+                  <div className="relative z-10 p-5 pb-10 w-full h-full flex flex-col justify-center items-center">
+                    <p className="absolute top-5 left-5 font-satoshi font-bold uppercase text-[10px] leading-[1.5] bg-white text-[#929292] px-2 rounded-full self-start">
+                      Password Protected
                     </p>
+                    <div className="relative flex flex-col items-center justify-center text-center">
+                      <div className="h-10 flex items-end justify-center mb-2">
+                        <img
+                          src="/images/logos/acquia-logo.svg"
+                          alt="Acquia logo"
+                          className="max-w-[80px]"
+                        />
+                      </div>
+                      <p className="font-ppmondwest text-[40px] leading-[1.5] text-[#fff]">
+                        Acquia Unification
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </Link>
-          </div>
-        </section>
+              </Link>
+              <Link href="/case-studies/acquia-ai" className="flex flex-col gap-2">
+                <div className="relative h-[540px] w-full overflow-hidden rounded-[16px] bg-[#929292]">
+                  <AnimatedGradientBackground
+                    preset="fire"
+                    animationDuration={50}
+                    blurAmount={50}
+                    opacity={1}
+                    grain={true}
+                    grainOpacity={0.015}
+                    dither={true}
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      minHeight: "100%",
+                      position: "absolute",
+                      top: 0,
+                      left: 0,
+                    }}
+                  />
+                  <div className="relative z-10 p-5 pb-10 w-full h-full flex flex-col justify-center items-center">
+                    <p className="absolute top-5 left-5 font-satoshi font-bold uppercase text-[10px] leading-[1.5] bg-white text-[#929292] px-2 rounded-full self-start">
+                      Password Protected
+                    </p>
+                    <div className="relative flex flex-col items-center justify-center text-center">
+                      <div className="h-10 flex items-end justify-center mb-2">
+                        <img
+                          src="/images/logos/acquia-logo.svg"
+                          alt="Acquia logo"
+                          className="max-w-[80px]"
+                        />
+                      </div>
+                      <p className="font-ppmondwest text-[40px] leading-[1.5] text-[#fff]">
+                        Acquia AI
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </Link>
+            </div>
+          </section>
+        </FadeInUp>
       </main>
     </>
   );

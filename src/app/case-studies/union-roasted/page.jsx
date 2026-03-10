@@ -1,5 +1,6 @@
 import CaseStudyBentoGrid from "@/components/case-study/CaseStudyBentoGrid";
 import CaseStudyHero from "@/components/case-study/CaseStudyHero";
+import CaseStudyLayout from "@/components/case-study/CaseStudyLayout";
 import CaseStudyMetaGrid from "@/components/case-study/CaseStudyMetaGrid";
 import CaseStudySection from "@/components/case-study/CaseStudySection";
 import CaseStudySlider from "@/components/case-study/CaseStudySlider";
@@ -20,25 +21,38 @@ const ellipse17 = "/images/projects/drupal-canvas/ellipse-17.png";
 const ellipse18 = "/images/projects/drupal-canvas/ellipse-18.png";
 const ellipse19 = "/images/projects/drupal-canvas/ellipse-19.png";
 const ellipse20 = "/images/projects/drupal-canvas/ellipse-20.png";
-const pagination = "http://localhost:3845/assets/ec5b9cba23aca00c8cb38ae680cca857a26cf81f.svg";
+
+// Union Roasted images
+const unionRoastedHero = "/images/case-studies/union-roasted/hero.png";
+const productHero = "/images/case-studies/union-roasted/product-hero.png";
+const unionBlog = "/images/case-studies/union-roasted/union-blog.png";
 
 export default function DrupalCanvasCaseStudy() {
+  const sections = [
+    { label: "Overview", id: "overview" },
+    "What I've done",
+    "The problem",
+    "My involvement",
+    "What it looks like",
+    "End notes",
+  ];
+
   const metaItems = [
     {
       label: "Role",
-      value: "Senior Product Designer, Senior Software Engineer",
+      value: "Web Designer, Web Developer",
     },
     {
       label: "Outcome",
-      value: "A new site building and editing experience for Drupal",
+      value: "A new e-commerce website for a coffee brand built on Shopify",
     },
     {
       label: "Deliverables",
-      value: "Design system, User Flows, Wireframes, User Testing",
+      value: "Wireframes, High-Fidelity Design, Web Development",
     },
     {
       label: "Timeline",
-      value: "Jan 2025 - Now",
+      value: "Aug 2018 - Sep 2018",
     },
   ];
 
@@ -116,141 +130,176 @@ export default function DrupalCanvasCaseStudy() {
 
   const sliderImages = [
     {
-      src: workFrameImage,
-      alt: "Drupal Canvas main interface",
+      src: unionRoastedHero,
+      alt: "Union Roasted home page",
     },
     {
-      src: cmsContentImage,
-      alt: "Drupal Canvas content management screen",
+      src: productHero,
+      alt: "Union Roasted product page",
     },
     {
-      src: codeEditorImage,
-      alt: "Drupal Canvas code editor screen",
-    },
-    {
-      src: contentDesignSystemNodes,
-      alt: "Drupal Canvas design system nodes screen",
+      src: unionBlog,
+      alt: "Union Roasted blog page",
     },
   ];
 
   return (
-    <main className="flex flex-col gap-[120px]">
-      <div className="flex flex-col gap-20">
-        <CaseStudyHero
-          title="Drupal Canvas"
-          description="Early 2025 I joined the Product Design team to help create the future of building and editing websites with Drupal. This is a case study on how I helped to create the future of Drupal."
-        />
-        <CaseStudyMetaGrid items={metaItems} />
-      </div>
-
-      <section className="w-full">
-        <div className="flex flex-col rounded-[16px] bg-[#ededed] p-10">
-          <img
-            alt="Drupal Canvas interface"
-            className="h-auto w-full rounded-[12px] object-cover"
-            src={workFrameImage}
+    <CaseStudyLayout sections={sections}>
+      <main className="flex flex-col gap-[120px]">
+        <div id="overview" className="flex flex-col gap-20 scroll-mt-8">
+          <CaseStudyHero
+            title="Union Roasted"
+            description="Early 2025 I joined the Product Design team to help create the future of building and editing websites with Drupal. This is a case study on how I helped to create the future of Drupal."
           />
+          <CaseStudyMetaGrid items={metaItems} />
         </div>
-      </section>
 
-      <CaseStudySection title="The problem">
-        <p className="max-w-[588px] text-[14px] font-medium leading-[1.5] text-[#656565]">
-          We created this product to solve an issue within Drupal; how could we make the editing
-          experience and the site builder experience better for anyone using Drupal? On top of
-          creating this, we had to ensure that what we were building aligned with the existing
-          paradigms within Drupal, keeping the open source community happy, and building something
-          that could become the foundation of Drupal.
-        </p>
-      </CaseStudySection>
+        <CaseStudySection title="What I’ve done">
+          <CaseStudyBentoGrid items={bentoItems} />
+        </CaseStudySection>
 
-      <CaseStudySection title="My involvement">
-        <div className="grid gap-10 lg:grid-cols-2">
-          <div className="space-y-4 text-[14px] font-medium leading-[1.5] text-[#656565]">
+        <section className="w-full">
+          <CaseStudySlider images={sliderImages} />
+        </section>
+
+        <CaseStudySection title="The problem">
+          <div className="flex flex-col gap-5 max-w-[710px]">
+            {/* Left bubble */}
+            <div className="flex flex-col items-start">
+              <div className="relative bg-[#ededed] rounded-[8px] px-4 py-2 max-w-[467px]">
+                <p className="font-satoshi text-[14px] font-medium leading-[1.25] text-[#656565]">
+                  We really want a new site for our coffee brand. We know that WeMakeWebsites makes
+                  shopify sites. We don't want our site to look like a Shopify site though. We want
+                  something that represents our brand.
+                </p>
+                <svg
+                  className="absolute -bottom-[6px] left-[16px]"
+                  width="10"
+                  height="6"
+                  viewBox="0 0 10 6"
+                  fill="none"
+                >
+                  <path d="M0 0L10 0L0 6Z" fill="#ededed" />
+                </svg>
+              </div>
+            </div>
+            {/* Right bubble */}
+            <div className="flex justify-end">
+              <div className="relative bg-[#0090ff] rounded-[8px] px-4 py-2 max-w-[467px]">
+                <p className="font-satoshi text-[14px] font-medium leading-[1.25] text-white">
+                  No problem. What I'll be doing is understanding your brand, and creating a design
+                  that represents it. I also wouldn't want it to look like everything else.
+                </p>
+                <svg
+                  className="absolute -bottom-[6px] right-[16px]"
+                  width="10"
+                  height="6"
+                  viewBox="0 0 10 6"
+                  fill="none"
+                >
+                  <path d="M10 0L0 0L10 6Z" fill="#0090ff" />
+                </svg>
+              </div>
+            </div>
+            {/* Left bubble */}
+            <div className="flex flex-col items-start">
+              <div className="relative bg-[#ededed] rounded-[8px] px-4 py-2 max-w-[467px]">
+                <p className="font-satoshi text-[14px] font-medium leading-[1.25] text-[#656565]">
+                  We make coffee and want to highlight our process. We want to show off our team. We
+                  want to sell our freshly roasted coffee. Can you capture all of this in a your
+                  design?
+                </p>
+                <svg
+                  className="absolute -bottom-[6px] left-[16px]"
+                  width="10"
+                  height="6"
+                  viewBox="0 0 10 6"
+                  fill="none"
+                >
+                  <path d="M0 0L10 0L0 6Z" fill="#ededed" />
+                </svg>
+              </div>
+            </div>
+            {/* Right bubble */}
+            <div className="flex justify-end">
+              <div className="relative bg-[#0090ff] rounded-[8px] px-4 py-2 max-w-[467px]">
+                <p className="font-satoshi text-[14px] font-medium leading-[1.25] text-white">
+                  Absolutely. I will make sure to understand your process, your team, and your
+                  coffee. Let's get cracking.
+                </p>
+                <svg
+                  className="absolute -bottom-[6px] right-[16px]"
+                  width="10"
+                  height="6"
+                  viewBox="0 0 10 6"
+                  fill="none"
+                >
+                  <path d="M10 0L0 0L10 6Z" fill="#0090ff" />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </CaseStudySection>
+
+        <CaseStudySection title="Understanding the client">
+          <div className="grid gap-10 lg:grid-cols-2">
+            <div className="space-y-4 text-[14px] font-medium leading-[1.5] text-[#656565]">
+              <p>
+                I worked on this site from start to finish. I was there for the initial discovery,
+                the research, the design, the development, and the launch. I was the only designer
+                on the project, I worked closely with the Project Manager. In our initial kick off
+                meeting with the client, they made it incrediby clear that they didn't want a
+                typical Shopify site.
+              </p>
+              <p>
+                I quickly had to understand the brand, the product, and the people behind it. Union
+                Roasted was a coffee I'd purchased myself in stores, so it was a really fun
+                experience in understanding how everything was made. The PM and I went to the
+                roastery to find out how everything worked and learn more about their brand.
+              </p>
+              <p>
+                They made it clear that they wanted to show off their process, the quality of their
+                beans, and the partnerships with the farmers. This gave me some great opportunities
+                to show off my design skills and create a really unique site that stood out from the
+                typical Shopify sites.
+              </p>
+            </div>
+            <div className="space-y-4 text-[14px] font-medium leading-[1.5] text-[#656565]"></div>
+          </div>
+        </CaseStudySection>
+
+        <CaseStudySection title="What it looks like">
+          <div className="bg-[#ededed] p-5 rounded-[16px]">
+            <img
+              src="/images/case-studies/union-roasted/full-product.png"
+              alt="Final design"
+              className="w-full"
+            />
+          </div>
+        </CaseStudySection>
+
+        <CaseStudySection title="End notes">
+          <div className="max-w-[588px] space-y-4 text-[14px] font-medium leading-[1.5] text-[#656565]">
             <p>
-              This isn’t a typical design project, usually you’d be there from the start, but I was
-              late to the party. Originally I was going to be a front-end engineer on this, but I
-              noticed that there wasn’t a design system in place for us to build out the necessary
-              UI. This is where I started collating everything that was available from the original
-              designers, and started to create a design system.
+              As you can probably tell, this isn’t a typical case study where I go into absolutely
+              everything. If you want to know more about the project, I’ll happily show you how I’ve
+              created everything listed above and more. This has been created as a way of showing
+              the value I’ve generated for this product.
             </p>
             <p>
-              This is how I was offered the job of Senior Product at Acquia. I was making strides on
-              the design system, and bringing order to what were some pretty chaotic design files.
-              From here I organised everything into a clear atomic design system.
+              However, this project isn’t a typical design process. Many times I’ve had to work as a
+              product manager to figure out the requirements, or I’ve had to work as an engineer to
+              solve technical limitations. None of this fits into the regular design workflow, but
+              that’s fine!
+            </p>
+            <p>
+              Ultimately, I solve problems, but I don’t let anything get in the way of that. I think
+              you need to be a nerd to solve this stuff, and if that means working outside of the
+              realms of a typical product designer. So be it.
             </p>
           </div>
-          <div className="space-y-4 text-[14px] font-medium leading-[1.5] text-[#656565]">
-            <p>
-              While organising I improved on the UI of each of our components. Due to the deep
-              technical complexity of the product, there were some aspects of our UI that weren’t
-              very intuitive, or just weren’t fit for the job.
-            </p>
-            <p>
-              Since then I have redesigned the entire UI, worked with developers closely on the
-              interaction design, designed multiple new features that required turning very complex
-              workflows into simple processes, helping new designers work on new features by guiding
-              them through complex engineering requirements, and a lot more.
-            </p>
-          </div>
-        </div>
-      </CaseStudySection>
-
-      <CaseStudySection title="Crafting a design system">
-        <p className="max-w-[588px] text-[14px] font-medium leading-[1.5] text-[#656565]">
-          As I said above, there wasn’t a design system in place for us to build out the necessary
-          UI. This is where I started to take inventory of what we had and bring this into a
-          sensible system. Take a look at what things looked like, and how it is now:
-        </p>
-        <img
-          src={"/images/case-studies/drupal-canvas/design-system.png"}
-          alt="Design system"
-          className="h-auto w-full object-contain max-h-full rounded-[16px]"
-        />
-      </CaseStudySection>
-
-      <CaseStudySection title="Breaking tasks down into clear user flows">
-        <p className="max-w-[588px] text-[14px] font-medium leading-[1.5] text-[#656565]">
-          Each one of the features that I worked on were extensively broken down into clear user
-          flows. This was to ensure that the engineers and other designers working on the project
-          could understand the complex workflows that we had to create, and how we turned these into
-          simple processes for our users.
-        </p>
-        <img
-          src={"/images/case-studies/drupal-canvas/user-flows.png"}
-          alt="Design system"
-          className="h-auto w-full object-contain max-h-full rounded-[16px]"
-        />
-      </CaseStudySection>
-
-      <CaseStudySection title="What I’ve done">
-        <CaseStudyBentoGrid items={bentoItems} />
-      </CaseStudySection>
-
-      <CaseStudySection title="What it looks like">
-        <CaseStudySlider images={sliderImages} />
-      </CaseStudySection>
-
-      <CaseStudySection title="End notes">
-        <div className="max-w-[588px] space-y-4 text-[14px] font-medium leading-[1.5] text-[#656565]">
-          <p>
-            As you can probably tell, this isn’t a typical case study where I go into absolutely
-            everything. If you want to know more about the project, I’ll happily show you how I’ve
-            created everything listed above and more. This has been created as a way of showing the
-            value I’ve generated for this product.
-          </p>
-          <p>
-            However, this project isn’t a typical design process. Many times I’ve had to work as a
-            product manager to figure out the requirements, or I’ve had to work as an engineer to
-            solve technical limitations. None of this fits into the regular design workflow, but
-            that’s fine!
-          </p>
-          <p>
-            Ultimately, I solve problems, but I don’t let anything get in the way of that. I think
-            you need to be a nerd to solve this stuff, and if that means working outside of the
-            realms of a typical product designer. So be it.
-          </p>
-        </div>
-      </CaseStudySection>
-    </main>
+        </CaseStudySection>
+      </main>
+    </CaseStudyLayout>
   );
 }

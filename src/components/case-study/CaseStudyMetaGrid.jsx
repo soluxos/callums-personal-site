@@ -8,7 +8,7 @@ export default function CaseStudyMetaGrid({ items }) {
         >
           <p className="font-ppmondwest text-[20px] leading-[1.25] text-[#484848]">{item.label}</p>
           <p
-            className={`text-[14px] font-medium leading-[1.5] text-[#656565] ${
+            className={`text-[14px] font-medium leading-[1.5] text-[#929292] ${
               item.label === "Role" ? "max-w-[200px]" : ""
             }`}
           >
