@@ -64,6 +64,7 @@ function FakeCursor({ user }) {
   return (
     <motion.div
       style={{ position: "absolute", top: 0, left: 0, pointerEvents: "none", zIndex: 9000 }}
+      initial={{ x: user.x, y: user.y }}
       animate={{ x: user.x, y: user.y }}
       transition={{ type: "spring", stiffness: 55, damping: 18, mass: 0.7 }}
     >
