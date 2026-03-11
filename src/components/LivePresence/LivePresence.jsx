@@ -534,8 +534,28 @@ export default function LivePresence() {
 
     channel
       .on("presence", { event: "sync" }, buildPresenceMap)
-      .on("presence", { event: "join" }, buildPresenceMap)
-      .on("presence", { event: "leave" }, buildPresenceMap)
+      .on("presence", { event: "join" }, ({ key, newPresences }) => {
+        buildPresenceMap();
+        // Start an initial inactivity timer for users who join but may never move
+        if (key && key !== myId && !inactivityTimersRef.current[key]) {
+          inactivityTimersRef.current[key] = setTimeout(() => {
+            setInactiveIds(prev => new Set([...prev, key]));
+          }, 30000);
+        }
+      })
+      .on("presence", { event: "leave" }, ({ key }) => {
+        buildPresenceMap();
+        // Clean up inactivity tracking for the departed user
+        if (key) {
+          clearTimeout(inactivityTimersRef.current[key]);
+          delete inactivityTimersRef.current[key];
+          setInactiveIds(prev => {
+            const n = new Set(prev);
+            n.delete(key);
+            return n;
+          });
+        }
+      })
       // Receive other users' cursor positions via low-latency broadcast
       .on("broadcast", { event: "cursor" }, ({ payload }) => {
         const { id, x, y } = payload ?? {};
@@ -919,7 +939,7 @@ export default function LivePresence() {
   const allUsers = meColor
     ? [
         { id: "me", name: "You", color: meColor },
-        ...otherRealUsers,
+        ...otherRealUsers.filter(user => !inactiveIds.has(user.id)),
         ...(showFake ? effectiveFakes : []),
       ]
     : [];
