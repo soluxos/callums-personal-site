@@ -460,6 +460,7 @@ export default function LivePresence() {
   const meNameRef = useRef(null);
   const channelRef = useRef(null);
   const lastBroadcastRef = useRef(0);
+  const lastPresenceUpdateRef = useRef(0);
   const lastClientRef = useRef({ x: 0, y: 0 }); // last known viewport mouse position
   const prevRealCountRef = useRef(0);
   const wanderTimersRef = useRef({});
@@ -524,24 +525,45 @@ export default function LivePresence() {
     function buildPresenceMap() {
       const state = channel.presenceState();
       const map = {};
+      const cursorSeed = {};
+      const now = Date.now();
       for (const [key, arr] of Object.entries(state)) {
         if (key !== myId && arr.length > 0) {
           map[key] = { name: arr[0].name ?? "Anonymous", color: arr[0].color ?? "#888" };
+          // Seed cursor position from presence so it's correct on reload
+          if (arr[0].x !== undefined && arr[0].y !== undefined) {
+            cursorSeed[key] = { x: arr[0].x, y: arr[0].y };
+          }
+          const lastActive = arr[0].lastActive;
+          if (lastActive !== undefined) {
+            const elapsed = now - lastActive;
+            if (elapsed >= 20000) {
+              // Already past threshold — mark inactive immediately
+              setInactiveIds(prev => new Set([...prev, key]));
+              clearTimeout(inactivityTimersRef.current[key]);
+              delete inactivityTimersRef.current[key];
+            } else if (!inactivityTimersRef.current[key]) {
+              // Schedule hide for the remaining time
+              inactivityTimersRef.current[key] = setTimeout(() => {
+                setInactiveIds(prev => new Set([...prev, key]));
+              }, 20000 - elapsed);
+            }
+          } else if (!inactivityTimersRef.current[key]) {
+            // No lastActive (older client) — fall back to 30s timer
+            inactivityTimersRef.current[key] = setTimeout(() => {
+              setInactiveIds(prev => new Set([...prev, key]));
+            }, 30000);
+          }
         }
       }
       setPresenceMap(map);
+      setCursorMap(prev => ({ ...prev, ...cursorSeed }));
     }
 
     channel
       .on("presence", { event: "sync" }, buildPresenceMap)
-      .on("presence", { event: "join" }, ({ key, newPresences }) => {
+      .on("presence", { event: "join" }, () => {
         buildPresenceMap();
-        // Start an initial inactivity timer for users who join but may never move
-        if (key && key !== myId && !inactivityTimersRef.current[key]) {
-          inactivityTimersRef.current[key] = setTimeout(() => {
-            setInactiveIds(prev => new Set([...prev, key]));
-          }, 30000);
-        }
       })
       .on("presence", { event: "leave" }, ({ key }) => {
         buildPresenceMap();
@@ -633,8 +655,12 @@ export default function LivePresence() {
       .subscribe(async status => {
         if (status === "SUBSCRIBED") {
           setChannelStatus("live");
-          // Track identity once — name + colour only, no position
-          await channel.track({ name: meNameRef.current, color: meColorRef.current });
+          // Track identity with lastActive so other clients can detect inactivity on reload
+          await channel.track({
+            name: meNameRef.current,
+            color: meColorRef.current,
+            lastActive: Date.now(),
+          });
         } else if (status === "CHANNEL_ERROR" || status === "TIMED_OUT" || status === "CLOSED") {
           setChannelStatus("error");
         }
@@ -650,6 +676,17 @@ export default function LivePresence() {
         event: "cursor",
         payload: { id: myId, x: clientX + window.scrollX, y: clientY + window.scrollY },
       });
+      // Refresh lastActive + position in presence every 10s while the mouse is moving
+      if (now - lastPresenceUpdateRef.current > 10000) {
+        lastPresenceUpdateRef.current = now;
+        channelRef.current?.track({
+          name: meNameRef.current,
+          color: meColorRef.current,
+          lastActive: now,
+          x: clientX + window.scrollX,
+          y: clientY + window.scrollY,
+        });
+      }
     };
 
     const onMouseMove = e => {
