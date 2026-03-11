@@ -54,7 +54,7 @@ export default function RootLayout({ children }) {
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <div className="relative overflow-clip bg-[#f5f5f5] font-satoshi text-[#484848]">
           {/* <div aria-hidden="true" className="noise-overlay" /> */}
-          {/* <DitherOverlay opacity="0.1" /> */}
+          {/* <DitherOverlay opacity="0.6" /> */}
           {/* <WipBanner /> */}
           <div className="flex w-full max-w-[1440px] flex-col pb-20 sm:pb-[160px] mx-auto relative z-10">
             <div className="mx-5 sm:mx-10 gap-30 sm:gap-[240px] flex flex-col pt-8">

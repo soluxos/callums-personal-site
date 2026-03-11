@@ -27,8 +27,23 @@ const ADJECTIVES = [
   "Cool",
   "Wise",
   "Crisp",
+  "Ingenious",
+  "Scrupulous",
 ];
-const NOUNS = ["Panda", "Eagle", "Tiger", "Koala", "Fox", "Owl", "Lynx", "Wolf", "Bear", "Raven"];
+const NOUNS = [
+  "Panda",
+  "Eagle",
+  "Tiger",
+  "Koala",
+  "Fox",
+  "Owl",
+  "Lynx",
+  "Wolf",
+  "Bear",
+  "Raven",
+  "Weasel",
+  "Rat",
+];
 
 function randomItem(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
