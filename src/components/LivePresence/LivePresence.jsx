@@ -228,7 +228,7 @@ export default function LivePresence() {
 
     const usedColors = new Set([meColor]);
     const available = PALETTE.filter(c => !usedColors.has(c));
-    const count = 2 + Math.floor(Math.random() * 2); // 2–3 fake users, fresh each nav
+    const count = 1 + Math.floor(Math.random() * 2); // 1–2 fake users on each nav
     const pageWidth = window.innerWidth;
     const pageHeight = document.body.scrollHeight;
 
@@ -251,7 +251,7 @@ export default function LivePresence() {
       churnTimerRef.current = setTimeout(
         () => {
           const current = fakeUsersRef.current;
-          const canLeave = current.length > 2;
+          const canLeave = current.length > 1;
           const canJoin = current.length < 3;
 
           let action = null;
