@@ -88,8 +88,9 @@ function FakeCursor({ user }) {
   return (
     <motion.div
       style={{ position: "absolute", top: 0, left: 0, pointerEvents: "none", zIndex: 9000 }}
-      initial={{ x: user.x, y: user.y }}
-      animate={{ x: user.x, y: user.y }}
+      initial={{ x: user.x, y: user.y, opacity: 0 }}
+      animate={{ x: user.x, y: user.y, opacity: 1 }}
+      exit={{ opacity: 0, transition: { duration: 0.5, ease: "easeOut" } }}
       transition={{ type: "spring", stiffness: 55, damping: 18, mass: 0.7 }}
     >
       <CursorIcon color={user.color} />
@@ -451,6 +452,7 @@ export default function LivePresence() {
   const myMessagePosRef = useRef({ x: 0, y: 0 });
   const [fakeUsers, setFakeUsers] = useState([]);
   const [remoteFakes, setRemoteFakes] = useState([]); // fakes received from the leader
+  const [enabled, setEnabled] = useState(true); // user-controlled live presence toggle
   const [mounted, setMounted] = useState(false);
   const [channelStatus, setChannelStatus] = useState("connecting"); // connecting | live | error
   const [inactiveIds, setInactiveIds] = useState(new Set());
@@ -473,6 +475,10 @@ export default function LivePresence() {
   // Resolve identity once on mount (client-only)
   useEffect(() => {
     setMounted(true);
+    // Restore enabled preference before connecting
+    try {
+      if (localStorage.getItem("lp-enabled") === "false") setEnabled(false);
+    } catch {}
     let color, id, name;
     try {
       // Always generate fresh identity — never persist across windows/sessions
@@ -500,6 +506,16 @@ export default function LivePresence() {
   // Supabase Realtime — presence for identity, broadcast for cursor positions
   useEffect(() => {
     if (!meColor) return;
+    if (!enabled) {
+      // Disconnect: clear all remote state (channel cleanup runs from previous effect teardown)
+      setPresenceMap({});
+      setCursorMap({});
+      setMessageMap({});
+      setComposing(false);
+      setMyMessage(null);
+      clearTimeout(myMessageTimerRef.current);
+      return;
+    }
 
     if (channelRef.current) {
       supabase.removeChannel(channelRef.current);
@@ -674,7 +690,7 @@ export default function LivePresence() {
       supabase.removeChannel(channel);
       channelRef.current = null;
     };
-  }, [meColor, pathname]);
+  }, [meColor, pathname, enabled]);
 
   // Leader broadcasts the current fake-user state whenever it changes or the room membership changes.
   // This ensures every client sees the same bots immediately when someone joins.
@@ -692,6 +708,13 @@ export default function LivePresence() {
   // Fake user wander — always runs, but only leader's fakes are rendered
   useEffect(() => {
     if (!meColor) return;
+    if (!enabled) {
+      Object.values(wanderTimersRef.current).forEach(t => clearTimeout(t));
+      wanderTimersRef.current = {};
+      clearTimeout(churnTimerRef.current);
+      setFakeUsers([]);
+      return;
+    }
 
     Object.values(wanderTimersRef.current).forEach(t => clearTimeout(t));
     wanderTimersRef.current = {};
@@ -789,7 +812,7 @@ export default function LivePresence() {
       wanderTimersRef.current = {};
       clearTimeout(churnTimerRef.current);
     };
-  }, [meColor, pathname]);
+  }, [meColor, pathname, enabled]);
 
   // When the last real user leaves, spawn a fresh fake to naturally replace them.
   // When the first real user joins, gradually remove fake users one by one.
@@ -868,6 +891,20 @@ export default function LivePresence() {
     }
   }, [presenceMap, meColor]);
 
+  const toggleEnabled = () => {
+    setEnabled(prev => {
+      const next = !prev;
+      try {
+        localStorage.setItem("lp-enabled", String(next));
+      } catch {}
+      return next;
+    });
+    // Always cancel any active composer when toggling
+    setComposing(false);
+    clearTimeout(myMessageTimerRef.current);
+    setMyMessage(null);
+  };
+
   const broadcastMsg = (text, composing) => {
     channelRef.current?.send({
       type: "broadcast",
@@ -916,13 +953,14 @@ export default function LivePresence() {
   // Show fakes when alone or with only one other real user
   const showFake = otherRealUsers.length <= 1;
   const cursorsToRender = showFake ? effectiveFakes : otherRealUsers;
-  const allUsers = meColor
-    ? [
-        { id: "me", name: "You", color: meColor },
-        ...otherRealUsers,
-        ...(showFake ? effectiveFakes : []),
-      ]
-    : [];
+  const allUsers =
+    enabled && meColor
+      ? [
+          { id: "me", name: "You", color: meColor },
+          ...otherRealUsers,
+          ...(showFake ? effectiveFakes : []),
+        ]
+      : [];
 
   return (
     <>
@@ -946,24 +984,25 @@ export default function LivePresence() {
         }}
       >
         <div style={{ display: "flex", alignItems: "center" }}>
-          {allUsers.slice(0, 4).map((user, i) => (
-            <AvatarWithTooltip
-              key={user.id}
-              user={user}
-              index={i}
-              total={Math.min(allUsers.length, 4)}
-              onScrollTo={
-                user.id !== "me"
-                  ? () =>
-                      window.scrollTo({
-                        top: user.y - window.innerHeight / 2,
-                        behavior: "smooth",
-                      })
-                  : undefined
-              }
-            />
-          ))}
-          {allUsers.length > 4 && (
+          {enabled &&
+            allUsers.slice(0, 4).map((user, i) => (
+              <AvatarWithTooltip
+                key={user.id}
+                user={user}
+                index={i}
+                total={Math.min(allUsers.length, 4)}
+                onScrollTo={
+                  user.id !== "me"
+                    ? () =>
+                        window.scrollTo({
+                          top: user.y - window.innerHeight / 2,
+                          behavior: "smooth",
+                        })
+                    : undefined
+                }
+              />
+            ))}
+          {enabled && allUsers.length > 4 && (
             <div
               title={`${allUsers.length - 4} more`}
               style={{
@@ -1024,15 +1063,53 @@ export default function LivePresence() {
           />
           {allUsers.length} online
         </span>
+
+        {/* Power button — enable/disable live presence */}
+        <button
+          onClick={toggleEnabled}
+          title={enabled ? "Turn off live presence" : "Turn on live presence"}
+          style={{
+            width: 26,
+            height: 26,
+            borderRadius: "50%",
+            border: "2px solid white",
+            cursor: "pointer",
+            padding: 0,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            flexShrink: 0,
+            background: enabled ? "#1f2937" : "#e5e7eb",
+            color: enabled ? "#fff" : "#9ca3af",
+            transition: "background 0.2s, color 0.2s",
+            boxShadow: enabled ? "0 0 0 0px transparent" : "none",
+          }}
+        >
+          <svg
+            width="12"
+            height="12"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M18.36 6.64a9 9 0 1 1-12.73 0" />
+            <line x1="12" y1="2" x2="12" y2="12" />
+          </svg>
+        </button>
       </div>
 
       {/* Cursors — portalled to body, absolute-positioned in document */}
       {mounted &&
         createPortal(
           <>
-            {effectiveFakes.map(
-              user => showFake && <FakeCursor key={`fake-${user.id}`} user={user} />
-            )}
+            <AnimatePresence>
+              {effectiveFakes.map(
+                user => showFake && <FakeCursor key={`fake-${user.id}`} user={user} />
+              )}
+            </AnimatePresence>
             <AnimatePresence>
               {otherRealUsers
                 .filter(user => !inactiveIds.has(user.id))
