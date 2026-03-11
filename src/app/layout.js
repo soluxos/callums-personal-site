@@ -3,6 +3,7 @@ import "./globals.css";
 import Navigation from "@/components/Navigation/Navigation";
 import DitherOverlay from "@/components/DitherOverlay/DitherOverlay";
 import PageTransition from "@/components/PageTransition/PageTransition";
+import LivePresence from "@/components/LivePresence/LivePresence";
 
 // app/layout.js
 import Script from "next/script";
@@ -55,13 +56,14 @@ export default function RootLayout({ children }) {
           {/* <div aria-hidden="true" className="noise-overlay" /> */}
           {/* <DitherOverlay opacity="0.1" /> */}
           {/* <WipBanner /> */}
-          <div className="flex w-full max-w-[1440px] flex-col pb-[160px] mx-auto relative z-10">
-            <div className="mx-10 gap-[240px] flex flex-col pt-8">
+          <div className="flex w-full max-w-[1440px] flex-col pb-20 sm:pb-[160px] mx-auto relative z-10">
+            <div className="mx-5 sm:mx-10 gap-30 sm:gap-[240px] flex flex-col pt-8">
               <Navigation />
               <PageTransition>{children}</PageTransition>
               <Footer />
             </div>
           </div>
+          <LivePresence />
         </div>
       </body>
       <Script src="https://scripts.simpleanalyticscdn.com/latest.js" />

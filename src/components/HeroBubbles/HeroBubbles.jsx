@@ -5,9 +5,8 @@ import { motion, AnimatePresence } from "motion/react";
 const CHAR_MS = 38; // ms per character while typing
 const PAUSE_MS = 4000; // pause after fully typed before exiting
 
-// ↕ Distance from the container centre to each bubble's inner edge.
-// Increase to push the bubbles further apart.
-const BUBBLE_GAP = 80; // px
+const BUBBLE_GAP_MOBILE = 0; // px on small screens
+const BUBBLE_GAP_DESKTOP = 80; // px on larger screens
 
 // ↔ Maximum width of a speech bubble before text wraps to a new line.
 const BUBBLE_MAX_WIDTH = 320; // px
@@ -45,7 +44,17 @@ export default function HeroBubbles({ messages }) {
   const [phase, setPhase] = useState("typing");
   const [typedLen, setTypedLen] = useState(0);
   const [visible, setVisible] = useState(true);
+  const [bubbleGap, setBubbleGap] = useState(BUBBLE_GAP_DESKTOP);
   const timerRef = useRef(null);
+
+  useEffect(() => {
+    function updateGap() {
+      setBubbleGap(window.innerWidth < 768 ? BUBBLE_GAP_MOBILE : BUBBLE_GAP_DESKTOP);
+    }
+    updateGap();
+    window.addEventListener("resize", updateGap);
+    return () => window.removeEventListener("resize", updateGap);
+  }, []);
 
   const msg = messages[index];
   // Automatically alternate: even index = left, odd index = right
@@ -126,12 +135,17 @@ export default function HeroBubbles({ messages }) {
                 // left bubble: anchor right edge at BUBBLE_GAP from centre, grows leftward
                 // right bubble: anchor left edge at BUBBLE_GAP from centre, grows rightward
                 ...(side === "left"
-                  ? { right: `calc(50% + ${BUBBLE_GAP}px)` }
-                  : { left: `calc(50% + ${BUBBLE_GAP}px)` }),
+                  ? {
+                      right: `calc(50% + ${bubbleGap}px)`,
+                      maxWidth: `calc(50% - ${bubbleGap}px - 20px)`,
+                    }
+                  : {
+                      left: `calc(50% + ${bubbleGap}px)`,
+                      maxWidth: `calc(50% - ${bubbleGap}px - 20px)`,
+                    }),
                 display: "inline-flex",
                 alignItems: "center",
                 minHeight: 34,
-                maxWidth: BUBBLE_MAX_WIDTH,
                 backgroundColor: "#0090ff",
                 borderRadius: 8,
                 padding: "8px 16px",

@@ -59,6 +59,10 @@ export default function Home() {
                       <p className="font-ppmondwest text-[40px] leading-[1.5] text-[#fff]">
                         Drupal Canvas
                       </p>
+                      <p className="text-[16px] max-w-[320px] font-medium leading-[1.5] text-[#ffffffbf]">
+                        How I designed and shipped the future of building and editing sites with
+                        Drupal
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -96,6 +100,9 @@ export default function Home() {
                       </div>
                       <p className="font-ppmondwest text-[40px] leading-[1.5] text-[#fff]">
                         Union Roasted
+                      </p>
+                      <p className="text-[16px] max-w-[320px] font-medium leading-[1.5] text-[#ffffffbf]">
+                        The story of how I designed a site for one of the largest UK coffee brands
                       </p>
                     </div>
                   </div>

@@ -14,7 +14,7 @@ export default function Home() {
       <div className="flex flex-col gap-[120px]">
         <FadeInUp>
           <section className="flex w-full flex-col gap-2 items-center justify-center text-center">
-            <div className="hero-text-container w-auto flex flex-col gap-2 items-center justify-start">
+            <div className="hero-text-container w-full flex flex-col gap-2 items-center justify-start">
               <HeroBubbles
                 messages={[
                   "I'm currently leading design at Acquia",

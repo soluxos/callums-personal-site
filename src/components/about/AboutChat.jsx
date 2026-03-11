@@ -82,6 +82,16 @@ export default function AboutChat() {
     if (timerRef.current) clearTimeout(timerRef.current);
   }
 
+  function skipAll() {
+    clearTimer();
+    setVisibleCount(MESSAGES.length);
+    setTypedLengths(MESSAGES.map(m => m.text.length));
+  }
+
+  const isDone =
+    visibleCount >= MESSAGES.length &&
+    typedLengths[MESSAGES.length - 1] >= MESSAGES[MESSAGES.length - 1].text.length;
+
   useEffect(() => {
     // Kick off: show the first bubble after a short initial delay
     timerRef.current = setTimeout(() => setVisibleCount(1), 300);
@@ -136,6 +146,14 @@ export default function AboutChat() {
       `}</style>
 
       <div className="flex flex-col gap-5 max-w-[710px]">
+        {!isDone && (
+          <button
+            onClick={skipAll}
+            className="self-start font-satoshi text-[12px] font-medium text-[#b0b0b0] hover:text-[#656565] transition-colors cursor-pointer bg-none border-none p-0 underline underline-offset-2"
+          >
+            Skip (the layout shift is really annoying)
+          </button>
+        )}
         {MESSAGES.slice(0, visibleCount).map((msg, idx) => {
           const typed = typedLengths[idx];
           const isTyping = typed < msg.text.length;
