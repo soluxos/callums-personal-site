@@ -76,6 +76,10 @@ export default function Home() {
                       <p className="font-ppmondwest text-[40px] leading-[1.5] text-[#fff]">
                         Drupal Canvas
                       </p>
+                      <p className="text-[16px] max-w-[320px] font-medium leading-[1.5] text-[#ffffffbf]">
+                        How I designed and shipped the future of building and editing sites with
+                        Drupal
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -113,6 +117,9 @@ export default function Home() {
                       </div>
                       <p className="font-ppmondwest text-[40px] leading-[1.5] text-[#fff]">
                         Union Roasted
+                      </p>
+                      <p className="text-[16px] max-w-[320px] font-medium leading-[1.5] text-[#ffffffbf]">
+                        The story of how I designed a site for one of the largest UK coffee brands
                       </p>
                     </div>
                   </div>
@@ -203,7 +210,7 @@ export default function Home() {
         <section className="flex flex-col gap-6">
           <h2 className="font-ppmondwest text-[24px] leading-[1.25]">Some side projects</h2>
           <div className="grid gap-5 md:grid-cols-4">
-            <Link
+            <a
               href="https://yournexttale.com"
               className="relative h-auto w-full flex flex-col gap-2 overflow-hidden"
             >
@@ -218,8 +225,8 @@ export default function Home() {
               <p className="font-satoshi text-[14px] text-[#929292] leading-[1.5] font-medium">
                 Your Next Tale
               </p>
-            </Link>
-            <Link
+            </a>
+            <a
               href="https://crisp.framer.website"
               className="relative h-auto w-full flex flex-col gap-2 overflow-hidden"
             >
@@ -234,8 +241,8 @@ export default function Home() {
               <p className="font-satoshi text-[14px] text-[#929292] leading-[1.5] font-medium">
                 Crisp Framer Template
               </p>
-            </Link>
-            <Link
+            </a>
+            <a
               href="https://nifty.framer.website"
               className="relative h-auto w-full flex flex-col gap-2 overflow-hidden"
             >
@@ -250,8 +257,8 @@ export default function Home() {
               <p className="font-satoshi text-[14px] text-[#929292] leading-[1.5] font-medium">
                 Nifty Framer Template
               </p>
-            </Link>
-            <Link
+            </a>
+            <a
               href="https://maybe.framer.website"
               className="relative h-auto w-full flex flex-col gap-2 overflow-hidden"
             >
@@ -266,7 +273,7 @@ export default function Home() {
               <p className="font-satoshi text-[14px] text-[#929292] leading-[1.5] font-medium">
                 Maybe Framer Template
               </p>
-            </Link>
+            </a>
           </div>
         </section>
       </FadeInUp>

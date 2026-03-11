@@ -1,7 +1,7 @@
 "use client";
 
 import { useId } from "react";
-import { Pagination } from "swiper/modules";
+import { Autoplay, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 import "swiper/css";
@@ -20,7 +20,8 @@ export default function CaseStudySlider({ images }) {
           spaceBetween={20}
           slideToClickedSlide={true}
           watchSlidesProgress={true}
-          modules={[Pagination]}
+          modules={[Autoplay, Pagination]}
+          autoplay={{ delay: 3000, disableOnInteraction: false, pauseOnMouseEnter: true }}
           pagination={{
             clickable: true,
             el: `.case-study-pagination-${paginationId}`,

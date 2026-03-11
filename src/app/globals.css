@@ -109,6 +109,10 @@
     border-collapse: collapse;
     border-spacing: 0;
   }
+
+  a {
+    transition: color 0.2s ease-in-out;
+  }
 }
 
 @theme {

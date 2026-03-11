@@ -30,7 +30,6 @@ const unionBlog = "/images/case-studies/union-roasted/union-blog.png";
 export default function DrupalCanvasCaseStudy() {
   const sections = [
     { label: "Overview", id: "overview" },
-    "What I've done",
     "The problem",
     "My involvement",
     "What it looks like",
@@ -149,14 +148,10 @@ export default function DrupalCanvasCaseStudy() {
         <div id="overview" className="flex flex-col gap-20 scroll-mt-8">
           <CaseStudyHero
             title="Union Roasted"
-            description="Early 2025 I joined the Product Design team to help create the future of building and editing websites with Drupal. This is a case study on how I helped to create the future of Drupal."
+            description="The story of how I designed a site for one of the largest UK coffee brands. In 2018 I worked at an agency to create one of my favourite pieces of design work, while nailing the brief for the customer."
           />
           <CaseStudyMetaGrid items={metaItems} />
         </div>
-
-        <CaseStudySection title="What I’ve done">
-          <CaseStudyBentoGrid items={bentoItems} />
-        </CaseStudySection>
 
         <section className="w-full">
           <CaseStudySlider images={sliderImages} />

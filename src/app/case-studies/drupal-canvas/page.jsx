@@ -5,7 +5,8 @@ import CaseStudyMetaGrid from "@/components/case-study/CaseStudyMetaGrid";
 import CaseStudySection from "@/components/case-study/CaseStudySection";
 import CaseStudySlider from "@/components/case-study/CaseStudySlider";
 import FadeInUp from "@/components/FadeInUp/FadeInUp";
-import Image from "next/image";
+import Link from "next/link";
+import AnimatedGradientBackground from "@/components/AnimatedGradientBackground/AnimatedGradientBackground";
 
 const workFrameImage = "/images/case-studies/drupal-canvas/drupal-canvas-hero.png";
 
@@ -27,12 +28,11 @@ const pagination = "http://localhost:3845/assets/ec5b9cba23aca00c8cb38ae680cca85
 export default function DrupalCanvasCaseStudy() {
   const sections = [
     { label: "Overview", id: "overview" },
-    "What I've done",
     "The problem",
     "My involvement",
     "Crafting a design system",
-    "Breaking tasks down into clear user flows",
-    "What it looks like",
+    "Creating new features",
+    "What I've done",
     "End notes",
   ];
 
@@ -153,8 +153,53 @@ export default function DrupalCanvasCaseStudy() {
           <div id="overview" className="flex flex-col gap-20 scroll-mt-8">
             <CaseStudyHero
               title="Drupal Canvas"
-              description="Early 2025 I joined the Product Design team to help create the future of building and editing websites with Drupal. This is a case study on how I helped to create the future of Drupal."
+              description="How I designed and shipped the future of building and editing sites with Drupal. Early 2025 I joined the Product Design team to help, since then I led the design of the new editing and site building experience for Drupal, which is now live and being used by thousands of users."
             />
+            {/* <FadeInUp delay={0.1}>
+              <section className="flex flex-col gap-4">
+                <div className="grid gap-4">
+                  <Link
+                    href="/case-studies/drupal-canvas"
+                    className="flex flex-col md:col-span-2 gap-2"
+                  >
+                    <div className="relative h-[540px] w-full overflow-hidden rounded-[16px] bg-[#929292]">
+                      <AnimatedGradientBackground
+                        preset="ocean"
+                        animationDuration={50}
+                        blurAmount={50}
+                        opacity={1}
+                        grain={true}
+                        grainOpacity={0.015}
+                        dither={true}
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          minHeight: "100%",
+                          position: "absolute",
+                          top: 0,
+                          left: 0,
+                        }}
+                      />
+                      <div className="relative z-10 p-5 pb-10 w-full h-full flex flex-col justify-center items-center">
+                        <div className="relative flex flex-col items-center justify-center text-center">
+                          <div className="h-10 flex items-end justify-center mb-2">
+                            <img
+                              src="/images/logos/acquia-logo.svg"
+                              alt="Acquia logo"
+                              className="max-w-[80px]"
+                            />
+                          </div>
+                          <p className="font-ppmondwest text-[64px] leading-[1.5] text-[#fff]">
+                            Drupal Canvas
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </Link>
+                </div>
+              </section>
+            </FadeInUp> */}
+
             <CaseStudyMetaGrid items={metaItems} />
           </div>
         </FadeInUp>
@@ -166,159 +211,43 @@ export default function DrupalCanvasCaseStudy() {
         </FadeInUp>
 
         <FadeInUp>
-          <CaseStudySection title="What I've done">
-            <CaseStudyBentoGrid items={bentoItems} />
-          </CaseStudySection>
-        </FadeInUp>
-
-        <FadeInUp>
           <CaseStudySection title="The problem">
-            <div className="flex flex-col gap-5 max-w-[710px]">
-              {/* Left bubble */}
-              <div className="flex flex-col items-start">
-                <div className="relative bg-[#ededed] rounded-[8px] px-4 py-2 max-w-[467px]">
-                  <p className="font-satoshi text-[14px] font-medium leading-[1.25] text-[#656565]">
-                    Drupal, as it stands today isn&apos;t very intuitive for building websites.
-                    <br />
-                    <br />
-                    How do we make it easier for site builders, especially when PHP/Drupal
-                    developers are difficult to find, and JavaScript developers are on the rise?
-                  </p>
-                  <svg
-                    className="absolute -bottom-[6px] left-[16px]"
-                    width="10"
-                    height="6"
-                    viewBox="0 0 10 6"
-                    fill="none"
-                  >
-                    <path d="M0 0L10 0L0 6Z" fill="#ededed" />
-                  </svg>
-                </div>
-              </div>
-              {/* Right bubble */}
-              <div className="flex justify-end">
-                <div className="relative bg-[#0090ff] rounded-[8px] px-4 py-2 max-w-[467px]">
-                  <p className="font-satoshi text-[14px] font-medium leading-[1.25] text-white">
-                    We ensure that JavaScript developers can render their code within our system. We
-                    also support the Drupal developers by allowing them control through the use of
-                    Blocks and SDC&apos;s.
-                  </p>
-                  <svg
-                    className="absolute -bottom-[6px] right-[16px]"
-                    width="10"
-                    height="6"
-                    viewBox="0 0 10 6"
-                    fill="none"
-                  >
-                    <path d="M10 0L0 0L10 6Z" fill="#0090ff" />
-                  </svg>
-                </div>
-              </div>
-              {/* Left bubble */}
-              <div className="flex flex-col items-start">
-                <div className="relative bg-[#ededed] rounded-[8px] px-4 py-2 max-w-[467px]">
-                  <p className="font-satoshi text-[14px] font-medium leading-[1.25] text-[#656565]">
-                    How can we make it easier for the users that are managing these sites, editing
-                    content, and building out pages?
-                  </p>
-                  <svg
-                    className="absolute -bottom-[6px] left-[16px]"
-                    width="10"
-                    height="6"
-                    viewBox="0 0 10 6"
-                    fill="none"
-                  >
-                    <path d="M0 0L10 0L0 6Z" fill="#ededed" />
-                  </svg>
-                </div>
-              </div>
-              {/* Right bubble */}
-              <div className="flex justify-end">
-                <div className="relative bg-[#0090ff] rounded-[8px] px-4 py-2 max-w-[467px]">
-                  <p className="font-satoshi text-[14px] font-medium leading-[1.25] text-white">
-                    By ensuring that our UX and UI are flawless, everything should be simple.
-                  </p>
-                  <svg
-                    className="absolute -bottom-[6px] right-[16px]"
-                    width="10"
-                    height="6"
-                    viewBox="0 0 10 6"
-                    fill="none"
-                  >
-                    <path d="M10 0L0 0L10 6Z" fill="#0090ff" />
-                  </svg>
-                </div>
-              </div>
-              {/* Left bubble */}
-              <div className="flex flex-col items-start">
-                <div className="relative bg-[#ededed] rounded-[8px] px-4 py-2 max-w-[467px]">
-                  <p className="font-satoshi text-[14px] font-medium leading-[1.25] text-[#656565]">
-                    How can we make it as appealing to work with as Webflow, Framer, or other
-                    low-code site builders?
-                  </p>
-                  <svg
-                    className="absolute -bottom-[6px] left-[16px]"
-                    width="10"
-                    height="6"
-                    viewBox="0 0 10 6"
-                    fill="none"
-                  >
-                    <path d="M0 0L10 0L0 6Z" fill="#ededed" />
-                  </svg>
-                </div>
-              </div>
-              {/* Right bubble */}
-              <div className="flex justify-end">
-                <div className="relative bg-[#0090ff] rounded-[8px] px-4 py-2">
-                  <p className="font-satoshi text-[14px] font-medium leading-[1.25] text-white">
-                    By focusing on the site builders and site editors experiences
-                  </p>
-                  <svg
-                    className="absolute -bottom-[6px] right-[16px]"
-                    width="10"
-                    height="6"
-                    viewBox="0 0 10 6"
-                    fill="none"
-                  >
-                    <path d="M10 0L0 0L10 6Z" fill="#0090ff" />
-                  </svg>
-                </div>
-              </div>
-            </div>
+            <p className="max-w-[588px] text-[14px] font-medium leading-[1.5] text-[#656565]">
+              Drupal is an incredibly powerful content management system, but it has a reputation
+              for being difficult to use. The editing experience was clunky and unintuitive, and the
+              site building experience was even worse. This was a problem for our users, and it was
+              a problem for Drupal as a platform. We needed to create a new experience that would
+              make Drupal more accessible and easier to use, while still maintaining the power and
+              flexibility that our users love.
+            </p>
           </CaseStudySection>
         </FadeInUp>
 
         <FadeInUp>
           <CaseStudySection title="My involvement">
-            <div className="grid gap-10 lg:grid-cols-2">
-              <div className="space-y-4 text-[14px] font-medium leading-[1.5] text-[#656565]">
-                <p>
-                  This isn’t a typical design project, usually you’d be there from the start, but I
-                  was late to the party. Originally I was going to be a front-end engineer on this,
-                  but I noticed that there wasn’t a design system in place for us to build out the
-                  necessary UI. This is where I started collating everything that was available from
-                  the original designers, and started to create a design system.
-                </p>
-                <p>
-                  This is how I was offered the job of Senior Product at Acquia. I was making
-                  strides on the design system, and bringing order to what were some pretty chaotic
-                  design files. From here I organised everything into a clear atomic design system.
-                </p>
-              </div>
-              <div className="space-y-4 text-[14px] font-medium leading-[1.5] text-[#656565]">
-                <p>
-                  While organising I improved on the UI of each of our components. Due to the deep
-                  technical complexity of the product, there were some aspects of our UI that
-                  weren’t very intuitive, or just weren’t fit for the job.
-                </p>
-                <p>
-                  Since then I have redesigned the entire UI, worked with developers closely on the
-                  interaction design, designed multiple new features that required turning very
-                  complex workflows into simple processes, helping new designers work on new
-                  features by guiding them through complex engineering requirements, and a lot more.
-                </p>
-              </div>
-            </div>
+            <p className="max-w-[588px] text-[14px] font-medium leading-[1.5] text-[#656565]">
+              This isn’t a typical design project, usually you’d be there from the start, but I was
+              late to the party. Originally I was going to be a front-end engineer on this, but I
+              noticed that there wasn’t a design system in place for us to build out the necessary
+              UI. This is where I started collating everything that was available from the original
+              designers, and started to create a design system.
+            </p>
+            <p className="max-w-[588px] text-[14px] font-medium leading-[1.5] text-[#656565]">
+              This is how I was offered the job of Senior Product at Acquia. I was making strides on
+              the design system, and bringing order to what were some pretty chaotic design files.
+              From here I organised everything into a clear atomic design system.
+            </p>
+            <p className="max-w-[588px] text-[14px] font-medium leading-[1.5] text-[#656565]">
+              While organising I improved on the UI of each of our components. Due to the deep
+              technical complexity of the product, there were some aspects of our UI that weren’t
+              very intuitive, or just weren’t fit for the job.
+            </p>
+            <p className="max-w-[588px] text-[14px] font-medium leading-[1.5] text-[#656565]">
+              Since then I have redesigned the entire UI, worked with developers closely on the
+              interaction design, designed multiple new features that required turning very complex
+              workflows into simple processes, helping new designers work on new features by guiding
+              them through complex engineering requirements, and a lot more.
+            </p>
           </CaseStudySection>
         </FadeInUp>
 
@@ -338,7 +267,7 @@ export default function DrupalCanvasCaseStudy() {
         </FadeInUp>
 
         <FadeInUp>
-          <CaseStudySection title="Breaking tasks down into clear user flows">
+          <CaseStudySection title="Creating new features">
             <p className="max-w-[588px] text-[14px] font-medium leading-[1.5] text-[#656565]">
               Each one of the features that I worked on were extensively broken down into clear user
               flows. This was to ensure that the engineers and other designers working on the
@@ -354,8 +283,8 @@ export default function DrupalCanvasCaseStudy() {
         </FadeInUp>
 
         <FadeInUp>
-          <CaseStudySection title="What it looks like">
-            <CaseStudySlider images={sliderImages} />
+          <CaseStudySection title="What I've done">
+            <CaseStudyBentoGrid items={bentoItems} />
           </CaseStudySection>
         </FadeInUp>
 

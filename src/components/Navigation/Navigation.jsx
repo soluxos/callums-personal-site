@@ -15,13 +15,13 @@ export default function Navigation() {
         </span>
       </Link>
       <nav className="hidden items-center gap-6 text-[16px] font-medium leading-[24px] text-[#a8a8a8] sm:flex">
-        <Link href="/" className="text-[14px] text-[#929292]">
+        <Link href="/" className="text-[14px] text-[#929292] hover:text-[#484848]">
           Home
         </Link>
-        <Link href="/about" className="text-[14px] text-[#929292]">
+        <Link href="/about" className="text-[14px] text-[#929292] hover:text-[#484848]">
           About
         </Link>
-        <Link href="/case-studies" className="text-[14px] text-[#929292]">
+        <Link href="/case-studies" className="text-[14px] text-[#929292] hover:text-[#484848]">
           Case studies
         </Link>
       </nav>
@@ -40,20 +40,24 @@ export default function Navigation() {
       {isOpen ? (
         <div className="absolute right-0 top-[52px] z-10 w-48 rounded-[8px] bg-white p-4 shadow-[0_12px_40px_rgba(0,0,0,0.12)] sm:hidden">
           <div className="flex flex-col gap-3 text-[14px] font-medium text-[#484848]">
-            <Link onClick={() => setIsOpen(false)} href="/" className="text-[14px] text-[#929292]">
+            <Link
+              onClick={() => setIsOpen(false)}
+              href="/"
+              className="text-[14px] text-[#929292] hover:text-[#484848]"
+            >
               Home
             </Link>
             <Link
               onClick={() => setIsOpen(false)}
               href="/about"
-              className="text-[14px] text-[#929292]"
+              className="text-[14px] text-[#929292] hover:text-[#484848]"
             >
               About
             </Link>
             <Link
               onClick={() => setIsOpen(false)}
               href="/case-studies"
-              className="text-[14px] text-[#929292]"
+              className="text-[14px] text-[#929292] hover:text-[#484848]"
             >
               Case studies
             </Link>
