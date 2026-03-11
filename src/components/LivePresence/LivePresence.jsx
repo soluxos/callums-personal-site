@@ -469,6 +469,8 @@ export default function LivePresence() {
   const fakeUsersRef = useRef([]);
   const presenceMapRef = useRef({}); // synced after each render for use in timer closures
   const inactivityTimersRef = useRef({}); // per-real-user 20s hide timers
+  const selfInactivityTimerRef = useRef(null); // fires when the local user goes inactive
+  const meInactiveRef = useRef(false); // whether we've self-reported inactive to Supabase
   const pathname = usePathname();
 
   // Resolve identity once on mount (client-only)
@@ -534,25 +536,36 @@ export default function LivePresence() {
           if (arr[0].x !== undefined && arr[0].y !== undefined) {
             cursorSeed[key] = { x: arr[0].x, y: arr[0].y };
           }
-          const lastActive = arr[0].lastActive;
-          if (lastActive !== undefined) {
-            const elapsed = now - lastActive;
-            if (elapsed >= 20000) {
-              // Already past threshold — mark inactive immediately
-              setInactiveIds(prev => new Set([...prev, key]));
-              clearTimeout(inactivityTimersRef.current[key]);
-              delete inactivityTimersRef.current[key];
-            } else if (!inactivityTimersRef.current[key]) {
-              // Schedule hide for the remaining time
+          // inactive flag is the authoritative signal — set by the user's own client
+          if (arr[0].inactive === true) {
+            setInactiveIds(prev => new Set([...prev, key]));
+            clearTimeout(inactivityTimersRef.current[key]);
+            delete inactivityTimersRef.current[key];
+          } else {
+            // User is active — remove from inactive set and (re-)start their observer timer
+            setInactiveIds(prev => {
+              const n = new Set(prev);
+              n.delete(key);
+              return n;
+            });
+            clearTimeout(inactivityTimersRef.current[key]);
+            const lastActive = arr[0].lastActive;
+            if (lastActive !== undefined) {
+              const elapsed = now - lastActive;
+              if (elapsed >= 20000) {
+                // lastActive is stale enough to hide even without the flag
+                setInactiveIds(prev => new Set([...prev, key]));
+              } else {
+                inactivityTimersRef.current[key] = setTimeout(() => {
+                  setInactiveIds(prev => new Set([...prev, key]));
+                }, 20000 - elapsed);
+              }
+            } else {
+              // No lastActive — fall back to 30s observer timer
               inactivityTimersRef.current[key] = setTimeout(() => {
                 setInactiveIds(prev => new Set([...prev, key]));
-              }, 20000 - elapsed);
+              }, 30000);
             }
-          } else if (!inactivityTimersRef.current[key]) {
-            // No lastActive (older client) — fall back to 30s timer
-            inactivityTimersRef.current[key] = setTimeout(() => {
-              setInactiveIds(prev => new Set([...prev, key]));
-            }, 30000);
           }
         }
       }
@@ -598,6 +611,15 @@ export default function LivePresence() {
       .on("broadcast", { event: "fake-state" }, ({ payload }) => {
         // Non-leader clients receive the leader's fake-user positions and render them
         setRemoteFakes(payload?.fakes ?? []);
+      })
+      .on("broadcast", { event: "req-positions" }, () => {
+        // A new client joined and wants to know where everyone is — respond immediately
+        const { x: cx, y: cy } = lastClientRef.current;
+        channel.send({
+          type: "broadcast",
+          event: "cursor",
+          payload: { id: myId, x: cx + window.scrollX, y: cy + window.scrollY },
+        });
       })
       .on("broadcast", { event: "message" }, ({ payload }) => {
         const { id, text, composing } = payload ?? {};
@@ -655,12 +677,27 @@ export default function LivePresence() {
       .subscribe(async status => {
         if (status === "SUBSCRIBED") {
           setChannelStatus("live");
-          // Track identity with lastActive so other clients can detect inactivity on reload
+          // Track identity — inactive:false so anyone joining sees us as active immediately
+          meInactiveRef.current = false;
           await channel.track({
             name: meNameRef.current,
             color: meColorRef.current,
             lastActive: Date.now(),
+            inactive: false,
           });
+          // Start self-inactivity timer — fires after 20s if we never move
+          clearTimeout(selfInactivityTimerRef.current);
+          selfInactivityTimerRef.current = setTimeout(() => {
+            meInactiveRef.current = true;
+            channelRef.current?.track({
+              name: meNameRef.current,
+              color: meColorRef.current,
+              lastActive: Date.now(),
+              inactive: true,
+            });
+          }, 20000);
+          // Ask all existing clients to broadcast their current position immediately
+          channel.send({ type: "broadcast", event: "req-positions", payload: {} });
         } else if (status === "CHANNEL_ERROR" || status === "TIMED_OUT" || status === "CLOSED") {
           setChannelStatus("error");
         }
@@ -676,13 +713,38 @@ export default function LivePresence() {
         event: "cursor",
         payload: { id: myId, x: clientX + window.scrollX, y: clientY + window.scrollY },
       });
-      // Refresh lastActive + position in presence every 10s while the mouse is moving
+      // Reset self-inactivity timer on every movement
+      clearTimeout(selfInactivityTimerRef.current);
+      // If we were inactive, immediately re-track as active
+      if (meInactiveRef.current) {
+        meInactiveRef.current = false;
+        channelRef.current?.track({
+          name: meNameRef.current,
+          color: meColorRef.current,
+          lastActive: now,
+          inactive: false,
+          x: clientX + window.scrollX,
+          y: clientY + window.scrollY,
+        });
+        lastPresenceUpdateRef.current = now;
+      }
+      selfInactivityTimerRef.current = setTimeout(() => {
+        meInactiveRef.current = true;
+        channelRef.current?.track({
+          name: meNameRef.current,
+          color: meColorRef.current,
+          lastActive: Date.now(),
+          inactive: true,
+        });
+      }, 20000);
+      // Refresh position in presence every 10s while active
       if (now - lastPresenceUpdateRef.current > 10000) {
         lastPresenceUpdateRef.current = now;
         channelRef.current?.track({
           name: meNameRef.current,
           color: meColorRef.current,
           lastActive: now,
+          inactive: false,
           x: clientX + window.scrollX,
           y: clientY + window.scrollY,
         });
@@ -724,6 +786,7 @@ export default function LivePresence() {
       window.removeEventListener("mousemove", onMouseMove);
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("keydown", onKeyDown);
+      clearTimeout(selfInactivityTimerRef.current);
       Object.values(remoteInactivityTimers).forEach(t => clearTimeout(t));
       Object.values(inactivityTimersRef.current).forEach(t => clearTimeout(t));
       inactivityTimersRef.current = {};
@@ -1092,7 +1155,7 @@ export default function LivePresence() {
             )}
             <AnimatePresence>
               {otherRealUsers
-                .filter(user => !inactiveIds.has(user.id))
+                .filter(user => !inactiveIds.has(user.id) && cursorMap[user.id] !== undefined)
                 .map(user => (
                   <RealCursor key={`real-${user.id}`} user={user} />
                 ))}
