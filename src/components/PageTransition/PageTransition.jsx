@@ -12,12 +12,13 @@ export default function PageTransition({ children }) {
   }, [pathname]);
 
   return (
-    <AnimatePresence>
+    <AnimatePresence mode="wait">
       <motion.div
         key={pathname}
         animate={{ opacity: 1, y: 0 }}
         initial={{ opacity: 0, y: 10 }}
-        transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
+        exit={{ opacity: 0, y: -10 }}
+        transition={{ duration: 0.25, ease: [0.25, 0.1, 0.25, 1] }}
       >
         {children}
       </motion.div>

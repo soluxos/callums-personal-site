@@ -468,6 +468,7 @@ export default function LivePresence() {
   const nextIdRef = useRef(0);
   const fakeUsersRef = useRef([]);
   const presenceMapRef = useRef({}); // synced after each render for use in timer closures
+  const inactiveIdsRef = useRef(new Set()); // synced after each render for use in timer closures
   const inactivityTimersRef = useRef({}); // per-real-user 20s hide timers
   const selfInactivityTimerRef = useRef(null); // fires when the local user goes inactive
   const meInactiveRef = useRef(false); // whether we've self-reported inactive to Supabase
@@ -498,6 +499,7 @@ export default function LivePresence() {
   useEffect(() => {
     fakeUsersRef.current = fakeUsers;
     presenceMapRef.current = presenceMap;
+    inactiveIdsRef.current = inactiveIds;
   });
 
   // Supabase Realtime — presence for identity, broadcast for cursor positions
@@ -864,7 +866,9 @@ export default function LivePresence() {
       churnTimerRef.current = setTimeout(
         () => {
           const current = fakeUsersRef.current;
-          const realCount = Object.keys(presenceMapRef.current).length;
+          const realCount = Object.keys(presenceMapRef.current).filter(
+            id => !inactiveIdsRef.current.has(id)
+          ).length;
           const maxFakes = realCount > 0 ? 1 : 3;
           const canLeave = current.length > 1;
           const canJoin = current.length < maxFakes;
@@ -911,11 +915,11 @@ export default function LivePresence() {
     };
   }, [meColor, pathname]);
 
-  // When the last real user leaves, spawn a fresh fake to naturally replace them.
-  // When the first real user joins, gradually remove fake users one by one.
+  // When the last real user leaves/goes inactive, spawn a fresh fake to naturally replace them.
+  // When the first real user joins/becomes active, gradually remove fake users one by one.
   useEffect(() => {
     if (!meColor) return;
-    const curr = Object.keys(presenceMap).length;
+    const curr = Object.keys(presenceMap).filter(id => !inactiveIds.has(id)).length;
     const prev = prevRealCountRef.current;
     prevRealCountRef.current = curr;
 
@@ -986,7 +990,7 @@ export default function LivePresence() {
       });
       return () => timers.forEach(t => clearTimeout(t));
     }
-  }, [presenceMap, meColor]);
+  }, [presenceMap, inactiveIds, meColor]);
 
   const broadcastMsg = (text, composing) => {
     channelRef.current?.send({
@@ -1034,12 +1038,13 @@ export default function LivePresence() {
   // Non-leaders render fakes received from the leader broadcast; leaders use their own state
   const effectiveFakes = isLeader ? fakeUsers : remoteFakes;
   // Show fakes when alone or with only one other real user
-  const showFake = otherRealUsers.length <= 1;
-  const cursorsToRender = showFake ? effectiveFakes : otherRealUsers;
+  const activeRealUsers = otherRealUsers.filter(user => !inactiveIds.has(user.id));
+  const showFake = activeRealUsers.length <= 1;
+  const cursorsToRender = showFake ? effectiveFakes : activeRealUsers;
   const allUsers = meColor
     ? [
         { id: "me", name: "You", color: meColor },
-        ...otherRealUsers.filter(user => !inactiveIds.has(user.id)),
+        ...activeRealUsers,
         ...(showFake ? effectiveFakes : []),
       ]
     : [];
@@ -1154,8 +1159,8 @@ export default function LivePresence() {
               user => showFake && <FakeCursor key={`fake-${user.id}`} user={user} />
             )}
             <AnimatePresence>
-              {otherRealUsers
-                .filter(user => !inactiveIds.has(user.id) && cursorMap[user.id] !== undefined)
+              {activeRealUsers
+                .filter(user => cursorMap[user.id] !== undefined)
                 .map(user => (
                   <RealCursor key={`real-${user.id}`} user={user} />
                 ))}
