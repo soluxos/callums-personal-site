@@ -67,6 +67,9 @@ export default function Footer() {
               <Link href="https://github.com/soluxos" className="hover:text-[#484848]">
                 Github
               </Link>
+              <Link href="mailto:callumharrod1994@hotmail.co.uk" className="hover:text-[#484848]">
+                Get in toucb via email
+              </Link>
             </div>
           </div>
         </div>

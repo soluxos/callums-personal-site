@@ -276,21 +276,15 @@ export default function DrupalCanvasCaseStudy() {
         <CaseStudySection title="End notes">
           <div className="max-w-[588px] space-y-4 text-[14px] font-medium leading-[1.5] text-[#656565]">
             <p>
-              As you can probably tell, this isn’t a typical case study where I go into absolutely
-              everything. If you want to know more about the project, I’ll happily show you how I’ve
-              created everything listed above and more. This has been created as a way of showing
-              the value I’ve generated for this product.
-            </p>
-            <p>
-              However, this project isn’t a typical design process. Many times I’ve had to work as a
-              product manager to figure out the requirements, or I’ve had to work as an engineer to
-              solve technical limitations. None of this fits into the regular design workflow, but
-              that’s fine!
-            </p>
-            <p>
-              Ultimately, I solve problems, but I don’t let anything get in the way of that. I think
-              you need to be a nerd to solve this stuff, and if that means working outside of the
-              realms of a typical product designer. So be it.
+              It's been a while since I worked on this site. So sadly a lot of the materials such as
+              wireframes, and earlier work aren't available to me anymore. The client however, was
+              incredibly happy with what was delivered. They fully expected a generic Shopify site,
+              and they got an incredibly unique design that at the time matched them perfectly.
+              <br />
+              <br />
+              To date it's one of my favourite projects that I've worked on. I ended up receiving
+              employee of the month for this before I decided to leave WeMakeWebsites. I've still
+              got the trophy to prove it!
             </p>
           </div>
         </CaseStudySection>
