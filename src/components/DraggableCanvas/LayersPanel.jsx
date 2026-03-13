@@ -287,7 +287,7 @@ export default function LayersPanel({ selEl, onSelect }) {
         // boxShadow: "2px 0 12px rgba(0,0,0,0.06)",
         display: "flex",
         flexDirection: "column",
-        zIndex: 99997,
+        zIndex: 100000,
         overflow: "hidden",
         fontFamily: FONT,
       }}

@@ -2,9 +2,14 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import { motion } from "motion/react";
+import { motion, useMotionValue, animate } from "motion/react";
+import { usePathname } from "next/navigation";
 import { useEditMode } from "@/contexts/EditModeContext";
 import LayersPanel from "./LayersPanel";
+
+const MIN_ZOOM = 0.1;
+const MAX_ZOOM = 4;
+const ZOOM_SENSITIVITY = 0.001;
 
 const ACCENT = "#1a6cf1";
 const DRAG_THRESHOLD = 4;
@@ -13,9 +18,41 @@ const MIN_SIZE = 20;
 const SPRING_STIFF = 0.22;
 const SPRING_DAMP = 0.78;
 
-// Module-level: survives SPA navigation, resets on hard browser refresh
+// Module-level: survives SPA navigation, cleared on route change
 const txStore = new Map();
 const sizeStore = new Map();
+
+function resetAllDomChanges() {
+  // Revert transforms
+  for (const [el, { tx, ty }] of txStore) {
+    try {
+      el.style.transform = "";
+      el.style.zIndex = "";
+    } catch {}
+  }
+  txStore.clear();
+  // Revert sizes
+  for (const [el] of sizeStore) {
+    try {
+      el.style.width = "";
+      el.style.height = "";
+      el.style.maxWidth = "";
+      el.style.maxHeight = "";
+      el.style.overflow = "";
+    } catch {}
+  }
+  sizeStore.clear();
+  // Re-insert deleted elements
+  for (const entry of [...undoStack, ...redoStack]) {
+    if (entry.type === "delete" && entry.el && entry.parent && !entry.parent.contains(entry.el)) {
+      try {
+        entry.parent.insertBefore(entry.el, entry.nextSibling);
+      } catch {}
+    }
+  }
+  undoStack.length = 0;
+  redoStack.length = 0;
+}
 
 // Undo / redo stacks — each entry: { el, before, after }
 // before/after: { tx, ty, w?, h? }
@@ -151,12 +188,20 @@ function ResizeHandle({ id, vx, vy, cursor, active }) {
 }
 
 export default function DraggableCanvas({ children }) {
-  const { editMode } = useEditMode();
+  const { editMode, setEditMode } = useEditMode();
+  const pathname = usePathname();
   const [mounted, setMounted] = useState(false);
   const [hoverRect, setHoverRect] = useState(null);
   const [selRect, setSelRect] = useState(null);
   const [activeHandle, setActiveHandle] = useState(null);
-  const [phase, setPhase] = useState("idle"); // "idle" | "dragging" | "resizing"
+  const [phase, setPhase] = useState("idle"); // "idle" | "dragging" | "resizing" | "editing" | "panning"
+
+  // Canvas pan/zoom — motion values so we can animate them
+  const panX = useMotionValue(0);
+  const panY = useMotionValue(0);
+  const zoom = useMotionValue(1);
+  const panRef = useRef({ x: 0, y: 0, z: 1 }); // mirror for sync reads inside event handlers
+  const midPanRef = useRef(null); // middle-mouse pan state
 
   const hoverElRef = useRef(null);
   const selElRef = useRef(null);
@@ -177,6 +222,36 @@ export default function DraggableCanvas({ children }) {
   }, []);
 
   useEffect(() => setMounted(true), []);
+
+  // Reset all DOM mutations on route change and exit edit mode
+  useEffect(() => {
+    resetAllDomChanges();
+    setEditMode(false);
+    restoreAncestorOverflow(overflowRef);
+    cancelAnimationFrame(rafRef.current);
+    dragRef.current = null;
+    resizeRef.current = null;
+    midPanRef.current = null;
+    if (textEditElRef.current) {
+      textEditElRef.current.contentEditable = "inherit";
+      textEditElRef.current.style.outline = "";
+      textEditElRef.current = null;
+      textBeforeRef.current = "";
+    }
+    panX.set(0);
+    panY.set(0);
+    zoom.set(1);
+    panRef.current = { x: 0, y: 0, z: 1 };
+    setHoverRect(null);
+    setSelRect(null);
+    setPhase("idle");
+    setActiveHandle(null);
+    hoverElRef.current = null;
+    selElRef.current = null;
+    document.body.style.cursor = "";
+    document.body.style.userSelect = "";
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pathname]);
 
   // Intercept link/button clicks in edit mode so navigation is blocked but
   // pointer events (hover, drag) still work normally.
@@ -204,12 +279,14 @@ export default function DraggableCanvas({ children }) {
     };
   }, []);
 
+  // Animate pan/zoom back to origin when edit mode is turned off
   useEffect(() => {
     if (!editMode) {
       restoreAncestorOverflow(overflowRef);
       cancelAnimationFrame(rafRef.current);
       dragRef.current = null;
       resizeRef.current = null;
+      midPanRef.current = null;
       setHoverRect(null);
       setSelRect(null);
       setPhase("idle");
@@ -222,6 +299,11 @@ export default function DraggableCanvas({ children }) {
         textEditElRef.current = null;
         textBeforeRef.current = "";
       }
+      // Animate canvas back to origin
+      animate(panX, 0, { type: "spring", stiffness: 280, damping: 34 });
+      animate(panY, 0, { type: "spring", stiffness: 280, damping: 34 });
+      animate(zoom, 1, { type: "spring", stiffness: 280, damping: 34 });
+      panRef.current = { x: 0, y: 0, z: 1 };
       document.body.style.cursor = "";
       document.body.style.userSelect = "";
       return;
@@ -276,6 +358,21 @@ export default function DraggableCanvas({ children }) {
     }
 
     function onMouseMove(e) {
+      // Middle-mouse pan
+      if (midPanRef.current) {
+        const mp = midPanRef.current;
+        const newPX = mp.startPX + (e.clientX - mp.startMX);
+        const newPY = mp.startPY + (e.clientY - mp.startMY);
+        panRef.current = { ...panRef.current, x: newPX, y: newPY };
+        panX.set(newPX);
+        panY.set(newPY);
+        // Sync overlays — .set() updates the DOM transform synchronously
+        if (selElRef.current) setSelRect({ el: selElRef.current, ...getRect(selElRef.current) });
+        if (hoverElRef.current)
+          setHoverRect({ el: hoverElRef.current, ...getRect(hoverElRef.current) });
+        return;
+      }
+
       const now = performance.now();
       const dt = now - prevMouseRef.current.t;
       if (dt > 0 && dt < 100) {
@@ -380,7 +477,62 @@ export default function DraggableCanvas({ children }) {
       }
     }
 
+    function onMiddleMouseDown(e) {
+      if (e.button !== 1) return;
+      e.preventDefault();
+      midPanRef.current = {
+        startMX: e.clientX,
+        startMY: e.clientY,
+        startPX: panRef.current.x,
+        startPY: panRef.current.y,
+      };
+      document.body.style.cursor = "grabbing";
+    }
+
+    function onMiddleMouseUp(e) {
+      if (e.button !== 1) return;
+      midPanRef.current = null;
+      document.body.style.cursor = "";
+    }
+
+    function onWheel(e) {
+      e.preventDefault();
+      const p = panRef.current;
+      // ctrlKey = pinch-to-zoom on Mac trackpad OR Ctrl+wheel on mouse
+      if (e.ctrlKey) {
+        const delta = -e.deltaY * ZOOM_SENSITIVITY * (e.deltaMode === 1 ? 8 : 1);
+        const newZ = Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, p.z * (1 + delta * 3)));
+        // Zoom toward cursor
+        const cx = e.clientX,
+          cy = e.clientY;
+        const newPX = cx - (cx - p.x) * (newZ / p.z);
+        const newPY = cy - (cy - p.y) * (newZ / p.z);
+        panRef.current = { x: newPX, y: newPY, z: newZ };
+        panX.set(newPX);
+        panY.set(newPY);
+        zoom.set(newZ);
+      } else {
+        // Two-finger pan (or scroll wheel pan)
+        const dx = e.deltaMode === 1 ? e.deltaX * 16 : e.deltaX;
+        const dy = e.deltaMode === 1 ? e.deltaY * 16 : e.deltaY;
+        const newPX = p.x - dx;
+        const newPY = p.y - dy;
+        panRef.current = { x: newPX, y: newPY, z: p.z };
+        panX.set(newPX);
+        panY.set(newPY);
+      }
+      // Sync overlays — .set() updates the DOM transform synchronously
+      if (selElRef.current) setSelRect({ el: selElRef.current, ...getRect(selElRef.current) });
+      if (hoverElRef.current)
+        setHoverRect({ el: hoverElRef.current, ...getRect(hoverElRef.current) });
+    }
+
     function onMouseDown(e) {
+      // Middle mouse = pan
+      if (e.button === 1) {
+        onMiddleMouseDown(e);
+        return;
+      }
       if (e.button !== 0) return;
       // Let canvas UI elements (layers panel, etc.) handle their own mouse events —
       // but still allow resize handle mousedowns through.
@@ -442,6 +594,10 @@ export default function DraggableCanvas({ children }) {
     }
 
     function onMouseUp(e) {
+      if (e.button === 1) {
+        onMiddleMouseUp(e);
+        return;
+      }
       if (resizeRef.current) {
         const rs = resizeRef.current;
         const finalTX = txStore.get(rs.el)?.tx ?? rs.startTX;
@@ -634,6 +790,8 @@ export default function DraggableCanvas({ children }) {
     window.addEventListener("keydown", onKeyDown);
     window.addEventListener("dblclick", onDblClick);
     window.addEventListener("dragstart", blockDragStart);
+    // Non-passive so we can preventDefault and own the scroll entirely
+    window.addEventListener("wheel", onWheel, { passive: false });
     return () => {
       window.removeEventListener("mousemove", onMouseMove);
       window.removeEventListener("mousedown", onMouseDown);
@@ -641,8 +799,10 @@ export default function DraggableCanvas({ children }) {
       window.removeEventListener("keydown", onKeyDown);
       window.removeEventListener("dblclick", onDblClick);
       window.removeEventListener("dragstart", blockDragStart);
+      window.removeEventListener("wheel", onWheel);
       restoreAncestorOverflow(overflowRef);
       cancelAnimationFrame(rafRef.current);
+      midPanRef.current = null;
       if (textEditElRef.current) {
         textEditElRef.current.contentEditable = "inherit";
         textEditElRef.current.style.outline = "";
@@ -652,14 +812,24 @@ export default function DraggableCanvas({ children }) {
       document.body.style.cursor = "";
       document.body.style.userSelect = "";
     };
-  }, [editMode]);
+  }, [editMode]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const showHover = editMode && hoverRect && hoverRect.el !== selElRef.current;
   const showSel = editMode && selRect;
 
   return (
     <>
+      {/* Page content wrapper — translates + scales with canvas pan/zoom */}
       <motion.div
+        style={{
+          paddingLeft: mounted && editMode ? 220 : 0,
+          x: panX,
+          y: panY,
+          scale: zoom,
+          transformOrigin: "0 0",
+          position: "relative",
+          zIndex: 1,
+        }}
         animate={{ paddingLeft: mounted && editMode ? 220 : 0 }}
         transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
       >
