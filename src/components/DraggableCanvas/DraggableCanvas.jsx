@@ -214,6 +214,7 @@ export default function DraggableCanvas({ children }) {
   const overflowRef = useRef([]);
   const textEditElRef = useRef(null);
   const textBeforeRef = useRef("");
+  const syncRafRef = useRef(null); // rAF handle for continuous overlay sync
 
   // Called from the Layers panel to select an element programmatically
   const handleLayerSelect = useCallback(el => {
@@ -264,20 +265,37 @@ export default function DraggableCanvas({ children }) {
     return () => document.removeEventListener("click", block, true);
   }, [editMode]);
 
-  // Keep overlays in sync during scroll / resize
+  // Keep overlays pixel-perfect via a rAF loop while in edit mode.
+  // This covers scroll, zoom, pan, drag, resize — no event gaps.
   useEffect(() => {
-    const update = () => {
-      if (selElRef.current) setSelRect({ el: selElRef.current, ...getRect(selElRef.current) });
-      if (hoverElRef.current)
-        setHoverRect({ el: hoverElRef.current, ...getRect(hoverElRef.current) });
+    if (!editMode) {
+      cancelAnimationFrame(syncRafRef.current);
+      return;
+    }
+    let prevSelKey = "";
+    let prevHovKey = "";
+    const loop = () => {
+      syncRafRef.current = requestAnimationFrame(loop);
+      if (selElRef.current) {
+        const r = selElRef.current.getBoundingClientRect();
+        const key = `${r.left},${r.top},${r.width},${r.height}`;
+        if (key !== prevSelKey) {
+          prevSelKey = key;
+          setSelRect({ el: selElRef.current, x: r.left, y: r.top, w: r.width, h: r.height });
+        }
+      }
+      if (hoverElRef.current) {
+        const r = hoverElRef.current.getBoundingClientRect();
+        const key = `${r.left},${r.top},${r.width},${r.height}`;
+        if (key !== prevHovKey) {
+          prevHovKey = key;
+          setHoverRect({ el: hoverElRef.current, x: r.left, y: r.top, w: r.width, h: r.height });
+        }
+      }
     };
-    window.addEventListener("scroll", update, { passive: true });
-    window.addEventListener("resize", update);
-    return () => {
-      window.removeEventListener("scroll", update);
-      window.removeEventListener("resize", update);
-    };
-  }, []);
+    syncRafRef.current = requestAnimationFrame(loop);
+    return () => cancelAnimationFrame(syncRafRef.current);
+  }, [editMode]);
 
   // Animate pan/zoom back to origin when edit mode is turned off
   useEffect(() => {
