@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { initials } from "./utils";
+import { useEditMode } from "@/contexts/EditModeContext";
 
 function AvatarWithTooltip({ user, index, total, onScrollTo, onHoverChange }) {
   const [hovered, setHovered] = useState(false);
@@ -92,6 +93,7 @@ function AvatarWithTooltip({ user, index, total, onScrollTo, onHoverChange }) {
 export default function AvatarPill({ allUsers, channelStatus }) {
   const [pillHovered, setPillHovered] = useState(false);
   const [anyAvatarHovered, setAnyAvatarHovered] = useState(false);
+  const { editMode, setEditMode } = useEditMode();
 
   return (
     <div
@@ -199,21 +201,75 @@ export default function AvatarPill({ allUsers, channelStatus }) {
           />
           {allUsers.length} online
         </span>
+
+        {/* Edit mode toggle */}
+        <div
+          style={{
+            width: 1,
+            height: 14,
+            background: "rgba(0,0,0,0.12)",
+            borderRadius: 1,
+            marginLeft: 2,
+            marginRight: 2,
+            flexShrink: 0,
+          }}
+        />
+        <button
+          data-no-drag
+          onClick={() => setEditMode(m => !m)}
+          title={editMode ? "Exit edit mode" : "Enter edit mode"}
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 4,
+            background: editMode ? "#1a6cf1" : "transparent",
+            border: editMode ? "none" : "1px solid rgba(0,0,0,0.12)",
+            borderRadius: 999,
+            padding: "2px 8px 2px 6px",
+            cursor: "pointer",
+            color: editMode ? "#fff" : "#888",
+            fontSize: 11,
+            fontWeight: 600,
+            fontFamily: "var(--font-satoshi), Satoshi, sans-serif",
+            whiteSpace: "nowrap",
+            letterSpacing: "0.01em",
+            flexShrink: 0,
+            transition: "background 0.15s, color 0.15s",
+          }}
+        >
+          {/* Pencil icon */}
+          <svg
+            width="10"
+            height="10"
+            viewBox="0 0 12 12"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M8.5 1.5a1.414 1.414 0 0 1 2 2L4 10H2V8L8.5 1.5Z"
+              stroke="currentColor"
+              strokeWidth="1.4"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              fill="none"
+            />
+          </svg>
+          {editMode ? "Editing" : "Edit"}
+        </button>
       </div>
 
       {/* Chat hint tooltip */}
       <AnimatePresence>
         {pillHovered && !anyAvatarHovered && (
           <motion.div
-            initial={{ opacity: 0, y: -4 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -4 }}
+            initial={{ opacity: 0, y: -4, x: "-50%" }}
+            animate={{ opacity: 1, y: 0, x: "-50%" }}
+            exit={{ opacity: 0, y: -4, x: "-50%" }}
             transition={{ duration: 0.15, ease: "easeOut" }}
             style={{
               position: "absolute",
               top: "calc(100% + 10px)",
               left: "50%",
-              transform: "translateX(-50%)",
               background: "#888",
               color: "#fff",
               fontSize: 11,
