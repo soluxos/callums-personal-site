@@ -5,8 +5,8 @@ import CaseStudyMetaGrid from "@/components/case-study/CaseStudyMetaGrid";
 import CaseStudySection from "@/components/case-study/CaseStudySection";
 import CaseStudySlider from "@/components/case-study/CaseStudySlider";
 import FadeInUp from "@/components/FadeInUp/FadeInUp";
-import Link from "next/link";
-import AnimatedGradientBackground from "@/components/AnimatedGradientBackground/AnimatedGradientBackground";
+import CaseStudyCards from "@/components/case-study/CaseStudyCards";
+import CaseStudyCard from "@/components/case-study/CaseStudyCard";
 
 const workFrameImage = "/images/case-studies/drupal-canvas/drupal-canvas-hero.png";
 
@@ -258,11 +258,29 @@ export default function DrupalCanvasCaseStudy() {
               necessary UI. This is where I started to take inventory of what we had and bring this
               into a sensible system. Take a look at what things looked like, and how it is now:
             </p>
-            <img
-              src={"/images/case-studies/drupal-canvas/design-system.png"}
-              alt="Design system"
-              className="h-auto w-full object-contain max-h-full rounded-[16px]"
-            />
+            <CaseStudyCards>
+              <CaseStudyCard
+                width="half"
+                image="/images/case-studies/drupal-canvas/case-study-components.png"
+                imageAlt="Description"
+              >
+                Components created with variables and autolayout
+              </CaseStudyCard>
+              <CaseStudyCard
+                width="half"
+                image="/images/case-studies/drupal-canvas/case-study-guides.png"
+                imageAlt="Description"
+              >
+                Rules and guides created for consistency
+              </CaseStudyCard>
+              <CaseStudyCard
+                width="full"
+                image="/images/case-studies/drupal-canvas/case-study-documented.png"
+                imageAlt="Description"
+              >
+                Every component organised into groups and documented
+              </CaseStudyCard>
+            </CaseStudyCards>
           </CaseStudySection>
         </FadeInUp>
 
