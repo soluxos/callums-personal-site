@@ -13,16 +13,16 @@ export default function CaseStudyCard({ width = "full", image, imageAlt = "", ch
   return (
     <div
       className={[
-        "relative flex flex-col justify-end overflow-hidden rounded-[8px] bg-[#ededed]",
-        "h-[640px] w-full",
+        "flex flex-col overflow-hidden rounded-[8px] bg-[#ededed]",
+        "h-[400px] md:h-[640px] w-full",
         isHalf ? "md:flex-1" : "md:w-full",
       ]
         .filter(Boolean)
         .join(" ")}
     >
-      {/* Image fills the card, sits behind the text strip */}
+      {/* Image fills remaining space above the text strip */}
       {image && (
-        <div className="flex flex-grow w-full h-full">
+        <div className="flex-1 min-h-0 w-full overflow-hidden">
           <img src={image} alt={imageAlt} className="h-full w-full object-contain" />
         </div>
       )}

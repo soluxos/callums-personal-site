@@ -82,13 +82,13 @@ function AvatarWithTooltip({ user, index, total, onScrollTo }) {
 export default function AvatarPill({ allUsers, channelStatus }) {
   return (
     <div
+      className="hidden md:flex"
       style={{
         position: "absolute",
         top: 24,
         left: "50%",
         transform: "translateX(-50%)",
         zIndex: 9001,
-        display: "flex",
         alignItems: "center",
         background: "rgba(255,255,255,0.85)",
         backdropFilter: "blur(12px)",

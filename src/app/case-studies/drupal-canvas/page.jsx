@@ -292,11 +292,15 @@ export default function DrupalCanvasCaseStudy() {
               project could understand the complex workflows that we had to create, and how we
               turned these into simple processes for our users.
             </p>
-            <img
-              src={"/images/case-studies/drupal-canvas/user-flows.png"}
-              alt="Design system"
-              className="h-auto w-full object-contain max-h-full rounded-[16px]"
-            />
+            <CaseStudyCards>
+              <CaseStudyCard
+                width="full"
+                image="/images/case-studies/drupal-canvas/case-study-step-by-step.png"
+                imageAlt="Description"
+              >
+                Step-by-step breakdown of the user flows
+              </CaseStudyCard>
+            </CaseStudyCards>
           </CaseStudySection>
         </FadeInUp>
 
