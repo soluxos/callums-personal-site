@@ -629,6 +629,9 @@ export default function LivePresence() {
       ]
     : [];
 
+  // Hide on lovable pages
+  if (pathname.startsWith("/lovable")) return null;
+
   return (
     <>
       <AvatarPill allUsers={allUsers} channelStatus={channelStatus} />

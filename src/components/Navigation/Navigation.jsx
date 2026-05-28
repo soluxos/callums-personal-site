@@ -12,6 +12,8 @@ export default function Navigation() {
   const { isLocked } = usePasswordGate();
   const isWhite = /^\/case-studies\/.+/.test(pathname) && !isLocked;
 
+  if (pathname.startsWith("/lovable")) return null;
+
   return (
     <header
       className="relative flex w-full max-w-[1360px] min-w-0 items-center justify-between gap-20"
