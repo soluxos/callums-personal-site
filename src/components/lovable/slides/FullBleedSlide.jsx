@@ -21,7 +21,7 @@ export default function FullBleedSlide({ src, alt, overlay, title, subtitle }) {
         style={{
           background:
             overlay ||
-            "linear-gradient(to top, rgba(10,10,10,0.9) 0%, rgba(10,10,10,0.3) 50%, rgba(10,10,10,0.5) 100%)",
+            "linear-gradient(to top, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0.6) 100%)",
         }}
       />
 
@@ -30,7 +30,7 @@ export default function FullBleedSlide({ src, alt, overlay, title, subtitle }) {
         <div className="relative z-10 flex max-w-[700px] flex-col items-center gap-4 text-center px-6">
           {title && (
             <motion.h2
-              className="font-ppmondwest text-[clamp(28px,6vw,56px)] leading-[1.1] text-white"
+              className="font-ppmondwest text-[clamp(28px,6vw,56px)] leading-[1.1] text-[#1a1a1a]"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
@@ -40,7 +40,7 @@ export default function FullBleedSlide({ src, alt, overlay, title, subtitle }) {
           )}
           {subtitle && (
             <motion.p
-              className="text-[15px] leading-[1.6] text-white/70 md:text-[17px]"
+              className="text-[15px] leading-[1.6] text-[#484848] md:text-[17px]"
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.45 }}

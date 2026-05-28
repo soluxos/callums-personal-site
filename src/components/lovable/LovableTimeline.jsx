@@ -8,7 +8,7 @@ export default function LovableTimeline({ total, selectedIndex, scrollTo }) {
       {/* Timeline segments */}
       <div className="relative flex w-full items-end">
         {/* Bottom baseline */}
-        <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-white/[0.08]" />
+        <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-[#e8e8e8]" />
 
         {Array.from({ length: total }).map((_, index) => {
           const isActive = index === selectedIndex;
@@ -26,14 +26,14 @@ export default function LovableTimeline({ total, selectedIndex, scrollTo }) {
                 animate={{
                   height: isActive ? 24 : 12,
                   backgroundColor: isActive
-                    ? "rgba(255, 255, 255, 0.9)"
+                    ? "rgba(26, 26, 26, 0.9)"
                     : isPast
-                      ? "rgba(255, 255, 255, 0.4)"
-                      : "rgba(255, 255, 255, 0.12)",
+                      ? "rgba(26, 26, 26, 0.35)"
+                      : "rgba(26, 26, 26, 0.1)",
                 }}
                 whileHover={{
                   height: 18,
-                  backgroundColor: "rgba(255, 255, 255, 0.6)",
+                  backgroundColor: "rgba(26, 26, 26, 0.5)",
                 }}
                 transition={{ type: "spring", stiffness: 350, damping: 26 }}
               />

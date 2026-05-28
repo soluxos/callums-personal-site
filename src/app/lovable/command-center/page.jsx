@@ -38,7 +38,7 @@ export default function CommandCenterLovable() {
         </>
       }
       aside={
-        <div className="flex h-[200px] w-[200px] items-center justify-center rounded-2xl border border-white/10 bg-white/5">
+        <div className="flex h-[200px] w-[200px] items-center justify-center rounded-2xl border border-[#e8e8e8] bg-[#f8f8f8]">
           <span className="text-[48px]">⚡</span>
         </div>
       }
@@ -75,22 +75,22 @@ export default function CommandCenterLovable() {
       key="dashboard"
       left={
         <div className="flex flex-col gap-4">
-          <h3 className="font-ppmondwest text-[28px] text-white">Unified Dashboard</h3>
-          <p className="text-[15px] leading-[1.7] text-white/60">
+          <h3 className="font-ppmondwest text-[28px] text-[#1a1a1a]">Unified Dashboard</h3>
+          <p className="text-[15px] leading-[1.7] text-[#6b6b6b]">
             A single pane of glass bringing together alerts, metrics, system health, and team
             activity. Customizable widgets allow each user to prioritize what matters most.
           </p>
         </div>
       }
       right={
-        <div className="flex h-[300px] w-full items-center justify-center rounded-xl border border-white/10 bg-gradient-to-br from-white/5 to-white/[0.02]">
+        <div className="flex h-[300px] w-full items-center justify-center rounded-xl border border-[#e8e8e8] bg-gradient-to-br from-[#f8f8f8] to-[#fafafa]">
           <div className="grid grid-cols-2 gap-3 p-6">
             {["Alerts", "Metrics", "Health", "Activity"].map(label => (
               <div
                 key={label}
-                className="flex h-[80px] w-[100px] items-center justify-center rounded-lg border border-white/10 bg-white/5"
+                className="flex h-[80px] w-[100px] items-center justify-center rounded-lg border border-[#e8e8e8] bg-[#f5f5f5]"
               >
-                <span className="text-[11px] text-white/50">{label}</span>
+                <span className="text-[11px] text-[#929292]">{label}</span>
               </div>
             ))}
           </div>
@@ -152,8 +152,8 @@ export default function CommandCenterLovable() {
       }
       aside={
         <div className="flex flex-col items-center gap-3">
-          <span className="font-ppmondwest text-[56px] text-white">73%</span>
-          <span className="text-[13px] text-white/40">less alert fatigue</span>
+          <span className="font-ppmondwest text-[56px] text-[#1a1a1a]">73%</span>
+          <span className="text-[13px] text-[#929292]">less alert fatigue</span>
         </div>
       }
     />,
@@ -161,12 +161,12 @@ export default function CommandCenterLovable() {
     <SplitSlide
       key="collaboration"
       left={
-        <div className="flex h-[250px] w-full items-center justify-center rounded-xl border border-white/10 bg-gradient-to-br from-blue-500/10 to-purple-500/10">
+        <div className="flex h-[250px] w-full items-center justify-center rounded-xl border border-[#e8e8e8] bg-gradient-to-br from-blue-500/10 to-purple-500/10">
           <div className="flex -space-x-3">
             {[1, 2, 3, 4].map(i => (
               <div
                 key={i}
-                className="h-12 w-12 rounded-full border-2 border-[#0a0a0a] bg-white/20"
+                className="h-12 w-12 rounded-full border-2 border-white bg-[#e0e0e0]"
               />
             ))}
           </div>
@@ -174,8 +174,8 @@ export default function CommandCenterLovable() {
       }
       right={
         <div className="flex flex-col gap-4">
-          <h3 className="font-ppmondwest text-[28px] text-white">Team Collaboration</h3>
-          <p className="text-[15px] leading-[1.7] text-white/60">
+          <h3 className="font-ppmondwest text-[28px] text-[#1a1a1a]">Team Collaboration</h3>
+          <p className="text-[15px] leading-[1.7] text-[#6b6b6b]">
             Built-in collaboration features allow teams to discuss, assign, and resolve incidents
             without leaving the platform. Shared context reduces mean time to resolution.
           </p>

@@ -14,7 +14,7 @@ export default function LovableNav({ title, currentIndex, total }) {
       {/* Back / close */}
       <Link
         href="/lovable"
-        className="group flex items-center gap-2 text-[13px] text-white/40 transition-colors hover:text-white/80"
+        className="group flex items-center gap-2 text-[13px] text-[#a0a0a0] transition-colors hover:text-[#484848]"
       >
         <svg
           width="16"
@@ -35,10 +35,10 @@ export default function LovableNav({ title, currentIndex, total }) {
       </Link>
 
       {/* Title */}
-      <span className="font-ppmondwest text-[13px] text-white/50">{title}</span>
+      <span className="font-ppmondwest text-[13px] text-[#a0a0a0]">{title}</span>
 
       {/* Counter */}
-      <span className="font-mono text-[12px] tabular-nums text-white/30">
+      <span className="font-mono text-[12px] tabular-nums text-[#c0c0c0]">
         {String(currentIndex + 1).padStart(2, "0")}/{String(total).padStart(2, "0")}
       </span>
     </motion.div>

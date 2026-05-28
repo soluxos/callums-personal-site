@@ -7,7 +7,7 @@ export default function MetricsSlide({ title, metrics }) {
     <div className="flex h-full w-full max-w-[1000px] flex-col items-center justify-center gap-12">
       {title && (
         <motion.h2
-          className="font-ppmondwest text-[clamp(20px,3vw,32px)] text-white/70"
+          className="font-ppmondwest text-[clamp(20px,3vw,32px)] text-[#6b6b6b]"
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
@@ -20,15 +20,15 @@ export default function MetricsSlide({ title, metrics }) {
         {metrics.map((metric, i) => (
           <motion.div
             key={i}
-            className="flex flex-col items-center gap-2 rounded-2xl border border-white/[0.06] bg-white/[0.02] px-6 py-8"
+            className="flex flex-col items-center gap-2 rounded-2xl border border-[#e8e8e8] bg-[#f8f8f8] px-6 py-8"
             initial={{ opacity: 0, y: 20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ duration: 0.4, delay: i * 0.08 }}
           >
-            <span className="font-ppmondwest text-[clamp(28px,5vw,48px)] leading-none text-white">
+            <span className="font-ppmondwest text-[clamp(28px,5vw,48px)] leading-none text-[#1a1a1a]">
               {metric.value}
             </span>
-            <span className="text-center text-[12px] leading-[1.4] text-white/40">
+            <span className="text-center text-[12px] leading-[1.4] text-[#a0a0a0]">
               {metric.label}
             </span>
           </motion.div>

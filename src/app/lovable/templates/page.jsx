@@ -56,8 +56,8 @@ export default function TemplatesPage() {
         </>
       }
       aside={
-        <div className="flex h-[180px] w-[180px] items-center justify-center rounded-2xl border border-white/10 bg-white/[0.03]">
-          <span className="text-[13px] text-white/30">Visual aside</span>
+        <div className="flex h-[180px] w-[180px] items-center justify-center rounded-2xl border border-[#e8e8e8] bg-[#f8f8f8]">
+          <span className="text-[13px] text-[#a0a0a0]">Visual aside</span>
         </div>
       }
     />,
@@ -67,16 +67,16 @@ export default function TemplatesPage() {
       key="split"
       left={
         <div className="flex flex-col gap-4">
-          <h3 className="font-ppmondwest text-[28px] text-white">Split Slide</h3>
-          <p className="text-[15px] leading-[1.7] text-white/60">
+          <h3 className="font-ppmondwest text-[28px] text-[#1a1a1a]">Split Slide</h3>
+          <p className="text-[15px] leading-[1.7] text-[#6b6b6b]">
             The left panel typically holds text content — a heading, description, or key points.
             This layout works well for pairing narrative with imagery.
           </p>
         </div>
       }
       right={
-        <div className="flex h-[280px] w-full items-center justify-center rounded-xl border border-white/10 bg-white/[0.03]">
-          <span className="text-[13px] text-white/30">Image or visual</span>
+        <div className="flex h-[280px] w-full items-center justify-center rounded-xl border border-[#e8e8e8] bg-[#f8f8f8]">
+          <span className="text-[13px] text-[#a0a0a0]">Image or visual</span>
         </div>
       }
     />,
@@ -230,13 +230,13 @@ export default function TemplatesPage() {
       key="comparison"
       title="Comparison Slide"
       before={
-        <div className="flex h-[200px] w-full items-center justify-center bg-white/[0.03]">
-          <span className="text-[13px] text-white/30">Before state</span>
+        <div className="flex h-[200px] w-full items-center justify-center bg-[#f8f8f8]">
+          <span className="text-[13px] text-[#a0a0a0]">Before state</span>
         </div>
       }
       after={
-        <div className="flex h-[200px] w-full items-center justify-center bg-white/[0.03]">
-          <span className="text-[13px] text-white/30">After state</span>
+        <div className="flex h-[200px] w-full items-center justify-center bg-[#f8f8f8]">
+          <span className="text-[13px] text-[#a0a0a0]">After state</span>
         </div>
       }
     />,

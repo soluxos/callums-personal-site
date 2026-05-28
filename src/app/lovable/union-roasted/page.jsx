@@ -41,7 +41,7 @@ export default function UnionRoastedLovable() {
         </>
       }
       aside={
-        <div className="flex h-[200px] w-[200px] items-center justify-center rounded-2xl border border-white/10 bg-white/5">
+        <div className="flex h-[200px] w-[200px] items-center justify-center rounded-2xl border border-[#e8e8e8] bg-[#f8f8f8]">
           <span className="text-[48px]">☕</span>
         </div>
       }
@@ -86,8 +86,8 @@ export default function UnionRoastedLovable() {
       key="product"
       left={
         <div className="flex flex-col gap-4">
-          <h3 className="font-ppmondwest text-[28px] text-white">Product Experience</h3>
-          <p className="text-[15px] leading-[1.7] text-white/60">
+          <h3 className="font-ppmondwest text-[28px] text-[#1a1a1a]">Product Experience</h3>
+          <p className="text-[15px] leading-[1.7] text-[#6b6b6b]">
             Each product page tells a story — from origin to roast profile. Rich photography and
             deliberate typography guide the customer through the tasting notes and brewing
             recommendations.
@@ -143,8 +143,8 @@ export default function UnionRoastedLovable() {
       }
       right={
         <div className="flex flex-col gap-4">
-          <h3 className="font-ppmondwest text-[28px] text-white">Editorial Content</h3>
-          <p className="text-[15px] leading-[1.7] text-white/60">
+          <h3 className="font-ppmondwest text-[28px] text-[#1a1a1a]">Editorial Content</h3>
+          <p className="text-[15px] leading-[1.7] text-[#6b6b6b]">
             A dedicated blog section builds community, drives organic traffic, and educates
             customers about coffee origins, brewing methods, and the roasting craft.
           </p>

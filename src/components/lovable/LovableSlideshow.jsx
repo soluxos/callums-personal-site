@@ -119,7 +119,7 @@ export default function LovableSlideshow({ slides, title }) {
   }, [goNext, goPrev]);
 
   return (
-    <div className="fixed inset-0 flex flex-col bg-[#0a0a0a] overflow-hidden">
+    <div className="fixed inset-0 flex flex-col bg-white overflow-hidden">
       {/* Exit navigation */}
       <LovableNav title={title} currentIndex={currentIndex} total={slides.length} />
 

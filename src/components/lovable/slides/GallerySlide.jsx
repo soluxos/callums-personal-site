@@ -31,7 +31,7 @@ export default function GallerySlide({ images, caption }) {
 
       {caption && (
         <motion.p
-          className="text-center text-[13px] text-white/35"
+          className="text-center text-[13px] text-[#a0a0a0]"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.4, delay: 0.4 }}

@@ -7,7 +7,7 @@ export default function TeamSlide({ title, members }) {
     <div className="flex h-full w-full max-w-[900px] flex-col items-center justify-center gap-10">
       {title && (
         <motion.h2
-          className="font-ppmondwest text-[clamp(20px,3vw,32px)] text-white/70"
+          className="font-ppmondwest text-[clamp(20px,3vw,32px)] text-[#6b6b6b]"
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
@@ -25,12 +25,12 @@ export default function TeamSlide({ title, members }) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: i * 0.08 }}
           >
-            <div className="flex h-16 w-16 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] text-[20px]">
+            <div className="flex h-16 w-16 items-center justify-center rounded-full border border-[#e8e8e8] bg-[#f5f5f5] text-[20px]">
               {member.avatar || member.name?.charAt(0) || "?"}
             </div>
             <div className="flex flex-col items-center gap-0.5">
-              <span className="text-[13px] font-medium text-white/80">{member.name}</span>
-              {member.role && <span className="text-[11px] text-white/35">{member.role}</span>}
+              <span className="text-[13px] font-medium text-[#484848]">{member.name}</span>
+              {member.role && <span className="text-[11px] text-[#a0a0a0]">{member.role}</span>}
             </div>
           </motion.div>
         ))}

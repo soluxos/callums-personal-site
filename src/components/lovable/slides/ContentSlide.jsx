@@ -9,7 +9,7 @@ export default function ContentSlide({ title, content, aside, accent = "#ffffff"
       <div className="flex flex-1 flex-col gap-5">
         {title && (
           <motion.h2
-            className="font-ppmondwest text-[clamp(24px,4vw,44px)] leading-[1.2] text-white"
+            className="font-ppmondwest text-[clamp(24px,4vw,44px)] leading-[1.2] text-[#1a1a1a]"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
@@ -20,7 +20,7 @@ export default function ContentSlide({ title, content, aside, accent = "#ffffff"
 
         {content && (
           <motion.div
-            className="flex flex-col gap-4 text-[15px] leading-[1.7] text-white/60 md:text-[16px]"
+            className="flex flex-col gap-4 text-[15px] leading-[1.7] text-[#6b6b6b] md:text-[16px]"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}

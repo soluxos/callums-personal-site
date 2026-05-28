@@ -41,7 +41,7 @@ export default function DrupalCanvasLovable() {
         </>
       }
       aside={
-        <div className="flex h-[200px] w-[200px] items-center justify-center rounded-2xl border border-white/10 bg-white/5">
+        <div className="flex h-[200px] w-[200px] items-center justify-center rounded-2xl border border-[#e8e8e8] bg-[#f8f8f8]">
           <span className="text-[48px]">🧩</span>
         </div>
       }
@@ -98,8 +98,8 @@ export default function DrupalCanvasLovable() {
       key="features"
       left={
         <div className="flex flex-col gap-4">
-          <h3 className="font-ppmondwest text-[28px] text-white">Node-Based Editing</h3>
-          <p className="text-[15px] leading-[1.7] text-white/60">
+          <h3 className="font-ppmondwest text-[28px] text-[#1a1a1a]">Node-Based Editing</h3>
+          <p className="text-[15px] leading-[1.7] text-[#6b6b6b]">
             A completely new paradigm for content editing. Users connect design system components
             visually, creating complex layouts through an intuitive drag-and-drop interface.
           </p>
@@ -168,8 +168,8 @@ export default function DrupalCanvasLovable() {
       }
       right={
         <div className="flex flex-col gap-4">
-          <h3 className="font-ppmondwest text-[28px] text-white">Code-Level Control</h3>
-          <p className="text-[15px] leading-[1.7] text-white/60">
+          <h3 className="font-ppmondwest text-[28px] text-[#1a1a1a]">Code-Level Control</h3>
+          <p className="text-[15px] leading-[1.7] text-[#6b6b6b]">
             For developers who prefer code, a seamless editor integration allows direct template
             manipulation while maintaining the visual benefits of the design system.
           </p>

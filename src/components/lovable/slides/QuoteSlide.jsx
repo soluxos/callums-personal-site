@@ -6,7 +6,7 @@ export default function QuoteSlide({ quote, author, role }) {
   return (
     <div className="flex h-full w-full max-w-[800px] flex-col items-center justify-center gap-8 text-center">
       <motion.blockquote
-        className="font-ppmondwest text-[clamp(20px,4vw,36px)] leading-[1.4] text-white/90"
+        className="font-ppmondwest text-[clamp(20px,4vw,36px)] leading-[1.4] text-[#1a1a1a]"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
@@ -21,8 +21,8 @@ export default function QuoteSlide({ quote, author, role }) {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.4, delay: 0.3 }}
         >
-          {author && <span className="text-[14px] font-medium text-white/60">{author}</span>}
-          {role && <span className="text-[12px] text-white/30">{role}</span>}
+          {author && <span className="text-[14px] font-medium text-[#6b6b6b]">{author}</span>}
+          {role && <span className="text-[12px] text-[#a0a0a0]">{role}</span>}
         </motion.div>
       )}
     </div>

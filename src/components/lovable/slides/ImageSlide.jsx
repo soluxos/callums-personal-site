@@ -22,7 +22,7 @@ export default function ImageSlide({ src, alt, caption, variant = "default" }) {
 
       {caption && (
         <motion.p
-          className="max-w-[500px] text-center text-[13px] leading-[1.5] text-white/40"
+          className="max-w-[500px] text-center text-[13px] leading-[1.5] text-[#a0a0a0]"
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, delay: 0.2 }}

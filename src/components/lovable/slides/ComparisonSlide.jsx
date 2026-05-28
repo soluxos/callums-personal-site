@@ -7,7 +7,7 @@ export default function ComparisonSlide({ title, before, after }) {
     <div className="flex h-full w-full max-w-[1100px] flex-col items-center justify-center gap-8">
       {title && (
         <motion.h2
-          className="font-ppmondwest text-[clamp(20px,3vw,32px)] text-white/70"
+          className="font-ppmondwest text-[clamp(20px,3vw,32px)] text-[#6b6b6b]"
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
@@ -24,10 +24,10 @@ export default function ComparisonSlide({ title, before, after }) {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
         >
-          <span className="text-[11px] font-medium uppercase tracking-widest text-white/30">
+          <span className="text-[11px] font-medium uppercase tracking-widest text-[#b0b0b0]">
             Before
           </span>
-          <div className="overflow-hidden rounded-xl border border-white/[0.06]">
+          <div className="overflow-hidden rounded-xl border border-[#e8e8e8]">
             {typeof before === "string" ? (
               <img src={before} alt="Before" className="h-auto w-full object-cover" />
             ) : (
@@ -43,10 +43,10 @@ export default function ComparisonSlide({ title, before, after }) {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
-          <span className="text-[11px] font-medium uppercase tracking-widest text-white/30">
+          <span className="text-[11px] font-medium uppercase tracking-widest text-[#b0b0b0]">
             After
           </span>
-          <div className="overflow-hidden rounded-xl border border-white/[0.06]">
+          <div className="overflow-hidden rounded-xl border border-[#e8e8e8]">
             {typeof after === "string" ? (
               <img src={after} alt="After" className="h-auto w-full object-cover" />
             ) : (
