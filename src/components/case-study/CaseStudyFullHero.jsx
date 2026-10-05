@@ -10,10 +10,11 @@ export default function CaseStudyFullHero({
   logoAlt = "",
   preset = "peach",
   metaItems,
+  link,
 }) {
   return (
     // margin-top: -60px pulls the hero up behind the nav (pt-8 ≈ 32px + nav ≈ 28px)
-    <div className="relative h-[600px] sm:h-[800px]" style={{ marginTop: "-60px" }}>
+    <div className="relative min-h-[600px] sm:min-h-[680px]" style={{ marginTop: "-60px" }}>
       {/* Absolutely-positioned background breaks out of the container's horizontal margins
           to cover the full viewport width without causing a horizontal scrollbar */}
       <div
@@ -40,7 +41,7 @@ export default function CaseStudyFullHero({
       </div>
 
       {/* Content sits on top of the background */}
-      <div className="relative z-10 h-full flex flex-col pt-[80px] sm:pt-[100px] pb-[50px] sm:pb-[80px]">
+      <div className="relative z-10 min-h-[600px] sm:min-h-[680px] flex flex-col gap-12 pt-[100px] sm:pt-[120px] pb-[50px] sm:pb-[64px]">
         {/* Logo + title + description — vertically centred in the remaining space */}
         <div className="flex-1 flex flex-col items-start justify-center text-left gap-3">
           {logo && (
@@ -53,9 +54,21 @@ export default function CaseStudyFullHero({
             className="font-ppmondwest text-[40px] sm:text-[64px] leading-[1.2] text-white"
           />
           {description && (
-            <p className="text-[16px] max-w-[480px] font-medium leading-[1.5] text-white/80">
+            <p className="text-[16px] max-w-[560px] font-medium leading-[1.5] text-white/80">
               {description}
             </p>
+          )}
+          {/* Optional link to the live work, e.g. a public prototype. */}
+          {link && (
+            <a
+              href={link.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[16px] font-medium leading-[1.5] text-white underline underline-offset-4 hover:text-white/80"
+            >
+              {link.label} <span aria-hidden="true">↗</span>
+              <span className="sr-only"> (opens in a new tab)</span>
+            </a>
           )}
         </div>
 
@@ -67,7 +80,7 @@ export default function CaseStudyFullHero({
                 <p className="font-ppmondwest text-[18px] leading-[1.25] text-white">
                   {item.label}
                 </p>
-                <p className="text-[13px] font-medium leading-[1.5] text-white/80 max-w-[200px]">
+                <p className="text-[13px] font-medium leading-[1.5] text-white/80 max-w-[240px]">
                   {item.value}
                 </p>
               </div>

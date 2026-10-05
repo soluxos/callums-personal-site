@@ -153,7 +153,7 @@ export default function IdeasCanvasPreview({
         <h2 className="font-ppmondwest text-[24px] leading-[1.25]">Ideas</h2>
         <Link
           href="/ideas"
-          className="text-[13px] font-medium text-[#929292] hover:text-[#2a2a2a] transition-colors"
+          className="text-[13px] font-medium text-[#6b6b6b] hover:text-[#2a2a2a] transition-colors"
         >
           View all →
         </Link>

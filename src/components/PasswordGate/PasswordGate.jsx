@@ -1,54 +1,48 @@
 "use client";
 
-import { useState, useLayoutEffect } from "react";
-import { usePasswordGate } from "@/contexts/PasswordGateContext";
+import { useActionState, useState } from "react";
+import { unlockCaseStudies } from "@/app/case-studies/actions";
 
-const COOKIE_KEY = "pg_unlocked";
-
-function setCookie(name, value, days = 30) {
-  const expires = new Date(Date.now() + days * 864e5).toUTCString();
-  document.cookie = `${name}=${value}; expires=${expires}; path=/; SameSite=Strict`;
-}
-
-export default function PasswordGate({ password, children, defaultUnlocked = false }) {
-  const [unlocked, setUnlocked] = useState(defaultUnlocked);
-  const [input, setInput] = useState("");
-  const [error, setError] = useState(false);
-  const { setIsLocked } = usePasswordGate();
-
-  useLayoutEffect(() => {
-    setIsLocked(!unlocked);
-  }, [unlocked]);
-
-  function handleSubmit(e) {
-    e.preventDefault();
-    if (input === password) {
-      setCookie(COOKIE_KEY, "1");
-      setUnlocked(true);
-      setError(false);
-    } else {
-      setError(true);
-      setInput("");
-    }
-  }
-
-  if (unlocked) return children;
+/**
+ * The locked state of a password-protected case study. The page decides on the
+ * server whether to render this or the detail (see src/lib/caseStudyAccess.js),
+ * so the password and the gated content never reach a locked visitor.
+ */
+export default function PasswordGate() {
+  const [state, formAction, pending] = useActionState(unlockCaseStudies, { error: false });
+  // Hide the error once they start typing again; a new submission brings a new state.
+  const [dismissedState, setDismissedState] = useState(null);
+  const error = state.error && dismissedState !== state;
 
   return (
-    <div className="flex flex-col items-center justify-center gap-8 py-40">
-      <div className="flex flex-col items-center gap-2 text-center">
-        <h1 className="text-[22px] font-semibold tracking-tight text-[#1a1a1a]">
-          Password protected
-        </h1>
-        <p className="text-[14px] font-medium text-[#656565]">
-          Enter the password to view this case study.
+    <div className="flex flex-col items-center justify-center gap-8 rounded-[16px] bg-[#ededed] px-5 py-20">
+      <div className="flex max-w-[440px] flex-col items-center gap-2 text-center">
+        <h2 className="font-ppmondwest text-[32px] leading-[1.25] text-[#484848]">
+          The rest is password protected
+        </h2>
+        <p className="text-[14px] font-medium leading-[1.5] text-[#656565]">
+          The screens and detail are for work that isn&apos;t public yet. If you&apos;re hiring and
+          don&apos;t have the password,{" "}
+          <a
+            href="mailto:callumharrod1994@hotmail.co.uk?subject=Portfolio%20password"
+            className="text-[#484848] underline underline-offset-2 hover:text-[#1a1a1a]"
+          >
+            email me
+          </a>{" "}
+          and I&apos;ll send it over.
         </p>
       </div>
 
-      <form className="flex w-full max-w-[320px] flex-col gap-3" onSubmit={handleSubmit}>
+      <form className="flex w-full max-w-[320px] flex-col gap-3" action={formAction}>
+        <label htmlFor="case-study-password" className="sr-only">
+          Password
+        </label>
         <input
+          id="case-study-password"
+          name="password"
           autoComplete="current-password"
-          autoFocus
+          aria-invalid={error || undefined}
+          aria-describedby={error ? "case-study-password-error" : undefined}
           className={[
             "w-full rounded-[10px] border bg-white px-4 py-3 text-[14px] font-medium text-[#1a1a1a] outline-none transition-colors placeholder:text-[#b0b0b0]",
             error
@@ -57,22 +51,22 @@ export default function PasswordGate({ password, children, defaultUnlocked = fal
           ].join(" ")}
           placeholder="Password"
           type="password"
-          value={input}
-          onChange={e => {
-            setInput(e.target.value);
-            if (error) setError(false);
+          required
+          onChange={() => {
+            if (error) setDismissedState(state);
           }}
         />
         {error && (
-          <p className="text-[13px] font-medium text-red-500">
+          <p id="case-study-password-error" className="text-[13px] font-medium text-red-500">
             Incorrect password. Please try again.
           </p>
         )}
         <button
-          className="w-full rounded-[10px] bg-[#1a1a1a] px-4 py-3 text-[14px] font-semibold text-white transition-opacity hover:opacity-80"
+          className="w-full rounded-[10px] bg-[#1a1a1a] px-4 py-3 text-[14px] font-semibold text-white transition-opacity hover:opacity-80 disabled:opacity-60"
           type="submit"
+          disabled={pending}
         >
-          Unlock
+          {pending ? "Unlocking…" : "Unlock"}
         </button>
       </form>
     </div>

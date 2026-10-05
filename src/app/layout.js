@@ -4,6 +4,7 @@ import Navigation from "@/components/Navigation/Navigation";
 import DitherOverlay from "@/components/DitherOverlay/DitherOverlay";
 import PageTransition from "@/components/PageTransition/PageTransition";
 import LivePresence from "@/components/LivePresence/LivePresence";
+import MatCuts from "@/components/CuttingMat/MatCuts";
 import DraggableCanvas from "@/components/DraggableCanvas/DraggableCanvas";
 import EditModeProvider from "@/contexts/EditModeContext";
 
@@ -14,6 +15,7 @@ import ConditionalFooter from "@/components/ConditionalFooter/ConditionalFooter"
 import PageWrapper from "@/components/PageWrapper/PageWrapper";
 import WipBanner from "@/components/WipBanner/WipBanner";
 import { PasswordGateProvider } from "@/contexts/PasswordGateContext";
+import { SITE_URL, pageMetadata } from "@/lib/metadata";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,31 +27,17 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+// What a search result or a shared link shows. Written for a recruiter or hiring
+// manager seeing the link out of context, so it says what I do and what I've done.
 export const metadata = {
-  title: "Callum Harrod - Personal Site",
-  description: "My little nook on the internet. I also make things.",
-  openGraph: {
-    title: "Callum Harrod - Personal Site",
-    description: "My little nook on the internet. I also make things.",
-    url: "https://callumharrod.com", // Replace with your actual URL
-    type: "website",
-    images: [
-      {
-        url: "https://callumharrod.com/images/social-thumb.png", // Absolute URL for the social share image
-        width: 1200,
-        height: 630,
-        alt: "Callum Harrod - Personal Site",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Callum Harrod - Personal Site",
-    description: "My little nook on the internet. I also make things.",
-    images: ["https://callumharrod.com/images/social-thumb.png"], // Absolute URL for the social share image
-  },
+  metadataBase: new URL(SITE_URL),
+  ...pageMetadata({
+    title: "Callum Harrod · Design lead & design engineer",
+    description:
+      "Design lead at Acquia and a design engineer who builds in code. I led design on Drupal Canvas, now on 13,000+ sites, and rebuilt Site Studio in React with one other engineer.",
+  }),
   icons: {
-    icon: "/favicon.svg", // Path to your favicon
+    icon: "/favicon.svg",
   },
 };
 
@@ -72,6 +60,7 @@ export default function RootLayout({ children }) {
                   </PageWrapper>
                 </div>
                 <LivePresence />
+                <MatCuts />
               </DraggableCanvas>
             </PasswordGateProvider>
           </EditModeProvider>

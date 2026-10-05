@@ -1,305 +1,172 @@
-import CaseStudyBentoGrid from "@/components/case-study/CaseStudyBentoGrid";
+import CanvasUsageChart from "@/components/case-study/CanvasUsageChart";
+import CaseStudyCard from "@/components/case-study/CaseStudyCard";
+import CaseStudyCards from "@/components/case-study/CaseStudyCards";
 import CaseStudyFullHero from "@/components/case-study/CaseStudyFullHero";
 import CaseStudyLayout from "@/components/case-study/CaseStudyLayout";
+import CaseStudyRole from "@/components/case-study/CaseStudyRole";
 import CaseStudySection from "@/components/case-study/CaseStudySection";
 import CaseStudySlider from "@/components/case-study/CaseStudySlider";
-import FadeInUp from "@/components/FadeInUp/FadeInUp";
-import CaseStudyCards from "@/components/case-study/CaseStudyCards";
-import CaseStudyCard from "@/components/case-study/CaseStudyCard";
 import STARBreakdown from "@/components/case-study/STARBreakdown";
+import FadeInUp from "@/components/FadeInUp/FadeInUp";
+import { pageMetadata } from "@/lib/metadata";
 
-const workFrameImage = "/images/case-studies/drupal-canvas/drupal-canvas-hero.png";
+const img = name => `/images/case-studies/drupal-canvas/${name}`;
 
-// Slider images
-const cmsContentImage = "/images/case-studies/drupal-canvas/cms-content.png";
-const codeEditorImage = "/images/case-studies/drupal-canvas/code-editor.png";
-const contentCanvasImage = "/images/case-studies/drupal-canvas/content-canvas.png";
-const contentDesignSystemNodes = "/images/case-studies/drupal-canvas/design-system-nodes.png";
+const body = "max-w-[588px] space-y-4 text-[14px] font-medium leading-[1.5] text-[#656565]";
 
-const designSystemImage = "/images/projects/drupal-canvas/design-system.png";
-const leftPanelImage = "/images/projects/drupal-canvas/left-panel.png";
-const ellipse16 = "/images/projects/drupal-canvas/ellipse-16.png";
-const ellipse17 = "/images/projects/drupal-canvas/ellipse-17.png";
-const ellipse18 = "/images/projects/drupal-canvas/ellipse-18.png";
-const ellipse19 = "/images/projects/drupal-canvas/ellipse-19.png";
-const ellipse20 = "/images/projects/drupal-canvas/ellipse-20.png";
-const pagination = "http://localhost:3845/assets/ec5b9cba23aca00c8cb38ae680cca857a26cf81f.svg";
+export const metadata = pageMetadata({
+  title: "Drupal Canvas · Callum Harrod",
+  description:
+    "I led design on Drupal Canvas, Drupal's new page builder: the whole design system and a ground-up redesign of the product. It's now on over 13,000 sites.",
+  path: "/case-studies/drupal-canvas",
+});
 
 export default function DrupalCanvasCaseStudy() {
   const sections = [
-    { label: "Overview", id: "overview" },
+    { label: "My role", id: "my-role" },
     "The problem",
-    "My involvement",
-    "Crafting a design system",
+    "How I got involved",
+    "Building the design system",
     "Structuring the shell",
-    "Creating new features",
-    "What I've done",
+    "Designing new features",
+    "Working outside Figma",
     "Results",
-    "End notes",
     "STAR breakdown",
-  ];
-
-  const metaItems = [
-    {
-      label: "Role",
-      value: "Senior Product Designer, Senior Software Engineer",
-    },
-    {
-      label: "Outcome",
-      value: "Adopted by over 4,500 websites in 3.5 months.",
-    },
-    {
-      label: "Deliverables",
-      value: "Design system, User Flows, Wireframes, User Testing",
-    },
-    {
-      label: "Timeline",
-      value: "Jan 2025 - Now",
-    },
-  ];
-
-  const bentoItems = [
-    {
-      title: "Crafted a design system",
-      description:
-        "An atomic design system built using an existing UI library. Extended for our needs and evolved with a focus on ease of use.",
-      media: (
-        <img
-          alt="Design system"
-          className="h-auto w-full object-contain max-h-full"
-          src={designSystemImage}
-        />
-      ),
-      variant: "designSystem",
-    },
-    {
-      title: "Documented everything",
-      description: "Every single component is clearly defined and explains it’s use.",
-      media: <img alt="Documentation" className="w-[487px] !max-w-[487px]" src={leftPanelImage} />,
-      variant: "image-corner",
-    },
-    {
-      title: "AI Native",
-      description: "AI was a requirement, so it was built in to feel as seamless as possible.",
-      media: (
-        <img
-          alt="AI Native prompt"
-          className="h-auto w-[248px]"
-          src="/images/projects/drupal-canvas/ai-native-bubble.svg"
-        />
-      ),
-      variant: "centered",
-    },
-    {
-      title: "Help and train designers",
-      description:
-        "As the lead for the project I’ve helped senior designers and trained junior designers on the project",
-      media: (
-        <div className="flex items-center gap-2">
-          {[ellipse16, ellipse17, ellipse18, ellipse19, ellipse20].map(src => (
-            <img key={src} alt="Team member" className="h-12 w-12" src={src} />
-          ))}
-        </div>
-      ),
-      variant: "centered",
-    },
-    {
-      title: "Handled the small details",
-      description: "Every piece of the UI went through me, from working closely with the engineers",
-      media: (
-        <img
-          alt="Small details"
-          className="h-auto w-[300px]"
-          src="/images/projects/drupal-canvas/small-details.svg"
-        />
-      ),
-      variant: "centered",
-    },
-    {
-      title: "New features",
-      description:
-        "I’ve designed new features. There have been prototypes and user flows to showcase it all",
-      media: (
-        <img
-          alt="New features"
-          className="h-auto w-[320px]"
-          src="/images/projects/drupal-canvas/new-features.svg"
-        />
-      ),
-      variant: "centered",
-    },
-  ];
-
-  const sliderImages = [
-    {
-      src: workFrameImage,
-      alt: "Drupal Canvas main interface",
-    },
-    {
-      src: cmsContentImage,
-      alt: "Drupal Canvas content management screen",
-    },
-    {
-      src: codeEditorImage,
-      alt: "Drupal Canvas code editor screen",
-    },
-    {
-      src: contentDesignSystemNodes,
-      alt: "Drupal Canvas design system nodes screen",
-    },
   ];
 
   return (
     <>
       <CaseStudyFullHero
         title="Drupal Canvas"
-        description="How I designed and shipped the future of building and editing sites with Drupal. I led the design of the new editing and site building experience, which has since been adopted by over 4,500 websites in just three and a half months."
+        description="Drupal Canvas is the new way to build and edit pages in Drupal. I joined the project as a front-end engineer and ended up leading its design. I designed the whole design system, redesigned the entire UI so it worked as one product, and rethought the foundations of the experience, from the shell every feature sits in to how each one flows. Canvas 1.0 came out in December 2025, and by September 2026 it was running on over 13,000 sites."
         logo="/images/logos/acquia-logo.svg"
         logoAlt="Acquia logo"
         preset="ocean"
-        metaItems={metaItems}
+        metaItems={[
+          {
+            label: "Role",
+            value: "Design lead (Senior Product Designer), joined as a front-end engineer",
+          },
+          { label: "Team", value: "Canvas engineers, product managers and designers" },
+          { label: "Timeline", value: "Jan 2025 - Dec 2025" },
+          { label: "Outcome", value: "Over 13,000 sites by Sept 2026, under ten months after 1.0" },
+        ]}
       />
       <CaseStudyLayout sections={sections}>
         <main className="flex flex-col gap-[120px] mt-20">
-          {/* <FadeInUp delay={0.1}>
-              <section className="flex flex-col gap-4">
-                <div className="grid gap-4">
-                  <Link
-                    href="/case-studies/drupal-canvas"
-                    className="flex flex-col md:col-span-2 gap-2"
-                  >
-                    <div className="relative h-[540px] w-full overflow-hidden rounded-[16px] bg-[#929292]">
-                      <AnimatedGradientBackground
-                        preset="ocean"
-                        animationDuration={50}
-                        blurAmount={50}
-                        opacity={1}
-                        grain={true}
-                        grainOpacity={0.015}
-                        dither={true}
-                        style={{
-                          width: "100%",
-                          height: "100%",
-                          minHeight: "100%",
-                          position: "absolute",
-                          top: 0,
-                          left: 0,
-                        }}
-                      />
-                      <div className="relative z-10 p-5 pb-10 w-full h-full flex flex-col justify-center items-center">
-                        <div className="relative flex flex-col items-center justify-center text-center">
-                          <div className="h-10 flex items-end justify-center mb-2">
-                            <img
-                              src="/images/logos/acquia-logo.svg"
-                              alt="Acquia logo"
-                              className="max-w-[80px]"
-                            />
-                          </div>
-                          <p className="font-ppmondwest text-[64px] leading-[1.5] text-[#fff]">
-                            Drupal Canvas
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </Link>
-                </div>
-              </section>
-            </FadeInUp> */}
+          <CaseStudyRole
+            summary="I led the design of Drupal Canvas, but I didn't start it. When I joined, engineering had already chosen the tech, including Radix for components, and earlier designers had produced a first UI. I designed the whole design system, then redesigned the entire UI so it held together as one product, rethinking its foundations along the way: the shell, the panels and how every feature flows. I also designed the new features and reviewed the UI engineering shipped."
+            owned={[
+              "The whole Figma design system, built on Radix to match the codebase, with usage rules for components, icons, colour and type",
+              "A ground-up redesign of the entire UI, so every part of Canvas works the same way, with new components where the old ones didn't fit",
+              "The product shell: the panels and top bar, and how they expand with what you're doing",
+              "User flows and designs for every feature, both the redesigned ones and the new ones",
+              "Design review of the UI engineering built",
+              "Mentoring the junior designers on the team",
+            ]}
+            shared={[
+              "Interaction details, worked out with the engineers building them",
+              "Requirements, which I often worked out with product before there was anything to design",
+            ]}
+            others={[
+              "Engineering built and shipped Canvas, and chose the tech stack",
+              "Earlier designers created the first UI, which I pulled into the design system before redesigning it",
+            ]}
+          />
 
-          <FadeInUp delay={0.1}>
+          <FadeInUp>
             <section className="w-full">
-              <CaseStudySlider images={sliderImages} />
+              <CaseStudySlider
+                images={[
+                  {
+                    src: img("drupal-canvas-hero.webp"),
+                    alt: "Drupal Canvas editing a travel site's home page, with the templates panel on the left, the page preview in the middle and page settings on the right",
+                  },
+                  {
+                    src: img("cms-content.png"),
+                    alt: "The Canvas content list, with an article open for editing in a side panel",
+                  },
+                  {
+                    src: img("code-editor.png"),
+                    alt: "The Canvas code editor, writing a code component with a live preview and its props alongside",
+                  },
+                ]}
+              />
             </section>
           </FadeInUp>
 
           <FadeInUp>
             <CaseStudySection title="The problem">
-              <p className="max-w-[588px] text-[14px] font-medium leading-[1.5] text-[#656565]">
-                Drupal is an incredibly powerful content management system, but it has a reputation
-                for being difficult to use. The editing experience was clunky and unintuitive, and
-                the site building experience was even worse. This was a problem for our users, and
-                it was a problem for Drupal as a platform. We needed to create a new experience that
-                would make Drupal more accessible and easier to use, while still maintaining the
-                power and flexibility that our users love.
-              </p>
+              <div className={body}>
+                <p>
+                  Drupal is one of the most powerful content management systems around, and it has a
+                  long reputation for being hard to use. Editing content was clunky and building
+                  sites was worse. That hurt the people using it, and it hurt Drupal as a platform.
+                </p>
+                <p>
+                  Canvas had to make building and editing pages approachable without losing the
+                  power and flexibility that Drupal&apos;s users rely on.
+                </p>
+              </div>
             </CaseStudySection>
           </FadeInUp>
 
           <FadeInUp>
-            <CaseStudySection title="My involvement">
-              <p className="max-w-[588px] text-[14px] font-medium leading-[1.5] text-[#656565]">
-                This isn't a typical design project, usually you'd be there from the start, but I
-                was late to the party. Originally I was going to be a front-end engineer on this,
-                but as the project was moving fast and at an early stage, a design system hadn't yet
-                been formalised. I took the initiative to pull together the existing design work and
-                build a cohesive system from it.
-              </p>
-              <p className="max-w-[588px] text-[14px] font-medium leading-[1.5] text-[#656565]">
-                This is how I was offered the job of Senior Product at Acquia. I was making strides
-                on the design system, and created the design files that every developer would want
-                to work from. From here I organised everything into a clear atomic design system.
-              </p>
-              <p className="max-w-[588px] text-[14px] font-medium leading-[1.5] text-[#656565]">
-                While organising I improved on the UI for each of the components. Due to the deep
-                technical complexity of Drupal, there were some aspects of our UI that needed
-                updating. For other areas I created completely new components to make our interface
-                more intuitive.
-              </p>
-              <p className="max-w-[588px] text-[14px] font-medium leading-[1.5] text-[#656565]">
-                Since then I have led a comprehensive redesign of the UI, worked with developers
-                closely on the interaction design, designed multiple new features that required
-                turning very complex workflows into simple processes, collaborating with designers
-                on new features by bridging the gap between design and the complex engineering
-                constraints of the product, and a lot more.
-              </p>
+            <CaseStudySection title="How I got involved">
+              <div className={body}>
+                <p>
+                  I was brought in as a front-end engineer. The project was moving quickly, and
+                  nobody had pulled the design work into a system yet, which made the UI hard to
+                  build consistently. So I started doing it: auditing the existing designs,
+                  consolidating them into components and organising everything into an atomic design
+                  system.
+                </p>
+                <p>
+                  That work is how I was offered the Senior Product Designer role at Acquia. From
+                  there I led the design of Canvas: a redesign of the entire UI, a rethink of the
+                  product shell and how every feature flows, new features, and a lot of time with
+                  engineers on how things should behave.
+                </p>
+              </div>
             </CaseStudySection>
           </FadeInUp>
 
           <FadeInUp>
-            <CaseStudySection title="Crafting a design system">
-              <p className="max-w-[588px] text-[14px] font-medium leading-[1.5] text-[#656565]">
-                Joining the project somewhat late meant that certain technical decisions had already
-                been made, and there were certain design decisions that had been made too. One of
-                the largest challenges was that a design system hadn't yet been formalised. I worked
-                to build on the strong foundation of existing UI work, auditing and consolidating
-                designs into components, and organising everything into a clear atomic design
-                system.
-              </p>
-              <p className="max-w-[588px] text-[14px] font-medium leading-[1.5] text-[#656565]">
-                The codebase was using Radix as its underlying component library, so I had to create
-                the design system to fully reflect this. I found that Radix offered a design system
-                file for the atomic elements. With this I had the core building blocks, however, I
-                needed to remove all of the options that we weren't going to utilise for other
-                designers on the team. Removing options meant that a designer couldn't make an
-                incorrect UI anymore.
-              </p>
-              <p className="max-w-[588px] text-[14px] font-medium leading-[1.5] text-[#656565]">
-                Over time I designed a lot of components to be more intuitive and better suited to
-                the needs of our users. With this I also created clear rules and guides for how to
-                use each of the components. On top of this there were usage guides for icons,
-                colours, and text to ensure a consistent experience when using Drupal Canvas.
-              </p>
+            <CaseStudySection title="Building the design system">
+              <div className={body}>
+                <p>
+                  The codebase used Radix as its component library, so the design system had to
+                  reflect Radix exactly. I started from Radix&apos;s own design file for the basic
+                  elements, then removed every option we weren&apos;t going to use. With those gone,
+                  a designer on the team couldn&apos;t make an incorrect UI any more.
+                </p>
+                <p>
+                  Over time I redesigned many of the components to suit Canvas users better, and
+                  wrote rules for how to use each one. There are usage guides for icons, colour and
+                  type too, so every part of Canvas feels like the same product.
+                </p>
+              </div>
               <CaseStudyCards>
                 <CaseStudyCard
                   width="half"
-                  image="/images/case-studies/drupal-canvas/case-study-components.png"
-                  imageAlt="Description"
+                  image={img("case-study-components.png")}
+                  imageAlt="The Canvas file upload field in two states: empty, and with two images added"
                 >
-                  Components created with variables and autolayout
+                  One of the redesigned fields: file upload, empty and with files added.
                 </CaseStudyCard>
                 <CaseStudyCard
                   width="half"
-                  image="/images/case-studies/drupal-canvas/case-study-guides.png"
-                  imageAlt="Description"
+                  image={img("content-edit-panel.webp")}
+                  imageAlt="The Canvas article editor: title, media, a rich text body with its formatting toolbar, and a category field"
                 >
-                  Rules and guides created for consistency
+                  The same fields in use, editing an article.
                 </CaseStudyCard>
                 <CaseStudyCard
                   width="full"
-                  image="/images/case-studies/drupal-canvas/case-study-documented.png"
-                  imageAlt="Description"
+                  image={img("case-study-documented.png")}
+                  imageAlt="Figma documentation pages for Canvas form fields, including plain text, formatted text and number, each showing every state"
                 >
-                  Every component organised into groups and documented
+                  Form fields, each documented with its states and a line on when to use it.
                 </CaseStudyCard>
               </CaseStudyCards>
             </CaseStudySection>
@@ -307,118 +174,105 @@ export default function DrupalCanvasCaseStudy() {
 
           <FadeInUp>
             <CaseStudySection title="Structuring the shell">
-              <p className="max-w-[588px] text-[14px] font-medium leading-[1.5] text-[#656565]">
-                One of the largest challenges of this project was structuring the shell of the
-                product. We needed to fine-tune a system, that would not only serve as a site
-                building and editing interface for our core product, but one that would be
-                future-proof.
-              </p>
-              <p className="max-w-[588px] text-[14px] font-medium leading-[1.5] text-[#656565]">
-                The shell was created to take up as little space as possible, while still being able
-                to expand to show more options based on the task that a user might take. If they
-                wanted to add new items, or edit their existing page, the items become contextual to
-                the area of the UI that you're in.
-              </p>
-              <p className="max-w-[588px] text-[14px] font-medium leading-[1.5] text-[#656565]">
-                One of the largest challenges was creating all of this that would work today, but
-                ensure that it would facilitate new features that would be added in the future. This
-                meant solving problems that we didn't necessarily have yet.
-              </p>
-              <CaseStudyCards>
-                <CaseStudyCard
-                  width="half"
-                  image="/images/case-studies/drupal-canvas/case-study-consistent-experience.png"
-                  imageAlt="Description"
-                >
-                  Each panel has been designed with a consistent experience. It never navigates the
-                  user away at a top level, it always acts as a navigation device, and only
-                  navigates once you’ve selected a context.
-                </CaseStudyCard>
-                <CaseStudyCard
-                  width="half"
-                  image="/images/case-studies/drupal-canvas/case-study-top-bar.png"
-                  imageAlt="Description"
-                >
-                  The top bar has been designed for multiple different functions. We have a way to
-                  exit Canvas, change the content that you’re previewing, or perform contextual or
-                  global actions in a click.
-                </CaseStudyCard>
-              </CaseStudyCards>
-            </CaseStudySection>
-          </FadeInUp>
-
-          <FadeInUp>
-            <CaseStudySection title="Creating new features">
-              <p className="max-w-[588px] text-[14px] font-medium leading-[1.5] text-[#656565]">
-                Each one of the features that I worked on were extensively broken down into clear
-                user flows. This was to ensure that the engineers and other designers working on the
-                project could understand the complex workflows that we had to create, and how we
-                turned these into simple processes for our users.
-              </p>
+              <div className={body}>
+                <p>
+                  The shell is the frame around everything in Canvas: panels, top bar, and how they
+                  respond to what you&apos;re doing. It had to work as the site building and editing
+                  interface today, and leave room for features we hadn&apos;t designed yet.
+                </p>
+                <p>
+                  I kept it as small as possible, expanding only when a task needs more. Adding
+                  something to a page or editing what&apos;s already there brings up options for
+                  that part of the UI. A lot of the work was solving problems we didn&apos;t have
+                  yet, so new features would slot in without a redesign.
+                </p>
+              </div>
               <CaseStudyCards>
                 <CaseStudyCard
                   width="full"
-                  image="/images/case-studies/drupal-canvas/case-study-step-by-step.png"
-                  imageAlt="Description"
+                  image={img("highlighted-component.png")}
+                  imageAlt="Canvas with the hero component selected on the page and its settings open in the right-hand panel"
                 >
-                  Step-by-step breakdown of the user flows
+                  Select something on the page and its settings open beside it. Nothing else changes
+                  until you need it.
+                </CaseStudyCard>
+                <CaseStudyCard
+                  width="half"
+                  image={img("case-study-consistent-experience.png")}
+                  imageAlt="The Canvas templates panel, open beside the icon bar that switches between panels"
+                >
+                  Every panel behaves the same way. It never takes you away from the page at the top
+                  level. It only navigates once you&apos;ve picked something.
+                </CaseStudyCard>
+                <CaseStudyCard
+                  width="half"
+                  image={img("case-study-top-bar.png")}
+                  imageAlt="The Canvas top bar: the Drupal logo to exit, a content type and entry switcher, and preview and publish actions"
+                >
+                  The top bar lets you exit Canvas, switch the content you&apos;re previewing, and
+                  run page or global actions in one click.
                 </CaseStudyCard>
               </CaseStudyCards>
             </CaseStudySection>
           </FadeInUp>
 
           <FadeInUp>
-            <CaseStudySection title="What I've done">
-              <CaseStudyBentoGrid items={bentoItems} />
+            <CaseStudySection title="Designing new features">
+              <div className={body}>
+                <p>
+                  I redesigned every existing feature and designed the new ones from scratch, from
+                  the templates panel to the content list and the code editor. Each one started as a
+                  detailed user flow. Canvas workflows can get complicated, and the flows let
+                  engineers see how I&apos;d turned them into something simple before anyone built
+                  anything.
+                </p>
+              </div>
+              <CaseStudyCards>
+                <CaseStudyCard
+                  width="full"
+                  image={img("case-study-step-by-step.png")}
+                  imageAlt="Three Canvas screens in sequence: choosing Add then Content template in the templates panel, then the Add new template dialog asking for a content type and template"
+                >
+                  Adding a content template, screen by screen.
+                </CaseStudyCard>
+              </CaseStudyCards>
+            </CaseStudySection>
+          </FadeInUp>
+
+          <FadeInUp>
+            <CaseStudySection title="Working outside Figma">
+              <div className={body}>
+                <p>
+                  A lot of this project happened outside Figma. Sometimes I worked like a product
+                  manager, pinning down requirements before there was anything to design. Sometimes
+                  I worked like the engineer I&apos;d been hired as, finding a way around a
+                  technical limit. I&apos;m happy to walk through any of it in more detail.
+                </p>
+              </div>
             </CaseStudySection>
           </FadeInUp>
 
           <FadeInUp>
             <CaseStudySection title="Results">
-              <div className="max-w-[588px] space-y-4 text-[14px] font-medium leading-[1.5] text-[#656565]">
+              <div className={body}>
                 <p>
-                  Since the 1.0 release, Drupal Canvas has been adopted by over 4,500 websites in
-                  just three and a half months. For a product built to modernise one of the web's
-                  longest-standing CMS platforms, this adoption rate reflects both the demand for a
-                  better experience and the quality of what the team shipped.
+                  Canvas 1.0 was released on 4 December 2025. Three and a half months later it was
+                  on over 4,500 sites. In{" "}
+                  <a href="https://www.drupal.org/project/usage/canvas" className="underline">
+                    drupal.org&apos;s usage count
+                  </a>{" "}
+                  for the week of 20 September 2026 it was on 13,604, and it hasn&apos;t dropped
+                  below 7,000 in any week since mid-June.
                 </p>
               </div>
-              <CaseStudyCards>
-                <CaseStudyCard
-                  width="full"
-                  image="/images/case-studies/drupal-canvas/case-study-result.png"
-                  imageAlt="Description"
-                />
-              </CaseStudyCards>
+              <CanvasUsageChart />
             </CaseStudySection>
           </FadeInUp>
 
           <FadeInUp>
-            <CaseStudySection title="End notes">
-              <div className="max-w-[588px] space-y-4 text-[14px] font-medium leading-[1.5] text-[#656565]">
-                <p>
-                  As you can probably tell, this isn’t a typical case study where I go into
-                  absolutely everything. If you want to know more about the project, I’ll happily
-                  show you how I’ve created everything listed above and more. This has been created
-                  as a way of showing the value I’ve generated for this product.
-                </p>
-                <p>
-                  However, this project isn’t a typical design process. Many times I’ve had to work
-                  as a product manager to figure out the requirements, or I’ve had to work as an
-                  engineer to solve technical limitations. None of this fits into the regular design
-                  workflow, but that’s fine!
-                </p>
-                <p>
-                  Ultimately, I solve problems, but I don’t let anything get in the way of that. I
-                  think you need to be a nerd to solve this stuff, and if that means working outside
-                  of the realms of a typical product designer.
-                </p>
-              </div>
-            </CaseStudySection>
-          </FadeInUp>
-          <FadeInUp>
             <STARBreakdown caseStudyId="drupal-canvas" />
-          </FadeInUp>        </main>
+          </FadeInUp>
+        </main>
       </CaseStudyLayout>
     </>
   );

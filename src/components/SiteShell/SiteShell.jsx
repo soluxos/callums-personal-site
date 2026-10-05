@@ -1,14 +1,19 @@
 "use client";
 import { usePathname } from "next/navigation";
+import CuttingMat from "@/components/CuttingMat/CuttingMat";
 
 export default function SiteShell({ children }) {
   const pathname = usePathname();
   const isIdeas = pathname.startsWith("/ideas");
-  const isLovable = pathname.startsWith("/lovable");
+  const isHome = pathname === "/";
   return (
     <div
-      className={`relative font-satoshi text-[#484848]${isIdeas || isLovable ? "" : " bg-[#f5f5f5]"}`}
+      className={`relative overflow-x-clip font-satoshi text-[#484848]${isIdeas ? "" : " bg-[#f5f5f5]"}`}
     >
+      {/* Sits behind the page content, which PageWrapper lifts to z-10. Not on the
+          ideas board, which is its own surface. The angle guides only suit the
+          homepage; elsewhere they'd land behind body text. */}
+      {!isIdeas && <CuttingMat showAngleGuides={isHome} />}
       {children}
     </div>
   );

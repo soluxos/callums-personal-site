@@ -1,221 +1,316 @@
-import CaseStudyBentoGrid from "@/components/case-study/CaseStudyBentoGrid";
+import CaseStudyCard from "@/components/case-study/CaseStudyCard";
+import CaseStudyCards from "@/components/case-study/CaseStudyCards";
 import CaseStudyFullHero from "@/components/case-study/CaseStudyFullHero";
 import CaseStudyLayout from "@/components/case-study/CaseStudyLayout";
+import CaseStudyRole from "@/components/case-study/CaseStudyRole";
 import CaseStudySection from "@/components/case-study/CaseStudySection";
-import CaseStudySlider from "@/components/case-study/CaseStudySlider";
-import PasswordGate from "@/components/PasswordGate/PasswordGate";
-import { cookies } from "next/headers";
 import STARBreakdown from "@/components/case-study/STARBreakdown";
+import { pageMetadata } from "@/lib/metadata";
 
-const heroImage = "/images/case-studies/acquia-ai/hero.png";
-const whatIveDone1 = "/images/case-studies/acquia-ai/what-ive-done-1.png";
-const whatIveDone2 = "/images/case-studies/acquia-ai/what-ive-done-2.png";
-const whatIveDone3 = "/images/case-studies/acquia-ai/what-ive-done-3.png";
-const whatIveDone4 = "/images/case-studies/acquia-ai/what-ive-done-4.png";
+const img = name => `/images/case-studies/acquia-ai/${name}`;
 
-export default async function AcquiaAICaseStudy() {
-  const cookieStore = await cookies();
-  const isUnlocked = cookieStore.get("pg_unlocked")?.value === "1";
+const body = "max-w-[588px] space-y-4 text-[14px] font-medium leading-[1.5] text-[#656565]";
+
+export const metadata = pageMetadata({
+  title: "Acquia AI · Callum Harrod",
+  description:
+    "Lead designer on Acquia AI: agents that can publish and delete across a company's sites, with a person always in charge. Its first version shipped as an MVP four months after I joined.",
+  path: "/case-studies/acquia-ai",
+});
+
+export default function AcquiaAICaseStudy() {
   const sections = [
+    { label: "My role", id: "my-role" },
     "The problem",
-    "My involvement",
-    "What I've done",
-    "What it looks like",
-    "End notes",
+    "Part one: the standalone app",
+    "Part two: inside Acquia Source",
+    "Projects hold the context",
+    "Agents only do what they're allowed to",
+    "Destructive actions always ask",
+    "Admins can see everything",
+    "Results",
     "STAR breakdown",
   ];
 
   return (
-    <PasswordGate password={process.env.NEXT_PUBLIC_PASSWORD} defaultUnlocked={isUnlocked}>
-      <>
-        <CaseStudyFullHero
-          title="Acquia Prospero"
-          description="Imagine a world where we don't need real people to complete tasks within your business anymore, you ask your digital teammate instead. That's where Prospero comes to play. Use AI teammates, simple workflows, and harness the power of Acquia's products, all in one place."
-          logo="/images/logos/acquia-logo.svg"
-          logoAlt="Acquia logo"
-          preset="fire"
-          metaItems={[
-            { label: "Role", value: "Senior Product Designer" },
-            {
-              label: "Outcome",
-              value: "An AI product on having synthetic teammates complete business tasks",
-            },
-            { label: "Deliverables", value: "Design system, User Flows, UI design, new features" },
-            { label: "Timeline", value: "August 2025 - December 2025" },
-          ]}
-        />
-        <CaseStudyLayout sections={sections}>
-          <main className="flex flex-col gap-[120px] mt-20">
+    <>
+      <CaseStudyFullHero
+        title="Acquia AI"
+        description="AI agents that can publish a page, delete an old staging site or find every page still using the old brand colours. I've designed it twice. The first version, a standalone app, shipped its MVP four months after I joined. The second, inside Acquia Source, is where I designed how a person stays in charge: agents with their own permissions, destructive actions that only the product itself can approve, never text in the chat, and a full record for admins. I built that part of the prototype myself."
+        logo="/images/logos/acquia-logo.svg"
+        logoAlt="Acquia logo"
+        preset="fire"
+        link={{
+          href: "https://acquia-source-prototype.netlify.app/ai",
+          label: "Try Acquia AI in the live prototype",
+        }}
+        metaItems={[
+          { label: "Role", value: "Lead designer (Senior Product Designer)" },
+          { label: "Team", value: "Product, engineering and design at Acquia" },
+          { label: "Timeline", value: "Aug 2025 - Now" },
+          {
+            label: "Outcome",
+            value:
+              "The first version shipped in four months; agent permissions agreed with product and engineering leads",
+          },
+        ]}
+      />
+      <CaseStudyLayout sections={sections}>
+        <main className="flex flex-col gap-[120px] mt-20">
+          <CaseStudyRole
+            summary="I was the lead designer on both versions of Acquia AI. On the first, a standalone app, I took a developer-built prototype, redesigned it end to end and saw the MVP through to shipping. On the second, inside Acquia Source, I designed how projects, agents and permissions work, mapped the agent role onto Cloud Platform's 79 real permissions, and built the AI area of the Source prototype myself. A few colleagues have since added features on top."
+            owned={[
+              "First version: the design system, and a full redesign of the developer-built prototype",
+              "First version: user testing, and design QA on the MVP until it shipped",
+              "Inside Source: the product design for projects, agents and their permissions, context, approvals and admin oversight",
+              "Inside Source: building the AI area of the Source prototype, including chats, projects, context, activity, users, agent access and onboarding",
+            ]}
+            shared={[
+              "Product requirements, worked through with product management on both versions",
+              "The rules for what agents can access, settled in a review with product and engineering leads",
+            ]}
+            others={[
+              "The first version's engineers built the original prototype and shipped the product",
+              "Inside Source, colleagues built parts of the chat and the agent access changes from the September review, on top of my designs",
+            ]}
+          />
+
+          <div className="flex flex-col gap-[120px]">
             <section className="w-full">
-              <div className="flex flex-col rounded-[16px] bg-[#ededed] p-10">
+              <div className="flex flex-col gap-3 rounded-[16px] bg-[#ededed] p-5 md:p-10">
                 <img
-                  alt="Acquia Prospero interface"
-                  className="h-auto w-full rounded-[12px] object-cover"
-                  src={heroImage}
+                  alt="An Acquia AI conversation summarising a campaign brief, listing the brand guidelines and brief it used"
+                  className="h-auto w-full rounded-[12px] border border-[#dfdfdf]"
+                  src={img("chat-context.webp")}
                 />
+                <p className="text-[13px] font-medium text-[#6b6b6b]">
+                  Acquia AI in the Source prototype, answering from the project&apos;s brand
+                  guidelines and campaign brief, and showing which sources it used.
+                </p>
               </div>
             </section>
 
             <CaseStudySection title="The problem">
-              <div className="max-w-[588px] space-y-4 text-[14px] font-medium leading-[1.5] text-[#656565]">
+              <div className={body}>
                 <p>
-                  In a world where AI is becoming paramount to digital businesses, how could Acquia
-                  provide one of the most powerful offerings? Acquia as a business has a great deal
-                  of products for managing content, it also has the capabilities of Drupal for
-                  distributing that content in the forms of digital applications or websites.
+                  Businesses want to hand work to AI, and Acquia&apos;s products hold the things
+                  that work touches: sites, content, assets and code. An assistant that can publish
+                  or delete across a company&apos;s sites is useful. It&apos;s also a liability if
+                  nobody can tell what it&apos;s allowed to do, or who asked it to do something.
                 </p>
                 <p>
-                  With all of this power, we wanted to understand how we can take tools such as n8n,
-                  Make, Lovable, and combine this into a cohesive experience.
-                </p>
-                <p>
-                  With this we can remove the barriers to distributing your content, creating new
-                  experiences and more.
+                  Both versions of this product came back to the same two questions. What can the AI
+                  do? And how does a person stay in charge of it?
                 </p>
               </div>
             </CaseStudySection>
 
-            <CaseStudySection title="My involvement">
-              <div className="grid gap-10 lg:grid-cols-2">
-                <div className="space-y-4 text-[14px] font-medium leading-[1.5] text-[#656565]">
-                  <p>
-                    This isn’t a typical design project, usually you’d be there from the start, but
-                    I was late to the party. Originally I was going to be a front-end engineer on
-                    this, but I noticed that there wasn’t a design system in place for us to build
-                    out the necessary UI. This is where I started collating everything that was
-                    available from the original designers, and started to create a design system.
-                  </p>
-                  <p>
-                    This is how I was offered the job of Senior Product G at Acquia. I was making
-                    strides on the design system, and bringing order to what were some pretty
-                    chaotic design files. From here I organised everything into a clear atomic
-                    design system.
-                  </p>
-                </div>
-                <div className="space-y-4 text-[14px] font-medium leading-[1.5] text-[#656565]">
-                  <p>
-                    While organising I improved on the UI of each of our components. Due to the deep
-                    technical complexity of the product, there were some aspects of our UI that
-                    weren’t very intuitive, or just weren’t fit for the job.
-                  </p>
-                  <p>
-                    Since then I have redesigned the entire UI, worked with developers closely on
-                    the interaction design, designed multiple new features that required turning
-                    very complex workflows into simple processes, helping new designers work on new
-                    features by guiding them through complex engineering requirements, and a lot
-                    more.
-                  </p>
-                </div>
+            <CaseStudySection title="Part one: the standalone app">
+              <div className={body}>
+                <p>
+                  The first version of Acquia AI was a standalone app that framed AI as digital
+                  teammates. You&apos;d ask for something like &quot;check my Cloud applications for
+                  outdated modules and email me a ranked report every week&quot;, and it would hand
+                  the job to the teammate with the right tools. Phil was a full-stack engineer with
+                  access to GitHub and Cloud. Annie was a marketing specialist.
+                </p>
+                <p>
+                  I joined as lead designer in August 2025. There was a prototype the developers had
+                  built and no design system. I built the design system, redesigned the product from
+                  the ground up, and ran user testing to find out what worked and what didn&apos;t.
+                  Where the interface exposed a gap in the requirements, I pushed on them with
+                  product. I did design QA on everything engineering built until the MVP shipped in
+                  December 2025.
+                </p>
+                <p>
+                  One idea carried straight into the version inside Source. When a teammate
+                  didn&apos;t have access to something, it said so and suggested who might, instead
+                  of trying anyway.
+                </p>
+              </div>
+              <CaseStudyCards>
+                <CaseStudyCard
+                  width="full"
+                  image={img("first-version-decline.webp")}
+                  imageAlt="A chat in the first version of Acquia AI: Annie, the marketing teammate, declines a request to audit Acquia Cloud because she has no access, and suggests another teammate might"
+                >
+                  Asked for something she can&apos;t do, the marketing teammate says so and points
+                  elsewhere, instead of trying anyway.
+                </CaseStudyCard>
+              </CaseStudyCards>
+            </CaseStudySection>
+
+            <CaseStudySection title="Part two: inside Acquia Source">
+              <div className={body}>
+                <p>
+                  In 2026 the AI moved inside Acquia Source, so it could work across every product
+                  in the platform. From July I designed and built the AI area of the Source
+                  prototype: the composer on the dashboard, chats, projects, context, activity,
+                  users and agent access, and a first-run tour.
+                </p>
+                <p>
+                  My first pass inside Source gave one assistant the same permissions as the person
+                  using it, and raised an approval request whenever it hit a limit. I reworked that
+                  into a model built on projects and agents, which is what the rest of this page
+                  shows.
+                </p>
+              </div>
+              <CaseStudyCards>
+                <CaseStudyCard
+                  width="full"
+                  image={img("source-dashboard.webp")}
+                  imageAlt="Source dashboard with the Ask Acquia AI composer, a project picker and suggested prompts"
+                >
+                  The composer on the Source dashboard. It knows which project you&apos;re working
+                  in and suggests things to ask.
+                </CaseStudyCard>
+                <CaseStudyCard
+                  width="full"
+                  image={img("onboarding.webp")}
+                  imageAlt="First step of the Acquia AI tour, explaining projects, chats, context and access"
+                >
+                  The first-run tour: projects, context and access, then approvals and activity. I
+                  built it with seven steps, and we cut it to three after a review.
+                </CaseStudyCard>
+              </CaseStudyCards>
+            </CaseStudySection>
+
+            <CaseStudySection title="Projects hold the context">
+              <div className={body}>
+                <p>
+                  A project is a shared workspace for a piece of work, like a relaunch or day-to-day
+                  publishing. It has members, chats, resources and the agents allowed to act there.
+                  Every chat in a project is visible to its members. The top of each conversation
+                  says so, so nobody finds out later.
+                </p>
+                <p>
+                  Context comes in four layers: the whole organisation, groups of shared material
+                  such as brand guidelines, the project, and whatever you attach to the message.
+                  Each answer lists the sources it used.
+                </p>
+              </div>
+              <CaseStudyCards>
+                <CaseStudyCard
+                  width="half"
+                  image={img("projects.webp")}
+                  imageAlt="Projects page with four Signal projects showing chats, resources, context groups and members"
+                >
+                  Projects, each with its chats, resources, context and members.
+                </CaseStudyCard>
+                <CaseStudyCard
+                  width="half"
+                  image={img("context.webp")}
+                  imageAlt="Context page listing context groups such as org baseline, brand guidelines and compliance"
+                >
+                  Context groups, applied to the projects that need them.
+                </CaseStudyCard>
+              </CaseStudyCards>
+            </CaseStudySection>
+
+            <CaseStudySection title="Agents only do what they're allowed to">
+              <div className={body}>
+                <p>
+                  Agents have their own permissions, separate from the person asking. If a request
+                  needs something the project&apos;s agent can&apos;t do, it declines, explains why,
+                  and points to where that permission could be granted or which project already has
+                  it. It never quietly escalates.
+                </p>
+                <p>
+                  To make the permissions believable, I mapped the agent role onto Cloud
+                  Platform&apos;s real ones. Cloud has 79 permissions, and the agent role starts
+                  with 19. That mapping, and the rules for areas like digital assets, were settled
+                  in a review with product and engineering leads in September 2026.
+                </p>
+              </div>
+              <CaseStudyCards>
+                <CaseStudyCard
+                  width="full"
+                  image={img("chat-declined.webp")}
+                  imageAlt="Acquia AI declining to publish Signal UK because the project lacks publish permission, and naming the project that has it"
+                >
+                  Asked to publish from the wrong project, the agent declines and tells you which
+                  project can do it.
+                </CaseStudyCard>
+                <CaseStudyCard
+                  width="full"
+                  image={img("users.webp")}
+                  imageAlt="Acquia AI users page listing people, their access level and projects"
+                >
+                  Who can reach what: admins, project members, and people with no project access.
+                </CaseStudyCard>
+              </CaseStudyCards>
+            </CaseStudySection>
+
+            <CaseStudySection title="Destructive actions always ask">
+              <div className={body}>
+                <p>
+                  Publishing, deploying and deleting need a person to confirm. The confirmation
+                  comes from the product&apos;s own interface and never from the conversation, so
+                  text in a chat can&apos;t approve anything, whether someone typed it or the AI
+                  picked it up from a web page. That protects against prompt injection at the
+                  product level, whatever the model does.
+                </p>
+                <p>
+                  Later, a colleague built inline approval cards into the conversation. They sit on
+                  top of the gate without replacing it.
+                </p>
+              </div>
+              <CaseStudyCards>
+                <CaseStudyCard
+                  width="full"
+                  image={img("chat-approval.webp")}
+                  imageAlt="A publish approval card in the conversation with Reject and Approve buttons"
+                >
+                  Publishing a new page waits for approval. A colleague built the inline card and
+                  the usage meter under the composer. The gate behind them is mine.
+                </CaseStudyCard>
+              </CaseStudyCards>
+            </CaseStudySection>
+
+            <CaseStudySection title="Admins can see everything">
+              <div className={body}>
+                <p>
+                  Org admins get an Activity page showing every AI action in every project, with
+                  filters and a link to each transcript. On their first visit a notice explains
+                  what&apos;s visible to them, and users are told that admins can review
+                  transcripts.
+                </p>
+              </div>
+              <CaseStudyCards>
+                <CaseStudyCard
+                  width="full"
+                  image={img("activity.webp")}
+                  imageAlt="Activity page listing AI actions by user, project and mechanism, with a disclosure notice"
+                >
+                  Activity: who did what, through which project, with the transcript one click away.
+                </CaseStudyCard>
+              </CaseStudyCards>
+            </CaseStudySection>
+
+            <CaseStudySection title="Results">
+              <div className={body}>
+                <ul className="list-disc space-y-2 pl-5">
+                  <li>
+                    The first version&apos;s MVP shipped in December 2025, four months after I
+                    joined.
+                  </li>
+                  <li>
+                    Acquia AI&apos;s model (projects, agent permissions, confirmed destructive
+                    actions, admin activity) runs in the Source prototype, and it&apos;s what the
+                    product team demos.
+                  </li>
+                  <li>
+                    The agent access rules were reviewed and agreed with product and engineering
+                    leads.
+                  </li>
+                </ul>
               </div>
             </CaseStudySection>
 
-            <CaseStudySection title="What I’ve done">
-              <CaseStudyBentoGrid
-                rowHeight={474}
-                items={[
-                  {
-                    title: "Redesigned an entire UI",
-                    description:
-                      "I took a prototype that was clearly made by developers and turned it into a piece of work that brought smile to users faces.",
-                    media: (
-                      <img
-                        alt="Redesigned UI"
-                        className="h-full w-full object-cover"
-                        src={whatIveDone1}
-                      />
-                    ),
-                    variant: "image-full",
-                  },
-                  {
-                    title: "User testing",
-                    description:
-                      "I took what we had, validated what was working, what wasn't working, and altered our product to make the best end result possible for our users.",
-                    media: (
-                      <img
-                        alt="User Testing"
-                        className="h-full w-full object-cover"
-                        src={whatIveDone2}
-                      />
-                    ),
-                    variant: "image-full",
-                  },
-                  {
-                    title: "Influenced our product requirements",
-                    description:
-                      "By thinking of the UX, I ensured that the requirements solved real user needs. Through small interactions came big changes.",
-                    media: (
-                      <img
-                        alt="Product Requirements"
-                        className="h-full w-full object-cover"
-                        src={whatIveDone3}
-                      />
-                    ),
-                    variant: "image-full",
-                  },
-                  {
-                    title: "Shipped our MVP",
-                    description:
-                      "Constantly checking that what the engineers had created matched the look and feel in Figma.",
-                    media: (
-                      <img
-                        alt="Shipped MVP"
-                        className="h-full w-full object-cover"
-                        src={whatIveDone4}
-                      />
-                    ),
-                    variant: "image-full",
-                  },
-                ]}
-              />
-            </CaseStudySection>
-
-            <CaseStudySection title="What it looks like">
-              <CaseStudySlider
-                images={[
-                  {
-                    src: "/images/case-studies/acquia-ai/slide-1.png",
-                    alt: "Acquia Prospero redesigned UI",
-                  },
-                  {
-                    src: "/images/case-studies/acquia-ai/slide-2.png",
-                    alt: "Acquia Prospero user testing",
-                  },
-                  {
-                    src: "/images/case-studies/acquia-ai/slide-3.png",
-                    alt: "Acquia Prospero product requirements",
-                  },
-                  {
-                    src: "/images/case-studies/acquia-ai/slide-4.png",
-                    alt: "Acquia Prospero shipped MVP",
-                  },
-                ]}
-              />
-            </CaseStudySection>
-
-            <CaseStudySection title="End notes">
-              <div className="max-w-[588px] space-y-4 text-[14px] font-medium leading-[1.5] text-[#656565]">
-                <p>
-                  As you can probably tell, this isn’t a typical case study where I go into
-                  absolutely everything. If you want to know more about the project, I’ll happily
-                  show you how I’ve created everything listed above and more. This has been created
-                  as a way of showing the value I’ve generated for this product.
-                </p>
-                <p>
-                  However, this project isn’t a typical design process. Many times I’ve had to work
-                  as a product manager to figure out the requirements, or I’ve had to work as an
-                  engineer to solve technical limitations. None of this fits into the regular design
-                  workflow, but that’s fine!
-                </p>
-                <p>
-                  Ultimately, I solve problems, but I don’t let anything get in the way of that. I
-                  think you need to be a nerd to solve this stuff, and if that means working outside
-                  of the realms of a typical product designer. So be it.
-                </p>
-              </div>
-            </CaseStudySection>
-            <STARBreakdown caseStudyId="acquia-ai" />          </main>
-        </CaseStudyLayout>
-      </>
-    </PasswordGate>
+            <STARBreakdown caseStudyId="acquia-ai" />
+          </div>
+        </main>
+      </CaseStudyLayout>
+    </>
   );
 }

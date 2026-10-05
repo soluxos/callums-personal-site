@@ -4,15 +4,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
-import { usePasswordGate } from "@/contexts/PasswordGateContext";
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
-  const { isLocked } = usePasswordGate();
-  const isWhite = /^\/case-studies\/.+/.test(pathname) && !isLocked;
-
-  if (pathname.startsWith("/lovable")) return null;
+  // Every case study opens with a dark gradient hero, gated or not.
+  const isWhite = /^\/case-studies\/.+/.test(pathname);
 
   return (
     <header
@@ -29,25 +26,25 @@ export default function Navigation() {
       <nav className="hidden items-center gap-6 text-[16px] font-medium leading-[24px] sm:flex">
         <Link
           href="/"
-          className={`text-[14px] ${isWhite ? "text-white/70 hover:text-white" : "text-[#929292] hover:text-[#484848]"}`}
+          className={`text-[14px] ${isWhite ? "text-white/70 hover:text-white" : "text-[#6b6b6b] hover:text-[#484848]"}`}
         >
           Home
         </Link>
         <Link
           href="/about"
-          className={`text-[14px] ${isWhite ? "text-white/70 hover:text-white" : "text-[#929292] hover:text-[#484848]"}`}
+          className={`text-[14px] ${isWhite ? "text-white/70 hover:text-white" : "text-[#6b6b6b] hover:text-[#484848]"}`}
         >
           About
         </Link>
         <Link
           href="/case-studies"
-          className={`text-[14px] ${isWhite ? "text-white/70 hover:text-white" : "text-[#929292] hover:text-[#484848]"}`}
+          className={`text-[14px] ${isWhite ? "text-white/70 hover:text-white" : "text-[#6b6b6b] hover:text-[#484848]"}`}
         >
           Case studies
         </Link>
         <Link
           href="/ideas"
-          className={`text-[14px] ${isWhite ? "text-white/70 hover:text-white" : "text-[#929292] hover:text-[#484848]"}`}
+          className={`text-[14px] ${isWhite ? "text-white/70 hover:text-white" : "text-[#6b6b6b] hover:text-[#484848]"}`}
         >
           Ideas
         </Link>
@@ -70,28 +67,28 @@ export default function Navigation() {
             <Link
               onClick={() => setIsOpen(false)}
               href="/"
-              className="text-[14px] text-[#929292] hover:text-[#484848]"
+              className="text-[14px] text-[#6b6b6b] hover:text-[#484848]"
             >
               Home
             </Link>
             <Link
               onClick={() => setIsOpen(false)}
               href="/about"
-              className="text-[14px] text-[#929292] hover:text-[#484848]"
+              className="text-[14px] text-[#6b6b6b] hover:text-[#484848]"
             >
               About
             </Link>
             <Link
               onClick={() => setIsOpen(false)}
               href="/case-studies"
-              className="text-[14px] text-[#929292] hover:text-[#484848]"
+              className="text-[14px] text-[#6b6b6b] hover:text-[#484848]"
             >
               Case studies
             </Link>
             <Link
               onClick={() => setIsOpen(false)}
               href="/ideas"
-              className="text-[14px] text-[#929292] hover:text-[#484848]"
+              className="text-[14px] text-[#6b6b6b] hover:text-[#484848]"
             >
               Ideas
             </Link>

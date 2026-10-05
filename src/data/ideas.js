@@ -64,7 +64,7 @@ const ideas = [
     y: 123,
     color: "pink",
     rotation: 1.3,
-    text: "If you try and add post-its, they won't be saved, only I get that privelage 😘",
+    text: "If you try and add post-its, they won't be saved, only I get that privilege 😘",
     author: "Callum",
   },
   {
@@ -113,7 +113,7 @@ const ideas = [
     y: -314,
     color: "purple",
     rotation: 1,
-    text: "I would love an email client that felt more like actually receiving mail in the post.\n\nFor plain text emails you'd get a handwritten letter.\n\nFor marketing emails you'd get almost junk-mail flyers.\n\nFor payments it could be like opening a Birthday card or a cheque 😂",
+    text: "I would love an email client that felt more like actually receiving mail in the post.\n\nFor plain text emails you'd get a handwritten letter.\n\nFor marketing emails you'd get almost junk-mail flyers.\n\nFor payments it could be like opening a birthday card or a cheque 😂",
   },
   {
     id: "1774458620301",
@@ -121,7 +121,7 @@ const ideas = [
     y: -852,
     color: "blue",
     rotation: 0.9,
-    text: "A stupidly simple note taking app.",
+    text: "A stupidly simple note-taking app.",
   },
   {
     id: "1774458633015",
@@ -137,7 +137,7 @@ const ideas = [
     y: -712,
     color: "green",
     rotation: -2.3,
-    text: "I could really focus on the miniscule interactions as something to play around with. This would be incredibly useful for me to log everything too.",
+    text: "I could really focus on the minuscule interactions as something to play around with. This would be incredibly useful for me to log everything too.",
   },
   {
     id: "1774458780626",

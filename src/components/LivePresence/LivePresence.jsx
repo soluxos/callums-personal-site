@@ -15,6 +15,21 @@ import IdeasCursor from "./IdeasCursor";
 import OwnMessageBubble from "./OwnMessageBubble";
 import MyMessageComposer from "./MyMessageComposer";
 
+// Page cursors sit at document coordinates. This zero-height layer clips them
+// sideways but not vertically, so a cursor near the right edge can't widen the
+// page and cause horizontal scrolling on small screens.
+const PAGE_CURSOR_LAYER = {
+  position: "absolute",
+  top: 0,
+  left: 0,
+  width: "100%",
+  height: 0,
+  overflowX: "clip",
+  overflowY: "visible",
+  pointerEvents: "none",
+  zIndex: 9000,
+};
+
 export default function LivePresence() {
   const [meColor, setMeColor] = useState(null);
   const [presenceMap, setPresenceMap] = useState({});
@@ -620,7 +635,10 @@ export default function LivePresence() {
   const isLeader = allIds.length === 0 || allIds[0] === meIdRef.current;
   const effectiveFakes = isLeader ? fakeUsers : remoteFakes;
   const activeRealUsers = otherRealUsers.filter(user => !inactiveIds.has(user.id));
-  const showFake = activeRealUsers.length <= 1;
+  // Fake cursors wander over the page, so keep them off case studies, where they'd
+  // sit on the text a reader is trying to read. Real visitors' cursors still show.
+  const onCaseStudy = /^\/case-studies\/.+/.test(pathname);
+  const showFake = activeRealUsers.length <= 1 && !onCaseStudy;
   const allUsers = meColor
     ? [
         { id: "me", name: "You", color: meColor },
@@ -629,8 +647,36 @@ export default function LivePresence() {
       ]
     : [];
 
-  // Hide on lovable pages
-  if (pathname.startsWith("/lovable")) return null;
+  const ideasLayer =
+    mounted && pathname.startsWith("/ideas") && document.getElementById("ideas-cursor-layer");
+
+  const cursors = (
+    <>
+      {effectiveFakes.map(user => showFake && <FakeCursor key={`fake-${user.id}`} user={user} />)}
+      <AnimatePresence>
+        {activeRealUsers
+          .filter(user => cursorMap[user.id] !== undefined)
+          .map(user =>
+            cursorMap[user.id]?.canvasSpace ? (
+              <IdeasCursor key={`real-${user.id}`} user={user} />
+            ) : (
+              <RealCursor key={`real-${user.id}`} user={user} />
+            )
+          )}
+      </AnimatePresence>
+      <AnimatePresence>
+        {myMessage && meColor && (
+          <OwnMessageBubble
+            key="own-bubble"
+            initX={myMessagePosRef.current.x}
+            initY={myMessagePosRef.current.y}
+            text={myMessage}
+            color={meColor}
+          />
+        )}
+      </AnimatePresence>
+    </>
+  );
 
   return (
     <>
@@ -638,35 +684,8 @@ export default function LivePresence() {
 
       {mounted &&
         createPortal(
-          <>
-            {effectiveFakes.map(
-              user => showFake && <FakeCursor key={`fake-${user.id}`} user={user} />
-            )}
-            <AnimatePresence>
-              {activeRealUsers
-                .filter(user => cursorMap[user.id] !== undefined)
-                .map(user =>
-                  cursorMap[user.id]?.canvasSpace ? (
-                    <IdeasCursor key={`real-${user.id}`} user={user} />
-                  ) : (
-                    <RealCursor key={`real-${user.id}`} user={user} />
-                  )
-                )}
-            </AnimatePresence>
-            <AnimatePresence>
-              {myMessage && meColor && (
-                <OwnMessageBubble
-                  key="own-bubble"
-                  initX={myMessagePosRef.current.x}
-                  initY={myMessagePosRef.current.y}
-                  text={myMessage}
-                  color={meColor}
-                />
-              )}
-            </AnimatePresence>
-          </>,
-          (pathname.startsWith("/ideas") && document.getElementById("ideas-cursor-layer")) ||
-            document.body
+          ideasLayer ? cursors : <div style={PAGE_CURSOR_LAYER}>{cursors}</div>,
+          ideasLayer || document.body
         )}
 
       {composing && mounted && (

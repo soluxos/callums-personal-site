@@ -64,7 +64,7 @@ export default function STARBreakdown({ caseStudyId }) {
         <h2 className="font-ppmondwest text-[32px] leading-[1.25] text-[#484848]">
           STAR breakdown
         </h2>
-        <p className="text-[14px] font-medium leading-[1.5] text-[#929292]">
+        <p className="text-[14px] font-medium leading-[1.5] text-[#6b6b6b]">
           A short summary of the Situation, Task, Action, and Result for this case study, the key
           points I want you to remember.
         </p>

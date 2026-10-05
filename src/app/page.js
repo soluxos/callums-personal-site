@@ -2,6 +2,7 @@ import HeroBubbles from "@/components/HeroBubbles/HeroBubbles";
 import FadeInUp from "@/components/FadeInUp/FadeInUp";
 import IdeasCanvasPreview from "@/components/IdeasCanvasPreview/IdeasCanvasPreview";
 import CaseStudyPreviewCard from "@/components/case-study/CaseStudyPreviewCard";
+import GitHubContributions from "@/components/GitHubContributions/GitHubContributions";
 import { CASE_STUDIES } from "@/data/caseStudies";
 
 export default function Home() {
@@ -13,21 +14,21 @@ export default function Home() {
             <div className="hero-text-container w-full flex flex-col gap-2 items-center justify-start">
               <HeroBubbles
                 messages={[
-                  "I'm currently leading design at Acquia",
+                  "I led design on Drupal Canvas. It's on over 13,000 sites now",
+                  "These days I'm design lead on Acquia Source and Acquia AI",
+                  "I rebuilt Site Studio in React with one other engineer",
+                  "That was over 100,000 lines of AngularJS",
+                  "I built the Drupal Canvas design system from scratch",
                   "Oh, I'm also building a neat bookshelf web app on the side",
-                  "I'm designing an AI tool for Acquia at the moment",
-                  "One of two engineers that created the frontend of Site Studio, a product with $50m ARR",
-                  "I'm also building a platform for all Acquia products",
-                  "Created the new editor for Drupal",
-                  "Currently utilising AI tools to speed up my design process",
-                  "I worked at a small startup that got acquired by Acquia",
-                  "Made a website in a day to land a new customer",
-                  "Creating design systems for incredibly complex products",
+                  "I designed and built a 104-route prototype our product team demos from",
+                  "We won a £1m ARR deal with a prototype built over one weekend",
+                  "Then Acquia acquired the startup I worked at",
+                  "I design in Figma and build in React",
                   "I wonder if you've stayed around for this?",
                 ]}
               />
               <h1 className="font-ppmondwest text-[64px] leading-[1.25]">Hey, I&apos;m Callum.</h1>
-              <p className="max-w-[480px] text-[14px] font-medium leading-[1.5] text-[#929292]">
+              <p className="max-w-[480px] text-[14px] font-medium leading-[1.5] text-[#6b6b6b]">
                 I&apos;m a designer and developer with over ten years of experience in solving
                 difficult problems in tech. Versed in design systems, AI tooling, and more.
               </p>
@@ -41,7 +42,7 @@ export default function Home() {
         <section className="flex flex-col gap-4">
           <div className="grid gap-4 md:grid-cols-2">
             {CASE_STUDIES.map(cs => (
-              <CaseStudyPreviewCard key={cs.slug} {...cs} />
+              <CaseStudyPreviewCard key={cs.slug} {...cs} dither={false} />
             ))}
           </div>
         </section>
@@ -61,7 +62,7 @@ export default function Home() {
                   <source src="/videos/ynt.mp4" type="video/mp4" />
                 </video>
               </div>
-              <p className="font-satoshi text-[14px] text-[#929292] leading-[1.5] font-medium">
+              <p className="font-satoshi text-[14px] text-[#6b6b6b] leading-[1.5] font-medium">
                 Your Next Tale
               </p>
             </a>
@@ -74,7 +75,7 @@ export default function Home() {
                   <source src="/videos/crisp.mp4" type="video/mp4" />
                 </video>
               </div>
-              <p className="font-satoshi text-[14px] text-[#929292] leading-[1.5] font-medium">
+              <p className="font-satoshi text-[14px] text-[#6b6b6b] leading-[1.5] font-medium">
                 Crisp Framer Template
               </p>
             </a>
@@ -87,7 +88,7 @@ export default function Home() {
                   <source src="/videos/nifty.mp4" type="video/mp4" />
                 </video>
               </div>
-              <p className="font-satoshi text-[14px] text-[#929292] leading-[1.5] font-medium">
+              <p className="font-satoshi text-[14px] text-[#6b6b6b] leading-[1.5] font-medium">
                 Nifty Framer Template
               </p>
             </a>
@@ -100,13 +101,16 @@ export default function Home() {
                   <source src="/videos/maybe.mp4" type="video/mp4" />
                 </video>
               </div>
-              <p className="font-satoshi text-[14px] text-[#929292] leading-[1.5] font-medium">
+              <p className="font-satoshi text-[14px] text-[#6b6b6b] leading-[1.5] font-medium">
                 Maybe Framer Template
               </p>
             </a>
           </div>
         </section>
       </FadeInUp>
+
+      {/* GitHub contributions section */}
+      <GitHubContributions />
 
       {/* Notes section */}
       <FadeInUp>

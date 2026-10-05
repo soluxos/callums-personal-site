@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { CASE_STUDIES } from "@/data/caseStudies";
 
 export default function Footer() {
   return (
@@ -8,7 +9,7 @@ export default function Footer() {
         <div className="flex flex-1 flex-col gap-10 md:flex-row">
           <div className="w-[223px] flex flex-col">
             <p className="font-ppmondwest text-[20px] leading-none">Side projects</p>
-            <div className="mt-5 space-y-[14px] text-[14px] font-medium leading-[1.5] text-[#929292] flex flex-col gap-3">
+            <div className="mt-5 space-y-[14px] text-[14px] font-medium leading-[1.5] text-[#6b6b6b] flex flex-col gap-3">
               <Link
                 href="https://yournexttale.com"
                 className="text-[14px] font-medium leading-[1.5] hover:text-[#484848]"
@@ -37,27 +38,17 @@ export default function Footer() {
           </div>
           <div className="w-[223px]">
             <p className="font-ppmondwest text-[20px] leading-none">Case studies</p>
-            <div className="mt-5 space-y-[14px] text-[14px] font-medium leading-[1.5] text-[#929292] flex flex-col gap-3">
-              <Link href="/case-studies/drupal-canvas" className="flex gap-2 hover:text-[#484848]">
-                Drupal Canvas
-              </Link>
-              <Link
-                href="/case-studies/acquia-unification"
-                className="flex gap-2 hover:text-[#484848]"
-              >
-                Acquia Unification
-              </Link>
-              <Link href="/case-studies/acquia-ai" className="flex gap-2 hover:text-[#484848]">
-                Acquia AI
-              </Link>
-              <Link href="/case-studies/union-roasted" className="flex gap-2 hover:text-[#484848]">
-                Union Roasted
-              </Link>
+            <div className="mt-5 space-y-[14px] text-[14px] font-medium leading-[1.5] text-[#6b6b6b] flex flex-col gap-3">
+              {CASE_STUDIES.map(cs => (
+                <Link key={cs.slug} href={cs.href} className="flex gap-2 hover:text-[#484848]">
+                  {cs.title}
+                </Link>
+              ))}
             </div>
           </div>
           <div className="w-[223px]">
             <p className="font-ppmondwest text-[20px] leading-none">Useful links</p>
-            <div className="mt-5 space-y-[14px] text-[14px] font-medium leading-[1.5] text-[#929292] flex flex-col gap-3">
+            <div className="mt-5 space-y-[14px] text-[14px] font-medium leading-[1.5] text-[#6b6b6b] flex flex-col gap-3">
               <Link
                 href="https://www.linkedin.com/in/callumharrod/"
                 className="hover:text-[#484848]"
@@ -79,7 +70,7 @@ export default function Footer() {
               Callum Harrod
             </span>
           </Link>
-          <span className="text-[14px] md:text-right font-medium leading-none text-[#929292]">
+          <span className="text-[14px] md:text-right font-medium leading-none text-[#6b6b6b]">
             © {new Date().getFullYear()} Callum Harrod
           </span>
         </div>
