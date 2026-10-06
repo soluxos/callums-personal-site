@@ -3,15 +3,17 @@
 // Self-healing cuts. Drag across bare mat with the craft knife and a slit opens in
 // it: pointed at both ends, with a lit lower lip and the surface shadowed where it
 // has parted, and the mat's grid pushed aside around it. Through it you see what's
-// under the mat: flowing, hyper-colourful light, which spills out a little onto the
-// edges. Let go and it holds open for a moment, then closes from the ends inwards
-// while the grid settles back and a faint scar fades, like a real self-healing mat.
+// under the mat: another cutting mat, dark green with its own grid, as if two were
+// stacked on the desk. Let go and it holds open for a moment, then closes from the
+// ends inwards while the grid settles back and a faint scar fades, like a real
+// self-healing mat.
 //
 // A cut only starts where nothing but the mat is under the pointer: never on text,
 // links, buttons, media or any surface with its own background, so reading,
-// selecting and clicking work exactly as before. Mouse and pen only, and off while
-// edit mode is on (it has its own dragging). Cuts are drawn into the mat layer, so
-// a slit that runs under a card or a paragraph disappears beneath it.
+// selecting and clicking work exactly as before. Once started it can run anywhere,
+// and the press that started it never selects text. Mouse and pen only, and off
+// while edit mode is on (it has its own dragging). Cuts are drawn into the mat
+// layer, so a slit that runs under a card or a paragraph disappears beneath it.
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
@@ -41,19 +43,13 @@ const HEAL_MS = 1800; // how long it takes to close
 const SCAR_MS = 1200; // how long the scar takes to fade afterwards
 const SCAR_OPACITY = 0.18;
 
-// What's under the mat: a flowing rainbow, crossed by a second at another angle and
-// speed so the colours never settle. Each gradient repeats, and moves by exactly one
-// repeat per loop, so the motion is seamless.
-const RAINBOW = {
-  colours: ["#ff2d95", "#ff7a00", "#ffd400", "#2bea6b", "#00c8ff", "#6a5cff", "#ff2d95"],
-  period: [520, 180],
-  seconds: 5,
-};
-const SHIMMER = {
-  colours: ["#00f0ff", "#ff00e5", "#fff200", "#00ff9d", "#00f0ff"],
-  period: [-200, 360],
-  seconds: 3.2,
-};
+// What's under the mat: a classic dark green cutting mat. Its grid is finer than the
+// top mat's and fixed to the page, so every cut looks down onto the same board.
+const UNDER_SURFACE = "#1f4a38";
+const UNDER_MINOR = 10;
+const UNDER_MAJOR = 50;
+const UNDER_MINOR_LINE = "rgba(255, 255, 255, 0.12)";
+const UNDER_MAJOR_LINE = "rgba(240, 222, 140, 0.45)";
 
 const BLOCKING =
   "a, button, input, textarea, select, label, summary, img, video, canvas, svg, iframe, [contenteditable], [role=button], [role=link], [role=img], [data-no-cut]";
@@ -345,31 +341,19 @@ function gridPath(lines, opens, majorOnly) {
   return d;
 }
 
-function FlowGradient({ id, colours, period: [x, y], seconds, still }) {
+// The lower mat as a repeating tile: one major square with its minor lines inside.
+// Lines sit on half pixels so they stay crisp.
+function UnderMat({ id }) {
+  const minor = [];
+  for (let v = UNDER_MINOR; v < UNDER_MAJOR; v += UNDER_MINOR) {
+    minor.push(`M${v + 0.5} 0V${UNDER_MAJOR}M0 ${v + 0.5}H${UNDER_MAJOR}`);
+  }
   return (
-    <linearGradient
-      id={id}
-      gradientUnits="userSpaceOnUse"
-      x1="0"
-      y1="0"
-      x2={x}
-      y2={y}
-      spreadMethod="repeat"
-    >
-      {colours.map((colour, i) => (
-        <stop key={i} offset={i / (colours.length - 1)} stopColor={colour} />
-      ))}
-      {!still && (
-        <animateTransform
-          attributeName="gradientTransform"
-          type="translate"
-          from="0 0"
-          to={`${x} ${y}`}
-          dur={`${seconds}s`}
-          repeatCount="indefinite"
-        />
-      )}
-    </linearGradient>
+    <pattern id={id} patternUnits="userSpaceOnUse" width={UNDER_MAJOR} height={UNDER_MAJOR}>
+      <rect width={UNDER_MAJOR} height={UNDER_MAJOR} fill={UNDER_SURFACE} />
+      <path d={minor.join("")} stroke={UNDER_MINOR_LINE} />
+      <path d={`M0.5 0V${UNDER_MAJOR}M0 0.5H${UNDER_MAJOR}`} stroke={UNDER_MAJOR_LINE} />
+    </pattern>
   );
 }
 
@@ -384,9 +368,6 @@ function CutFilters({ id, bounds }) {
       </filter>
       <filter id={`mat-cut-wall-${id}`} {...region}>
         <feGaussianBlur stdDeviation="1.6" />
-      </filter>
-      <filter id={`mat-cut-glow-${id}`} {...region}>
-        <feGaussianBlur stdDeviation="3" />
       </filter>
     </>
   );
@@ -483,16 +464,6 @@ function CutLayers({ cuts, geometries, grid, now }) {
           filter={s.filter("soften")}
         />
       ))}
-      {/* Colour spilling out of each opening onto the mat around it. */}
-      {open.map(s => (
-        <path
-          key={s.id}
-          d={slitPath(s.g, s.width + 5 * s.open)}
-          fill="url(#mat-cut-rainbow)"
-          opacity={0.45 * s.fade}
-          filter={s.filter("glow")}
-        />
-      ))}
       {/* The far rim, lit where it meets the surface. */}
       {open.map(s => (
         <path
@@ -506,13 +477,7 @@ function CutLayers({ cuts, geometries, grid, now }) {
       {/* The insides last, so where cuts cross they read as one opening. */}
       {open.map(s => (
         <g key={s.id} clipPath={`url(#mat-cut-hole-${s.id})`} opacity={s.fade}>
-          <path d={s.hole} fill="url(#mat-cut-rainbow)" />
-          <path
-            d={s.hole}
-            fill="url(#mat-cut-shimmer)"
-            opacity="0.55"
-            style={{ mixBlendMode: "screen" }}
-          />
+          <path d={s.hole} fill="url(#mat-cut-under)" />
           {/* The near wall's shadow, so it reads as a hole rather than a sticker. */}
           <path
             d={s.hole}
@@ -533,18 +498,8 @@ export default function MatCuts() {
   const [layer, setLayer] = useState(null);
   const [cuts, setCuts] = useState([]);
   const [now, setNow] = useState(0);
-  const [still, setStill] = useState(false);
   const activeRef = useRef(null);
   const nextId = useRef(0);
-
-  // Keep the colours still for anyone who prefers reduced motion.
-  useEffect(() => {
-    const query = window.matchMedia("(prefers-reduced-motion: reduce)");
-    setStill(query.matches);
-    const onChange = e => setStill(e.matches);
-    query.addEventListener("change", onChange);
-    return () => query.removeEventListener("change", onChange);
-  }, []);
 
   // The mat (and its cut layer) isn't on every page, so look for it per route.
   useEffect(() => {
@@ -555,14 +510,27 @@ export default function MatCuts() {
   useEffect(() => {
     if (!layer || editMode) return;
 
+    // True from a press that starts a cut until the button comes up. That whole
+    // press must never select text, even where the cut crosses it.
+    let cutPress = false;
+
+    // Safari only honours the prefixed property.
+    function lockSelection(locked) {
+      const value = locked ? "none" : "";
+      document.body.style.userSelect = value;
+      document.body.style.webkitUserSelect = value;
+      if (locked) window.getSelection()?.removeAllRanges();
+    }
+
     function onPointerDown(e) {
       if (e.button !== 0 || e.pointerType === "touch") return;
       if (!isBareMat(e.clientX, e.clientY, layer)) return;
-      e.preventDefault(); // no text selection while cutting
+      e.preventDefault();
+      cutPress = true;
+      lockSelection(true);
 
       const id = nextId.current++;
       activeRef.current = { id, points: [{ x: e.pageX, y: e.pageY }], frame: 0 };
-      document.body.style.userSelect = "none";
       document.body.style.cursor = KNIFE_CURSOR;
       setCuts(prev => [
         ...prev.slice(-(MAX_CUTS - 1)),
@@ -587,11 +555,10 @@ export default function MatCuts() {
       }
     }
 
-    function onPointerUp() {
+    function finishCut() {
       const active = activeRef.current;
       if (!active) return;
       activeRef.current = null;
-      document.body.style.userSelect = "";
       document.body.style.cursor = "";
 
       // A click without a drag leaves nothing worth healing.
@@ -609,15 +576,35 @@ export default function MatCuts() {
       );
     }
 
+    function onPointerUp() {
+      finishCut();
+      if (cutPress) {
+        cutPress = false;
+        lockSelection(false);
+      }
+    }
+
+    // Belt and braces for browsers that still start a selection, or a native drag,
+    // from a press whose pointerdown was cancelled.
+    function blockDuringCut(e) {
+      if (cutPress) e.preventDefault();
+    }
+
     window.addEventListener("pointerdown", onPointerDown);
     window.addEventListener("pointermove", onPointerMove);
     window.addEventListener("pointerup", onPointerUp);
     window.addEventListener("pointercancel", onPointerUp);
+    window.addEventListener("mousedown", blockDuringCut, true);
+    document.addEventListener("selectstart", blockDuringCut, true);
+    document.addEventListener("dragstart", blockDuringCut, true);
     return () => {
       window.removeEventListener("pointerdown", onPointerDown);
       window.removeEventListener("pointermove", onPointerMove);
       window.removeEventListener("pointerup", onPointerUp);
       window.removeEventListener("pointercancel", onPointerUp);
+      window.removeEventListener("mousedown", blockDuringCut, true);
+      document.removeEventListener("selectstart", blockDuringCut, true);
+      document.removeEventListener("dragstart", blockDuringCut, true);
       onPointerUp();
     };
   }, [layer, editMode]);
@@ -649,8 +636,7 @@ export default function MatCuts() {
   return createPortal(
     <svg className="absolute inset-0 h-full w-full overflow-visible" aria-hidden="true">
       <defs>
-        <FlowGradient id="mat-cut-rainbow" {...RAINBOW} still={still} />
-        <FlowGradient id="mat-cut-shimmer" {...SHIMMER} still={still} />
+        <UnderMat id="mat-cut-under" />
       </defs>
       <CutLayers cuts={cuts} geometries={geometries} grid={grid} now={now} />
     </svg>,
