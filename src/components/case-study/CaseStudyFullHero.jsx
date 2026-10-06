@@ -28,7 +28,7 @@ export default function CaseStudyFullHero({
           opacity={1}
           grain={true}
           grainOpacity={0.015}
-          dither={true}
+          dither={false}
           style={{
             width: "100%",
             height: "100%",

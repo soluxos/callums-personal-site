@@ -14,8 +14,6 @@ export default function CaseStudyPreviewCard({
   logo,
   logoAlt = "",
   badge,
-  // The pixel dither over the gradient. The homepage turns it off.
-  dither = true,
   className = "",
 }) {
   const [glowKey, setGlowKey] = useState(0);
@@ -39,7 +37,7 @@ export default function CaseStudyPreviewCard({
           opacity={1}
           grain={true}
           grainOpacity={0.015}
-          dither={dither}
+          dither={false}
           style={{
             width: "100%",
             height: "100%",

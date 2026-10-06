@@ -1,6 +1,5 @@
 import { ArrowUpRight, Download } from "lucide-react";
 import FadeInUp from "@/components/FadeInUp/FadeInUp";
-import AboutChat from "@/components/about/AboutChat";
 import PhotoDesk from "@/components/about/PhotoDesk";
 import SkillBadges from "@/components/SkillBadges/SkillBadges";
 import { pageMetadata } from "@/lib/metadata";
@@ -209,15 +208,6 @@ export default function About() {
 
           <div className="lg:col-span-7">
             <PhotoDesk />
-          </div>
-        </section>
-      </FadeInUp>
-
-      <FadeInUp>
-        <section className="grid gap-6 lg:grid-cols-12 lg:gap-10">
-          <h2 className={`${sectionTitle} lg:col-span-5`}>A quick chat</h2>
-          <div className="lg:col-span-7">
-            <AboutChat />
           </div>
         </section>
       </FadeInUp>

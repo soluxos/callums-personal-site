@@ -42,7 +42,7 @@ export default function Home() {
         <section className="flex flex-col gap-4">
           <div className="grid gap-4 md:grid-cols-2">
             {CASE_STUDIES.map(cs => (
-              <CaseStudyPreviewCard key={cs.slug} {...cs} dither={false} />
+              <CaseStudyPreviewCard key={cs.slug} {...cs} />
             ))}
           </div>
         </section>
