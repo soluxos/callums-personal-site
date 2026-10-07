@@ -6,7 +6,6 @@ import CaseStudyLayout from "@/components/case-study/CaseStudyLayout";
 import CaseStudyRole from "@/components/case-study/CaseStudyRole";
 import CaseStudySection from "@/components/case-study/CaseStudySection";
 import CaseStudySlider from "@/components/case-study/CaseStudySlider";
-import STARBreakdown from "@/components/case-study/STARBreakdown";
 import FadeInUp from "@/components/FadeInUp/FadeInUp";
 import { pageMetadata } from "@/lib/metadata";
 
@@ -31,14 +30,13 @@ export default function DrupalCanvasCaseStudy() {
     "Designing new features",
     "Working outside Figma",
     "Results",
-    "STAR breakdown",
   ];
 
   return (
     <>
       <CaseStudyFullHero
         title="Drupal Canvas"
-        description="Drupal Canvas is the new way to build and edit pages in Drupal. I joined the project as a front-end engineer and ended up leading its design. I designed the whole design system, redesigned the entire UI so it worked as one product, and rethought the foundations of the experience, from the shell every feature sits in to how each one flows. Canvas 1.0 came out in December 2025, and by September 2026 it was running on over 13,000 sites."
+        description="Drupal's new page builder, now on over 13,000 sites. I joined as a front-end engineer and ended up leading its design, from the design system to a redesign of the whole product."
         logo="/images/logos/acquia-logo.svg"
         logoAlt="Acquia logo"
         preset="ocean"
@@ -267,10 +265,6 @@ export default function DrupalCanvasCaseStudy() {
               </div>
               <CanvasUsageChart />
             </CaseStudySection>
-          </FadeInUp>
-
-          <FadeInUp>
-            <STARBreakdown caseStudyId="drupal-canvas" />
           </FadeInUp>
         </main>
       </CaseStudyLayout>

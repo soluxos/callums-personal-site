@@ -5,7 +5,6 @@ import CaseStudyLayout from "@/components/case-study/CaseStudyLayout";
 import CaseStudyRole from "@/components/case-study/CaseStudyRole";
 import CaseStudySection from "@/components/case-study/CaseStudySection";
 import CaseStudySlider from "@/components/case-study/CaseStudySlider";
-import STARBreakdown from "@/components/case-study/STARBreakdown";
 import { pageMetadata } from "@/lib/metadata";
 
 const img = name => `/images/case-studies/uiscanner/${name}`;
@@ -35,14 +34,13 @@ export default function UIScannerCaseStudy() {
     "Selling it",
     "Shipping updates",
     "Results",
-    "STAR breakdown",
   ];
 
   return (
     <>
       <CaseStudyFullHero
         title="UIScanner"
-        description="UIScanner is a desktop app I designed and built that checks any web page for inconsistent UI: spacing off the grid, one-off type styles, near-duplicate colours, and stray radii and borders. Every issue is pinned to the element it's on, with the CSS behind it and the fix. It works on live sites, local dev servers and prototypes, and AI coding agents can use it to check what they build. It's out for Mac and Windows, with a paid Pro tier on Lemon Squeezy."
+        description="A desktop app that checks any web page for inconsistent UI and points to the fix. I came up with it, designed and built it, and launched it for Mac and Windows."
         logo="/images/logos/uiscanner-logo.svg"
         logoAlt="UIScanner icon"
         preset="midnight"
@@ -126,8 +124,8 @@ export default function UIScannerCaseStudy() {
               <p>
                 It needed to be a desktop app, with the live page inside it. It needed to cope with
                 sites built on different rules, and the fix for each issue had to be impossible to
-                miss. From then on I worked in short loops: change something, use it on a real
-                page, and decide whether it was good enough.
+                miss. From then on I worked in short loops: change something, use it on a real page,
+                and decide whether it was good enough.
               </p>
             </div>
             <CaseStudyCards>
@@ -157,12 +155,12 @@ export default function UIScannerCaseStudy() {
                 cries wolf.
               </p>
               <p>
-                So UIScanner works out each page&apos;s own system before judging anything. It
-                looks for the coarsest grid that explains the page, from 4 to 12px, then for a short
-                set of values the page sticks to. If neither fits, it says the page has no
-                consistent system and only flags near-duplicates and one-offs. On four real product
-                sites it found a 4px grid on one, an uneven scale on another, and no consistent
-                system on the other two.
+                So UIScanner works out each page&apos;s own system before judging anything. It looks
+                for the coarsest grid that explains the page, from 4 to 12px, then for a short set
+                of values the page sticks to. If neither fits, it says the page has no consistent
+                system and only flags near-duplicates and one-offs. On four real product sites it
+                found a 4px grid on one, an uneven scale on another, and no consistent system on the
+                other two.
               </p>
               <p>
                 When a team has a design system, that becomes the rulebook instead. UIScanner can
@@ -232,14 +230,13 @@ export default function UIScannerCaseStudy() {
                 a rail of square icons and the page gets the room.
               </p>
               <p>
-                I kept the interface monochrome, with black buttons in light mode and white in
-                dark, so colour only ever means something: severity and scores. Animation, built
-                with Motion, makes panels and highlights move smoothly, and the type is Satoshi.
-                Getting it to feel finished took a lot of small passes: an even rhythm in the
-                sidebar, a getting-started card that didn&apos;t look like an afterthought,
-                right-click menus, undo instead of confirm boxes, a native menu bar and a settings
-                page. I even rebuilt the sidebar animation, because it juddered when a report
-                opened.
+                I kept the interface monochrome, with black buttons in light mode and white in dark,
+                so colour only ever means something: severity and scores. Animation, built with
+                Motion, makes panels and highlights move smoothly, and the type is Satoshi. Getting
+                it to feel finished took a lot of small passes: an even rhythm in the sidebar, a
+                getting-started card that didn&apos;t look like an afterthought, right-click menus,
+                undo instead of confirm boxes, a native menu bar and a settings page. I even rebuilt
+                the sidebar animation, because it juddered when a report opened.
               </p>
               <p>
                 The icon went through the same process. The first ones were violet with a glowing
@@ -282,11 +279,11 @@ export default function UIScannerCaseStudy() {
           <CaseStudySection title="From one page to a whole site">
             <div className={body}>
               <p>
-                A page scan can&apos;t tell you whether a site holds together, so I added
-                whole-site audits. Every page UIScanner finds goes on a sitemap with its score, so
-                it&apos;s easy to see what to fix. It follows the site&apos;s links and sitemap,
-                scans every page, and lays them out with the home page at the top, sections beneath
-                it and child pages under those.
+                A page scan can&apos;t tell you whether a site holds together, so I added whole-site
+                audits. Every page UIScanner finds goes on a sitemap with its score, so it&apos;s
+                easy to see what to fix. It follows the site&apos;s links and sitemap, scans every
+                page, and lays them out with the home page at the top, sections beneath it and child
+                pages under those.
               </p>
               <p>
                 The first map wrapped sections onto new rows, which broke down on sites with a lot
@@ -326,8 +323,8 @@ export default function UIScannerCaseStudy() {
                 The scan box used to put everything up front: page or whole site with a hint beside
                 it, the address, then desktop, laptop, tablet or mobile, a design system and
                 options, over three rows. It wasn&apos;t intuitive, and the device was the wrong
-                thing to ask for first. It should be something you change once you&apos;ve seen
-                the result.
+                thing to ask for first. It should be something you change once you&apos;ve seen the
+                result.
               </p>
               <p>
                 Now the box is the address with one quiet row underneath, and the device switch
@@ -458,9 +455,9 @@ export default function UIScannerCaseStudy() {
                 When a new version is out, an &quot;Update available&quot; row appears in the
                 sidebar. One click downloads it, checks it against the release&apos;s hash, swaps it
                 in and restarts on a What&apos;s new note. It won&apos;t restart in the middle of a
-                scan, and it warns you first if an agent is using the app. Releases are published
-                on GitHub, and putting one out takes three steps: bump the version, write
-                what&apos;s new in the changelog, and run one command.
+                scan, and it warns you first if an agent is using the app. Releases are published on
+                GitHub, and putting one out takes three steps: bump the version, write what&apos;s
+                new in the changelog, and run one command.
               </p>
               <p>
                 The Mac app runs on Apple silicon and Intel, and there&apos;s a Windows installer
@@ -499,8 +496,6 @@ export default function UIScannerCaseStudy() {
               </ul>
             </div>
           </CaseStudySection>
-
-          <STARBreakdown caseStudyId="uiscanner" />
         </main>
       </CaseStudyLayout>
     </>

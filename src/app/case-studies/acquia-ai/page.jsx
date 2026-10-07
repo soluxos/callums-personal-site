@@ -4,7 +4,6 @@ import CaseStudyFullHero from "@/components/case-study/CaseStudyFullHero";
 import CaseStudyLayout from "@/components/case-study/CaseStudyLayout";
 import CaseStudyRole from "@/components/case-study/CaseStudyRole";
 import CaseStudySection from "@/components/case-study/CaseStudySection";
-import STARBreakdown from "@/components/case-study/STARBreakdown";
 import { pageMetadata } from "@/lib/metadata";
 
 const img = name => `/images/case-studies/acquia-ai/${name}`;
@@ -29,14 +28,13 @@ export default function AcquiaAICaseStudy() {
     "Destructive actions always ask",
     "Admins can see everything",
     "Results",
-    "STAR breakdown",
   ];
 
   return (
     <>
       <CaseStudyFullHero
         title="Acquia AI"
-        description="AI agents that can publish a page, delete an old staging site or find every page still using the old brand colours. I've designed it twice. The first version, a standalone app, shipped its MVP four months after I joined. The second, inside Acquia Source, is where I designed how a person stays in charge: agents with their own permissions, destructive actions that only the product itself can approve, never text in the chat, and a full record for admins. I built that part of the prototype myself."
+        description="AI agents that can publish and delete across a company's sites. I've designed it twice, and inside Acquia Source I designed and built how a person stays in charge of them."
         logo="/images/logos/acquia-logo.svg"
         logoAlt="Acquia logo"
         preset="fire"
@@ -306,8 +304,6 @@ export default function AcquiaAICaseStudy() {
                 </ul>
               </div>
             </CaseStudySection>
-
-            <STARBreakdown caseStudyId="acquia-ai" />
           </div>
         </main>
       </CaseStudyLayout>

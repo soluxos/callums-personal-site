@@ -4,7 +4,6 @@ import CaseStudyFullHero from "@/components/case-study/CaseStudyFullHero";
 import CaseStudyLayout from "@/components/case-study/CaseStudyLayout";
 import CaseStudyRole from "@/components/case-study/CaseStudyRole";
 import CaseStudySection from "@/components/case-study/CaseStudySection";
-import STARBreakdown from "@/components/case-study/STARBreakdown";
 import { pageMetadata } from "@/lib/metadata";
 
 const img = name => `/images/case-studies/acquia-source/${name}`;
@@ -29,14 +28,13 @@ export default function AcquiaSourceCaseStudy() {
     "Making it safe to contribute",
     "Rebuilding it on GEL",
     "Results",
-    "STAR breakdown",
   ];
 
   return (
     <>
       <CaseStudyFullHero
         title="Acquia Source"
-        description="Acquia sells hosting, site building, digital assets, governance and AI as separate products, each with its own interface. Acquia Source brings them into one platform, and I lead its design. I designed the navigation every product now sits in, then built the working prototype the product team demos from. It has 104 routes and over 900 commits, most of which I wrote with AI coding agents, and I'm rebuilding it on Acquia's design system so engineering can take code straight from it."
+        description="One platform for every Acquia product. I lead its design: I designed the navigation they all sit in, and built the 104-route prototype the product team demos from."
         logo="/images/logos/acquia-logo.svg"
         logoAlt="Acquia logo"
         preset="tropical"
@@ -327,8 +325,6 @@ export default function AcquiaSourceCaseStudy() {
                 </ul>
               </div>
             </CaseStudySection>
-
-            <STARBreakdown caseStudyId="acquia-source" />
           </div>
         </main>
       </CaseStudyLayout>

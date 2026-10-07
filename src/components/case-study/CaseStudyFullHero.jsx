@@ -14,7 +14,7 @@ export default function CaseStudyFullHero({
 }) {
   return (
     // margin-top: -60px pulls the hero up behind the nav (pt-8 ≈ 32px + nav ≈ 28px)
-    <div className="relative min-h-[600px] sm:min-h-[680px]" style={{ marginTop: "-60px" }}>
+    <div className="relative min-h-[680px] sm:min-h-[780px]" style={{ marginTop: "-60px" }}>
       {/* Absolutely-positioned background breaks out of the container's horizontal margins
           to cover the full viewport width without causing a horizontal scrollbar */}
       <div
@@ -41,7 +41,7 @@ export default function CaseStudyFullHero({
       </div>
 
       {/* Content sits on top of the background */}
-      <div className="relative z-10 min-h-[600px] sm:min-h-[680px] flex flex-col gap-12 pt-[100px] sm:pt-[120px] pb-[50px] sm:pb-[64px]">
+      <div className="relative z-10 min-h-[680px] sm:min-h-[780px] flex flex-col gap-12 pt-[100px] sm:pt-[120px] pb-[50px] sm:pb-[64px]">
         {/* Logo + title + description — vertically centred in the remaining space */}
         <div className="flex-1 flex flex-col items-start justify-center text-left gap-3">
           {logo && (

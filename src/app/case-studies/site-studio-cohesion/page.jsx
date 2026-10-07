@@ -5,7 +5,6 @@ import CaseStudyLayout from "@/components/case-study/CaseStudyLayout";
 import CaseStudyRole from "@/components/case-study/CaseStudyRole";
 import CaseStudySection from "@/components/case-study/CaseStudySection";
 import CaseStudySlider from "@/components/case-study/CaseStudySlider";
-import STARBreakdown from "@/components/case-study/STARBreakdown";
 import FadeInUp from "@/components/FadeInUp/FadeInUp";
 import { pageMetadata } from "@/lib/metadata";
 
@@ -31,14 +30,13 @@ export default function SiteStudioCaseStudy() {
     "Being acquired",
     "Rebuilding it in React",
     "Results",
-    "STAR breakdown",
   ];
 
   return (
     <>
       <CaseStudyFullHero
         title="Site Studio"
-        description="Site Studio, formerly Cohesion, was a low-code site builder for Drupal made by a 12-person startup. When I joined, our only customer was our partner agency. I taught people to use the product and demoed it to prospects, up to a £1m ARR deal with a global pharmaceutical company, and soon afterwards Acquia acquired us. Then I moved into engineering, and with one other front-end engineer I rebuilt the whole app in React."
+        description="A low-code site builder for Drupal. I helped land a £1m ARR deal for it, and after Acquia acquired us, I rebuilt the whole app in React with one other engineer."
         logo="/images/logos/acquia-logo.svg"
         logoAlt="Acquia logo"
         preset="forest"
@@ -245,10 +243,6 @@ export default function SiteStudioCaseStudy() {
                 </ul>
               </div>
             </CaseStudySection>
-          </FadeInUp>
-
-          <FadeInUp>
-            <STARBreakdown caseStudyId="site-studio-cohesion" />
           </FadeInUp>
         </main>
       </CaseStudyLayout>

@@ -249,23 +249,27 @@ export default function CanvasUsageChart() {
         , as of {CANVAS_USAGE_AS_OF}. Each point is one week.
       </figcaption>
 
-      <table className="sr-only">
-        <caption>Sites using Drupal Canvas each week</caption>
-        <thead>
-          <tr>
-            <th scope="col">Week starting</th>
-            <th scope="col">Sites</th>
-          </tr>
-        </thead>
-        <tbody>
-          {points.map(p => (
-            <tr key={p.week}>
-              <td>{day(p.week)}</td>
-              <td>{count(p.sites)}</td>
+      {/* sr-only goes on a wrapper: a table ignores its 1px size and would still take
+          up its full height, adding blank space below the footer. */}
+      <div className="sr-only">
+        <table>
+          <caption>Sites using Drupal Canvas each week</caption>
+          <thead>
+            <tr>
+              <th scope="col">Week starting</th>
+              <th scope="col">Sites</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {points.map(p => (
+              <tr key={p.week}>
+                <td>{day(p.week)}</td>
+                <td>{count(p.sites)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </figure>
   );
 }

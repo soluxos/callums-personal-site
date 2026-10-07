@@ -3,7 +3,6 @@ import CaseStudyLayout from "@/components/case-study/CaseStudyLayout";
 import CaseStudyRole from "@/components/case-study/CaseStudyRole";
 import CaseStudySection from "@/components/case-study/CaseStudySection";
 import CaseStudySlider from "@/components/case-study/CaseStudySlider";
-import STARBreakdown from "@/components/case-study/STARBreakdown";
 import { pageMetadata } from "@/lib/metadata";
 
 const img = name => `/images/case-studies/union-roasted/${name}`;
@@ -51,14 +50,13 @@ export default function UnionRoastedCaseStudy() {
     "Understanding the client",
     "What it looks like",
     "Results",
-    "STAR breakdown",
   ];
 
   return (
     <>
       <CaseStudyFullHero
         title="Union Roasted"
-        description="Union Roasted is one of the UK's best-known specialty coffee roasters. In 2018 they asked the agency I worked at for a new Shopify site that didn't look like a Shopify site. I designed every page and built the whole site on Shopify, and Union still use that design today."
+        description="A Shopify site for one of the UK's best-known specialty coffee roasters. I designed every page and built the whole site, and Union still use the design today."
         logo="/images/logos/union-logo.png"
         logoAlt="Union Roasted logo"
         preset="rachelChen"
@@ -176,8 +174,6 @@ export default function UnionRoastedCaseStudy() {
               </p>
             </div>
           </CaseStudySection>
-
-          <STARBreakdown caseStudyId="union-roasted" />
         </main>
       </CaseStudyLayout>
     </>
