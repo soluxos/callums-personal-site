@@ -20,6 +20,7 @@ const COLUMNS = [
 
 export default function CaseStudyRole({ summary, owned = [], shared = [], others = [], note }) {
   const lists = { owned, shared, others };
+  const columns = COLUMNS.filter(({ key }) => lists[key].length > 0);
 
   return (
     <section id="my-role" className="flex flex-col gap-10 scroll-mt-8">
@@ -30,8 +31,9 @@ export default function CaseStudyRole({ summary, owned = [], shared = [], others
         </p>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-3">
-        {COLUMNS.filter(({ key }) => lists[key].length > 0).map(({ key, label, dot }) => (
+      {/* a single list sits at the summary's width rather than in a third of the row */}
+      <div className={columns.length === 1 ? "grid max-w-[720px] gap-4" : "grid gap-4 md:grid-cols-3"}>
+        {columns.map(({ key, label, dot }) => (
           <div key={key} className="flex flex-col gap-4 rounded-[8px] bg-[#ededed] p-5">
             <p className="font-ppmondwest text-[20px] leading-[1.25] text-[#484848]">{label}</p>
             <ul className="flex flex-col gap-3">

@@ -50,6 +50,15 @@ const STAR_CONTENT = {
     result:
       "The client expected a standard Shopify build and got a site that looked and felt like them. Years later the site still uses my design, and I was named Employee of the Month at WeMakeWebsites for it.",
   },
+  uiscanner: {
+    situation:
+      "Small inconsistencies, like a 22px gap among 24s or a blue one shade off the brand colour, are hard to spot in review and slow to find by hand. AI agents now build pages faster than anyone can check them.",
+    task: "Design, build and launch a desktop app that finds those inconsistencies on any page, points to each one with a fix, works with AI coding agents, and is good enough to sell.",
+    action:
+      "- Came up with UIScanner and defined what it checks and how it points to each issue\n- Designed the app: the sidebar and icon rail, the report and inspector, the sitemap canvas, the scan box, both themes and the icon\n- Made the scanner work out each page's own spacing system instead of assuming a 4px grid, and learn design systems from pages, tokens files or git repos\n- Added whole-site audits on an endless sitemap canvas, and device switching after a scan\n- Built an MCP server so AI agents like Claude Code can check what they build\n- Set up Free and Pro on Lemon Squeezy, with releases for Mac and Windows that update from inside the app\n- Tested it on real sites and fixed what came up",
+    result:
+      "UIScanner 1.0.2 is out for Mac and Windows, updates itself from the sidebar, and Pro is on sale for $49.99 through Lemon Squeezy.",
+  },
 };
 
 export default STAR_CONTENT;

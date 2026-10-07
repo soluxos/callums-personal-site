@@ -1,5 +1,16 @@
 export const CASE_STUDIES = [
   {
+    slug: "uiscanner",
+    href: "/case-studies/uiscanner",
+    preset: "midnight",
+    title: "UIScanner",
+    description:
+      "A desktop app that finds inconsistent UI on any web page and shows how to fix it. I came up with it, designed and built it, and launched it for Mac and Windows.",
+    logo: "/images/logos/uiscanner-logo.svg",
+    logoAlt: "UIScanner icon",
+    badge: "Public",
+  },
+  {
     slug: "drupal-canvas",
     href: "/case-studies/drupal-canvas",
     preset: "ocean",
@@ -9,7 +20,6 @@ export const CASE_STUDIES = [
     logo: "/images/logos/acquia-logo.svg",
     logoAlt: "Acquia logo",
     badge: "Public",
-    className: "md:col-span-2",
   },
   {
     slug: "acquia-source",

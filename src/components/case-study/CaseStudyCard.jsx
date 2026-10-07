@@ -27,9 +27,12 @@ export default function CaseStudyCard({
         .filter(Boolean)
         .join(" ")}
     >
-      {/* Image fills remaining space above the text strip */}
+      {/* Image fills remaining space above the text strip, inset from the card's edges like
+          the slider and image blocks, so it never sits against the grey's sides */}
       {image && (
-        <div className="flex-1 min-h-0 w-full overflow-hidden">
+        <div
+          className={`flex-1 min-h-0 w-full overflow-hidden px-5 pt-5 md:px-10 md:pt-10 ${children ? "" : "pb-5 md:pb-10"}`}
+        >
           <img src={image} alt={imageAlt} className={`h-full w-full object-${objectFit}`} />
         </div>
       )}
