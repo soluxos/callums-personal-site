@@ -4,6 +4,7 @@ import CaseStudyRole from "@/components/case-study/CaseStudyRole";
 import CaseStudySection from "@/components/case-study/CaseStudySection";
 import CaseStudySlider from "@/components/case-study/CaseStudySlider";
 import { pageMetadata } from "@/lib/metadata";
+import ZoomableImage from "@/components/case-study/ZoomableImage";
 
 const img = name => `/images/case-studies/union-roasted/${name}`;
 
@@ -146,7 +147,7 @@ export default function UnionRoastedCaseStudy() {
 
           <CaseStudySection title="What it looks like">
             <div className="rounded-[16px] bg-[#ededed] p-5">
-              <img
+              <ZoomableImage
                 src={img("full-product.webp")}
                 alt="Full-length Union Roasted product page, from product details to the farm story, related coffees and footer"
                 className="w-full"

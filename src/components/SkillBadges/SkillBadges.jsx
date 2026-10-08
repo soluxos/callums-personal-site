@@ -221,6 +221,12 @@ export default function SkillBadges() {
       mouse.element.removeEventListener("mousewheel", mouse.mousewheel);
       mouse.element.removeEventListener("DOMMouseScroll", mouse.mousewheel);
       mouse.element.removeEventListener("wheel", mouse.mousewheel);
+      // Matter's touch handlers call preventDefault too, which traps a phone's scroll
+      // inside the pit. Without them a swipe scrolls the page; the mouse can still drag
+      // badges, and a tap on the dynamite still sets it off (that's a click).
+      mouse.element.removeEventListener("touchmove", mouse.mousemove);
+      mouse.element.removeEventListener("touchstart", mouse.mousedown);
+      mouse.element.removeEventListener("touchend", mouse.mouseup);
       const mc = MouseConstraint.create(engine, {
         mouse,
         constraint: {
@@ -475,7 +481,7 @@ export default function SkillBadges() {
         style={{
           maxWidth: 1400,
           userSelect: "none",
-          touchAction: "none",
+          touchAction: "pan-y",
           backgroundColor: "oklch(0.95 0 0)",
         }}
       >

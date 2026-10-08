@@ -28,7 +28,6 @@ export default function DrupalCanvasCaseStudy() {
     "Building the design system",
     "Structuring the shell",
     "Designing new features",
-    "Working outside Figma",
     "Results",
   ];
 
@@ -45,9 +44,16 @@ export default function DrupalCanvasCaseStudy() {
             label: "Role",
             value: "Design lead (Senior Product Designer), joined as a front-end engineer",
           },
-          { label: "Team", value: "Canvas engineers, product managers and designers" },
+          {
+            label: "Team",
+            value:
+              "Around 20 engineers, a product manager, and three junior designers who joined under me",
+          },
           { label: "Timeline", value: "Jan 2025 - Dec 2025" },
-          { label: "Outcome", value: "Over 13,000 sites by Sept 2026, under ten months after 1.0" },
+          {
+            label: "Outcome",
+            value: "13,604 sites in the week of 20 Sept 2026, under ten months after 1.0",
+          },
         ]}
       />
       <CaseStudyLayout sections={sections}>
@@ -60,7 +66,7 @@ export default function DrupalCanvasCaseStudy() {
               "The product shell: the panels and top bar, and how they expand with what you're doing",
               "User flows and designs for every feature, both the redesigned ones and the new ones",
               "Design review of the UI engineering built",
-              "Mentoring the junior designers on the team",
+              "Leading the three junior designers who joined under me, and reviewing their features so Canvas stayed cohesive",
             ]}
             shared={[
               "Interaction details, worked out with the engineers building them",
@@ -69,6 +75,7 @@ export default function DrupalCanvasCaseStudy() {
             others={[
               "Engineering built and shipped Canvas, and chose the tech stack",
               "Earlier designers created the first UI, which I pulled into the design system before redesigning it",
+              "The junior designers on my team designed individual features, such as asymmetric translations",
             ]}
           />
 
@@ -89,6 +96,7 @@ export default function DrupalCanvasCaseStudy() {
                     alt: "The Canvas code editor, writing a code component with a live preview and its props alongside",
                   },
                 ]}
+                caption="Canvas as it is now: the page editor, the content list and the code editor. I designed all three, and the Canvas engineers built them."
               />
             </section>
           </FadeInUp>
@@ -224,6 +232,12 @@ export default function DrupalCanvasCaseStudy() {
                   engineers see how I&apos;d turned them into something simple before anyone built
                   anything.
                 </p>
+                <p>
+                  Over the year, three junior designers joined the team under me. Each took on
+                  individual features, such as asymmetric translations, and I reviewed what they
+                  designed to make sure it fitted the rest of Canvas and made sense to the people
+                  using it.
+                </p>
               </div>
               <CaseStudyCards>
                 <CaseStudyCard
@@ -234,19 +248,6 @@ export default function DrupalCanvasCaseStudy() {
                   Adding a content template, screen by screen.
                 </CaseStudyCard>
               </CaseStudyCards>
-            </CaseStudySection>
-          </FadeInUp>
-
-          <FadeInUp>
-            <CaseStudySection title="Working outside Figma">
-              <div className={body}>
-                <p>
-                  A lot of this project happened outside Figma. Sometimes I worked like a product
-                  manager, pinning down requirements before there was anything to design. Sometimes
-                  I worked like the engineer I&apos;d been hired as, finding a way around a
-                  technical limit. I&apos;m happy to walk through any of it in more detail.
-                </p>
-              </div>
             </CaseStudySection>
           </FadeInUp>
 

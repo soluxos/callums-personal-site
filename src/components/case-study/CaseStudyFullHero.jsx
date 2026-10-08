@@ -37,7 +37,14 @@ export default function CaseStudyFullHero({
             left: 0,
           }}
         />
-        <div className="bg-[rgba(0,0,0,0.2)] absolute inset-0" />
+        {/* Darker on the left, behind the text, so it keeps its contrast on every preset. */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(90deg, rgba(0,0,0,0.36) 0%, rgba(0,0,0,0.28) 45%, rgba(0,0,0,0.12) 85%), rgba(0,0,0,0.3)",
+          }}
+        />
       </div>
 
       {/* Content sits on top of the background */}
@@ -54,7 +61,7 @@ export default function CaseStudyFullHero({
             className="font-ppmondwest text-[40px] sm:text-[64px] leading-[1.2] text-white"
           />
           {description && (
-            <p className="text-[16px] max-w-[560px] font-medium leading-[1.5] text-white/80">
+            <p className="text-[16px] max-w-[560px] font-medium leading-[1.5] text-white">
               {description}
             </p>
           )}
@@ -80,7 +87,7 @@ export default function CaseStudyFullHero({
                 <p className="font-ppmondwest text-[18px] leading-[1.25] text-white">
                   {item.label}
                 </p>
-                <p className="text-[13px] font-medium leading-[1.5] text-white/80 max-w-[240px]">
+                <p className="text-[13px] font-medium leading-[1.5] text-white max-w-[240px]">
                   {item.value}
                 </p>
               </div>

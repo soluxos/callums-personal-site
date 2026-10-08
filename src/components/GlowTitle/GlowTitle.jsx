@@ -35,9 +35,13 @@ export default function GlowTitle({ text, as: Tag = "h1", className = "", replay
   const isReplay = replayKey > 0;
   return (
     <Tag className={className}>
+      {/* One letter per span would be read out letter by letter, so screen readers get
+          the whole word here and the animated letters are hidden from them. */}
+      <span className="sr-only">{text}</span>
       {chars.map((char, i) => (
         <motion.span
           key={`${replayKey}-${i}`}
+          aria-hidden="true"
           style={{ display: "inline-block", whiteSpace: char === " " ? "pre" : "normal" }}
           initial={
             isReplay

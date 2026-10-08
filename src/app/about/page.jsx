@@ -29,7 +29,7 @@ const ELSEWHERE = [
 
 const EXPERIENCE = [
   {
-    role: "Design Lead (Senior Product Designer)",
+    role: "Senior Product Designer, then Lead Product Designer",
     company: "Acquia",
     dates: "Jan 2025 – Now",
     body: (
@@ -43,18 +43,28 @@ const EXPERIENCE = [
           <a href="/case-studies/acquia-ai" className={inlineLink}>
             Acquia AI
           </a>
-          , where AI agents do work across those products with a person in charge. Before that I led
+          , where AI agents do work across those products with a person in charge. Two designers
+          work under me across both. I joined as a Senior Product Designer in January 2025, leading
           the design of{" "}
           <a href="/case-studies/drupal-canvas" className={inlineLink}>
             Drupal Canvas
           </a>
-          , Drupal&apos;s new page builder, which is now on over 13,000 sites.
+          , Drupal&apos;s new page builder, which is now on over 13,000 sites. I&apos;ve been acting
+          as design lead since August 2025, starting on Acquia AI.
         </p>
         <p>
           I got here from engineering. I joined Canvas as a front-end engineer, saw it had no design
-          system, and built one. From there I redesigned the whole product. I also built the
-          prototyping tool the design team uses, so designs reach engineering as working React, and
-          I mentor and train the junior designers on the team.
+          system, and built one. From there I redesigned the whole product. Over the year three
+          junior designers joined under me, and I led and mentored them, working with one product
+          manager and around 20 engineers.
+        </p>
+        <p>
+          I also built the{" "}
+          <a href="/case-studies/acquia-source" className={inlineLink}>
+            Acquia Source prototype
+          </a>
+          , which the design team now designs in. I&apos;m rebuilding its pages on GEL,
+          Acquia&apos;s design system, so engineering can take code straight from them.
         </p>
       </>
     ),
@@ -79,7 +89,7 @@ const EXPERIENCE = [
           I built the React component library the whole app used, in Styled Components, and a
           Cypress end-to-end test suite that covered the whole application. New features usually
           started with me in Figma before I built them. Over those years Site Studio grew to more
-          than 1,000 customers and $45m in attached revenue.
+          than 1,000 customers and $45m in attached revenue, from hosting deals that included it.
         </p>
       </>
     ),
@@ -97,9 +107,9 @@ const EXPERIENCE = [
         </p>
         <p>
           Over one weekend, our Product Design Director and I designed and built a branded prototype
-          that helped land a £1m ARR deal, and that deal led to Acquia acquiring us. I also built a
-          full website live on stage at Acquia Engage, and recorded a soup-to-nuts site build in a
-          single day to close a major customer.
+          that helped land a £1m ARR deal with Bayer, and that deal led to Acquia acquiring us. I
+          also built a full website live on stage at Acquia Engage, and recorded a soup-to-nuts site
+          build in a single day to close a major customer.
         </p>
       </>
     ),

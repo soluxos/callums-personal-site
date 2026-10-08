@@ -36,7 +36,7 @@ export default function SiteStudioCaseStudy() {
     <>
       <CaseStudyFullHero
         title="Site Studio"
-        description="A low-code site builder for Drupal. I helped land a £1m ARR deal for it, and after Acquia acquired us, I rebuilt the whole app in React with one other engineer."
+        description="A low-code site builder for Drupal. I helped land a £1m ARR deal with Bayer for it, and after Acquia acquired us, I rebuilt the whole app in React with one other engineer."
         logo="/images/logos/acquia-logo.svg"
         logoAlt="Acquia logo"
         preset="forest"
@@ -63,14 +63,15 @@ export default function SiteStudioCaseStudy() {
             ]}
             shared={[
               "In-person demos at prospects' offices, with our Head of Marketing",
-              "The weekend prototype that won the pharmaceutical deal, with our Product Design Director",
-              "Helping that client migrate over 1,000 websites onto Site Studio",
+              "The weekend prototype that won the Bayer deal, with our Product Design Director",
+              "Helping Bayer migrate over 1,000 websites onto Site Studio",
               "Rebuilding the whole app in React, with one other front-end engineer: over 100,000 lines of AngularJS migrated and the architecture redesigned",
               "The visual page builder, built from scratch by the two of us",
             ]}
             others={[
               "The lead came from a Senior Director of Solutions Architecture at Acquia",
               "The commercial deal and the acquisition were handled by our directors",
+              "The product's interface design, by its original designer. The other front-end engineer and I built it in React",
             ]}
           />
 
@@ -95,6 +96,7 @@ export default function SiteStudioCaseStudy() {
                     alt: "Site Studio's style editor, setting the h1 font size for each screen size",
                   },
                 ]}
+                caption="Site Studio after the React rebuild. The product's original designer designed these screens, and the other front-end engineer and I built them."
               />
             </section>
           </FadeInUp>
@@ -172,18 +174,18 @@ export default function SiteStudioCaseStudy() {
                 <p>
                   We&apos;d been talking to two of the largest pharmaceutical companies in the
                   world, and nothing had converted. Then on a Friday evening, a Senior Director of
-                  Solutions Architecture at Acquia told us one of them was close to buying Site
-                  Studio licences. We just needed to show them the value. On Monday morning.
+                  Solutions Architecture at Acquia told us one of them, Bayer, was close to buying
+                  Site Studio licences. We just needed to show them the value. On Monday morning.
                 </p>
                 <p>
                   Our Product Design Director and I got to work straight away. Over the weekend we
-                  designed and built a prototype in Site Studio using the company&apos;s brand. For
-                  a 12-person startup, a £1m deal was enormous, and we both knew it.
+                  designed and built a prototype in Site Studio using Bayer&apos;s brand. For a
+                  12-person startup, a £1m deal was enormous, and we both knew it.
                 </p>
                 <p>
-                  We presented it on Monday morning, and we landed the deal. The client had over
-                  1,000 websites to move onto Site Studio over the following year, and we helped
-                  them do that too.
+                  We presented it on Monday morning, and we landed the deal. Bayer had over 1,000
+                  websites to move onto Site Studio over the following year, and we helped them do
+                  that too.
                 </p>
               </div>
             </CaseStudySection>
@@ -231,14 +233,15 @@ export default function SiteStudioCaseStudy() {
               <div className={body}>
                 <ul className="list-disc space-y-2 pl-5">
                   <li>
-                    A £1m ARR deal with one of the world&apos;s largest pharmaceutical companies, at
-                    a company whose only customer had been our partner agency.
+                    A £1m ARR deal with Bayer, one of the world&apos;s largest pharmaceutical
+                    companies, at a company whose only customer had been our partner agency.
                   </li>
                   <li>The client moved over 1,000 websites onto Site Studio.</li>
                   <li>Acquia acquired the business.</li>
+                  <li>The whole app rebuilt in React by two of us.</li>
                   <li>
-                    The whole app rebuilt in React by two of us, and Site Studio grew to more than
-                    1,000 customers and $45m in attached revenue.
+                    Over those years, Site Studio grew to more than 1,000 customers and $45m in
+                    attached revenue, from hosting deals that included it.
                   </li>
                 </ul>
               </div>

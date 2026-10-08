@@ -27,6 +27,18 @@ export default function CaseStudyTableOfContents({ sections = [] }) {
   const totalTicks = n > 0 ? n + (n - 1) * N_BETWEEN : 0;
   const rulerWidth = totalTicks * TICK_SPACING + SIDE_PAD * 2;
 
+  // The ruler is pinned over the bottom 64px of the screen. Reserve that space when the
+  // browser scrolls something into view (tabbing to a link, say), so whatever has focus is
+  // never hidden behind the ruler.
+  useEffect(() => {
+    if (!items.length) return;
+    const root = document.documentElement;
+    root.style.scrollPaddingBottom = "80px";
+    return () => {
+      root.style.scrollPaddingBottom = "";
+    };
+  }, [items.length]);
+
   // Track scroll progress + active section
   useEffect(() => {
     if (!items.length) return;
@@ -61,6 +73,16 @@ export default function CaseStudyTableOfContents({ sections = [] }) {
     const minX = Math.min(0, -(rulerWidth - vw));
     x.set(minX * scrollProgress);
   }, [scrollProgress, n, rulerWidth, x]);
+
+  // A label far along the ruler can sit off screen. When the keyboard lands on one,
+  // slide the ruler just enough to bring it into view.
+  function reveal(centreX) {
+    const vw = containerRef.current?.offsetWidth ?? 0;
+    const pos = centreX + x.get();
+    if (pos > 80 && pos < vw - 80) return;
+    const minX = Math.min(0, -(rulerWidth - vw));
+    x.set(Math.max(minX, Math.min(0, vw / 2 - centreX)));
+  }
 
   function handleClick(id) {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -128,6 +150,7 @@ export default function CaseStudyTableOfContents({ sections = [] }) {
                   <button
                     key={`lbl-${i}`}
                     onClick={() => handleClick(id)}
+                    onFocus={() => reveal(centreX)}
                     onMouseEnter={() => setHoveredSection(tick.sectionIndex)}
                     onMouseLeave={() => setHoveredSection(null)}
                     aria-current={isActive ? "location" : undefined}
@@ -190,6 +213,10 @@ export default function CaseStudyTableOfContents({ sections = [] }) {
                       onMouseEnter={() => setHoveredSection(tick.sectionIndex)}
                       onMouseLeave={() => setHoveredSection(null)}
                       aria-label={`Jump to ${label}`}
+                      // The label above does the same job, so keyboard and screen
+                      // reader users get one stop per section.
+                      tabIndex={-1}
+                      aria-hidden="true"
                       style={{
                         width: TICK_SPACING,
                         height: TICK_H,

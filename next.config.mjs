@@ -8,6 +8,12 @@ const nextConfig = {
         destination: "/case-studies/acquia-source",
         permanent: true,
       },
+      // UIScanner was renamed EvenUI.
+      {
+        source: "/case-studies/uiscanner",
+        destination: "/case-studies/evenui",
+        permanent: true,
+      },
     ];
   },
 };

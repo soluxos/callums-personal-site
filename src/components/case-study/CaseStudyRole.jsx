@@ -57,11 +57,11 @@ export default function CaseStudyRole({ summary, owned = [], shared = [], others
         </p>
       </div>
 
-      <div className="flex flex-col gap-12 lg:flex-row lg:gap-10">
+      <div className="flex flex-col gap-8 sm:gap-12 lg:flex-row lg:gap-10">
         {GROUPS.filter(({ key }) => lists[key].length > 0).map(({ key, title, colour }) => (
           <div
             key={key}
-            className="flex flex-col gap-6 lg:min-w-[164px] lg:basis-0"
+            className="flex flex-col gap-4 sm:gap-6 lg:min-w-[164px] lg:basis-0"
             // Side by side, a group with more notes gets more of the row.
             style={{ flexGrow: lists[key].length }}
           >
@@ -72,15 +72,16 @@ export default function CaseStudyRole({ summary, owned = [], shared = [], others
               </span>
             </div>
 
-            <ul className="flex flex-wrap gap-x-5 gap-y-7">
+            <ul className="flex flex-wrap gap-x-4 gap-y-5 sm:gap-x-5 sm:gap-y-7">
               {lists[key].map(item => {
                 const i = n++;
                 const { bg, shadow } = colour;
                 return (
                   <li
                     key={item}
-                    // Square, but free to grow taller if the text needs it.
-                    className="relative aspect-square w-[148px] rotate-[var(--tilt)] rounded-[4px] px-3.5 pt-6 pb-4 sm:w-[164px] transition-[rotate,translate] duration-300 ease-out hover:-translate-y-1 hover:rotate-0 motion-reduce:transition-none"
+                    // Square from tablet width up, free to grow if the text needs it. On phones a
+                    // note is only as tall as its text, so the work isn't pushed far down.
+                    className="relative min-h-[96px] w-[148px] rotate-[var(--tilt)] rounded-[4px] px-3.5 pt-5 pb-3.5 sm:aspect-square sm:pt-6 sm:pb-4 sm:min-h-0 sm:w-[164px] transition-[rotate,translate] duration-300 ease-out hover:-translate-y-1 hover:rotate-0 motion-reduce:transition-none"
                     style={{
                       background: bg,
                       boxShadow: `0 4px 18px ${shadow}, 0 1px 3px rgba(0,0,0,0.10)`,

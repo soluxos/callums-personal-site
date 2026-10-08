@@ -1,14 +1,20 @@
 "use client";
 
 import { useId } from "react";
-import { Autoplay, Pagination } from "swiper/modules";
+import { A11y, Keyboard, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import ZoomableImage from "./ZoomableImage";
 
-export default function CaseStudySlider({ images }) {
+/**
+ * Props:
+ *  - images:  [{ src, alt }]
+ *  - caption: optional text under the slider: what the screens show, and whose work they are
+ */
+export default function CaseStudySlider({ images, caption }) {
   const paginationId = useId().replace(/:/g, "");
 
   return (
@@ -20,8 +26,11 @@ export default function CaseStudySlider({ images }) {
           spaceBetween={20}
           slideToClickedSlide={true}
           watchSlidesProgress={true}
-          modules={[Autoplay, Pagination]}
-          autoplay={{ delay: 3000, disableOnInteraction: false, pauseOnMouseEnter: true }}
+          // No autoplay: dense product screens need as long as the reader wants, so
+          // slides only move when they click, swipe, tab to a dot or use the arrow keys.
+          modules={[A11y, Keyboard, Pagination]}
+          keyboard={{ enabled: true, onlyInViewport: true }}
+          a11y={{ paginationBulletMessage: "Show screen {{index}}" }}
           pagination={{
             clickable: true,
             el: `.case-study-pagination-${paginationId}`,
@@ -30,19 +39,35 @@ export default function CaseStudySlider({ images }) {
         >
           {images.map((image, index) => (
             <SwiperSlide key={`${image.src}-${index}`}>
-              <div className="flex h-[auto] w-full items-end justify-center overflow-hidden rounded-[8px]">
-                <img
-                  alt={image.alt}
-                  className="h-full w-auto max-w-full object-contain rounded-[8px]"
-                  src={image.src}
-                />
-              </div>
+              {/* Only the slide in front opens full size; clicking a side slide still
+                  just brings it forward. */}
+              {({ isActive }) => (
+                <div className="flex h-[auto] w-full items-end justify-center overflow-hidden rounded-[8px]">
+                  {isActive ? (
+                    <ZoomableImage
+                      src={image.src}
+                      alt={image.alt}
+                      linkClassName="max-w-full"
+                      className="h-full w-auto max-w-full object-contain rounded-[8px]"
+                    />
+                  ) : (
+                    <img
+                      alt={image.alt}
+                      className="h-full w-auto max-w-full object-contain rounded-[8px]"
+                      src={image.src}
+                    />
+                  )}
+                </div>
+              )}
             </SwiperSlide>
           ))}
         </Swiper>
         <div className="mt-10 flex justify-center">
           <div className={`case-study-pagination case-study-pagination-${paginationId}`} />
         </div>
+        {caption && (
+          <p className="mt-6 text-[13px] font-medium leading-[1.5] text-[#6b6b6b]">{caption}</p>
+        )}
       </div>
       <style jsx global>{`
         .case-study-swiper .swiper-slide {

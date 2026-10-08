@@ -1,5 +1,6 @@
 "use client";
 import { usePathname } from "next/navigation";
+import { MotionConfig } from "motion/react";
 import CuttingMat from "@/components/CuttingMat/CuttingMat";
 
 export default function SiteShell({ children }) {
@@ -14,7 +15,8 @@ export default function SiteShell({ children }) {
           ideas board, which is its own surface. The angle guides only suit the
           homepage; elsewhere they'd land behind body text. */}
       {!isIdeas && <CuttingMat showAngleGuides={isHome} />}
-      {children}
+      {/* With reduced motion on, nothing slides or moves in; fades still play. */}
+      <MotionConfig reducedMotion="user">{children}</MotionConfig>
     </div>
   );
 }

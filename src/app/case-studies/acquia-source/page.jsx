@@ -5,6 +5,7 @@ import CaseStudyLayout from "@/components/case-study/CaseStudyLayout";
 import CaseStudyRole from "@/components/case-study/CaseStudyRole";
 import CaseStudySection from "@/components/case-study/CaseStudySection";
 import { pageMetadata } from "@/lib/metadata";
+import ZoomableImage from "@/components/case-study/ZoomableImage";
 
 const img = name => `/images/case-studies/acquia-source/${name}`;
 const early = name => `/images/case-studies/acquia-unification/${name}`;
@@ -43,25 +44,30 @@ export default function AcquiaSourceCaseStudy() {
           label: "Try the live prototype",
         }}
         metaItems={[
-          { label: "Role", value: "Design lead (Senior Product Designer)" },
-          { label: "Team", value: "Designers, engineers and product leads across Acquia" },
+          { label: "Role", value: "Lead Product Designer" },
+          {
+            label: "Team",
+            value: "Two designers under me, with engineers and product leads across Acquia",
+          },
           { label: "Timeline", value: "Jan 2026 - Now" },
           {
             label: "Outcome",
-            value: "The 104-route prototype the product team demos from, with 900+ commits",
+            value:
+              "Live, with fewer features than I designed. The 104-route prototype has the full design",
           },
         ]}
       />
       <CaseStudyLayout sections={sections}>
         <main className="flex flex-col gap-[120px] mt-20">
           <CaseStudyRole
-            summary="I lead design on Acquia Source. I designed the navigation every Acquia product sits in, then built the coded prototype the whole team designs, reviews and demos in, with guardrails that steer everyone's contributions, AI-written or not, onto the design system. I didn't design every screen: colleagues own areas like security and asset management and build them in the same prototype."
+            summary="I lead design on Acquia Source. I designed the navigation every Acquia product sits in, then built the coded prototype the whole team designs, reviews and demos in, with guardrails that steer everyone's contributions, AI-written or not, onto the design system. I designed the platform, not every product in it: colleagues own the products inside it, like security and asset management, and build them in the same prototype."
             owned={[
               "The information architecture and navigation shell for desktop, tablet and mobile, with the interaction notes engineering builds from",
               "The prototype itself. I set it up in July 2026 and wrote most of its 900-plus commits, by prompting Replit's agent and later Claude Code",
               "Rebuilding its pages on GEL, Acquia's design system, so engineering can take code straight from them (35 so far)",
               "The guardrails that let other people contribute: design rules, lint rules, designer tools and CI checks",
               "Reviewing and merging colleagues' pull requests",
+              "Leading the two designers who work under me",
             ]}
             shared={[
               "A library of 24 UI patterns. I turned the R&D design team's written guidance into working examples that new screens copy",
@@ -73,12 +79,13 @@ export default function AcquiaSourceCaseStudy() {
               "Parts of the Acquia AI chat and agent access, built by colleagues on top of my designs",
               "GEL itself, which belongs to Acquia's design system team",
             ]}
+            note="Every screen on this page is from the prototype, which has the full design. Acquia Source used to be called Command Center, which is the name on my CV."
           />
 
           <div className="flex flex-col gap-[120px]">
             <section className="w-full">
               <div className="flex flex-col gap-3 rounded-[16px] bg-[#ededed] p-5 md:p-10">
-                <img
+                <ZoomableImage
                   alt="The Acquia Source dashboard, with an Ask Acquia AI box above performance cards for every site"
                   className="h-auto w-full rounded-[12px] border border-[#dfdfdf]"
                   src={img("dashboard.webp")}
@@ -303,6 +310,11 @@ export default function AcquiaSourceCaseStudy() {
               <div className={body}>
                 <p>There are no usage numbers to share yet. What&apos;s true today:</p>
                 <ul className="list-disc space-y-2 pl-5">
+                  <li>
+                    Acquia Source is live, including the navigation, the organisation switcher and
+                    the AI area. Many of the features I designed were cut for time before release,
+                    and the prototype still has the full design.
+                  </li>
                   <li>
                     One navigation model covers every product area, from dashboards to AI, on
                     desktop, tablet and mobile.

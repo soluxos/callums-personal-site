@@ -6,21 +6,22 @@ import CaseStudyRole from "@/components/case-study/CaseStudyRole";
 import CaseStudySection from "@/components/case-study/CaseStudySection";
 import CaseStudySlider from "@/components/case-study/CaseStudySlider";
 import { pageMetadata } from "@/lib/metadata";
+import ZoomableImage from "@/components/case-study/ZoomableImage";
 
-const img = name => `/images/case-studies/uiscanner/${name}`;
+const img = name => `/images/case-studies/evenui/${name}`;
 
 const body = "max-w-[588px] space-y-4 text-[14px] font-medium leading-[1.5] text-[#656565]";
 const caption = "text-[13px] font-medium text-[#6b6b6b]";
 const shot = "h-auto w-full rounded-[12px] border border-[#dfdfdf]";
 
 export const metadata = pageMetadata({
-  title: "UIScanner · Callum Harrod",
+  title: "EvenUI · Callum Harrod",
   description:
-    "I designed and built UIScanner, a desktop app that finds inconsistent UI on any web page, and launched it for Mac and Windows with a paid Pro tier.",
-  path: "/case-studies/uiscanner",
+    "I designed and built EvenUI, a desktop app that finds inconsistent UI on any web page, and launched it for Mac and Windows with a paid Pro tier.",
+  path: "/case-studies/evenui",
 });
 
-export default function UIScannerCaseStudy() {
+export default function EvenUICaseStudy() {
   const sections = [
     { label: "My role", id: "my-role" },
     "The problem",
@@ -39,35 +40,43 @@ export default function UIScannerCaseStudy() {
   return (
     <>
       <CaseStudyFullHero
-        title="UIScanner"
+        title="EvenUI"
         description="A desktop app that checks any web page for inconsistent UI and points to the fix. I came up with it, designed and built it, and launched it for Mac and Windows."
-        logo="/images/logos/uiscanner-logo.svg"
-        logoAlt="UIScanner icon"
+        logo="/images/logos/evenui-logo.svg"
+        logoAlt="EvenUI icon"
         preset="midnight"
+        link={{
+          href: "https://github.com/soluxos/evenui-releases/releases/latest",
+          label: "Download EvenUI",
+        }}
         metaItems={[
           { label: "Role", value: "Solo: product, design, build and launch" },
           { label: "Team", value: "Just me" },
-          { label: "Timeline", value: "Oct 2026 - Now" },
+          {
+            label: "Timeline",
+            value: "Started 5 Oct 2026, first release 6 Oct, alongside my job at Acquia",
+          },
           {
             label: "Outcome",
-            value: "1.0.2 out for Mac and Windows, with Pro at $49.99 on Lemon Squeezy",
+            value:
+              "Launched for Mac and Windows, with Pro at $49.99. No downloads or sales as of 7 Oct 2026",
           },
         ]}
       />
       <CaseStudyLayout sections={sections}>
         <main className="flex flex-col gap-[120px] mt-20">
           <CaseStudyRole
-            summary="UIScanner is my product. I came up with it, designed it and built it, then launched it with Free and Pro plans, a store and releases for Mac and Windows."
+            summary="EvenUI is my own product, a side project alongside my job at Acquia. I started it on 5 October 2026 and put out the first release the next day. I came up with it, designed it and built it with Claude Code, then launched it with Free and Pro plans, a store and releases for Mac and Windows."
             owned={[
               "The idea for a tool that checks any page, live or local, for one-off spacing, type, colours, radii and borders, and points to each one",
               "Everything it does: page scans, whole-site audits, design systems from pages, tokens files or git repos, comparisons, CI checks and support for AI agents",
               "The design, from the navigation, report and sitemap canvas to the scan box, both themes, motion and the icon",
               "How the scanner decides what's inconsistent, including working out each page's own spacing system instead of assuming a 4px grid",
               "Free and Pro, the pricing, and the Lemon Squeezy store",
-              "Releases for Mac and Windows, published as Nifty, with updates from inside the app",
+              "Releases for Mac and Windows, published under Nifty, my holding company, with updates from inside the app",
               "Testing on real sites and products, and fixing what that turned up",
             ]}
-            note="Every screen on this page is the real app. Halcyon, the site in most of them, is a demo site I made for the screenshots."
+            note="Every screen on this page is the real app, from version 1.0.2. EvenUI was called UIScanner at first, so some screens show the old name. Halcyon, the site in most of them, is a demo site I made for the screenshots."
           />
 
           <section className="flex w-full flex-col gap-3">
@@ -75,24 +84,24 @@ export default function UIScannerCaseStudy() {
               images={[
                 {
                   src: img("report.webp"),
-                  alt: "A UIScanner page report for Halcyon's home page: a score of 79, the issue list on the left, the page in the middle with a button outlined, and the suggested fix on the right",
+                  alt: "An EvenUI page report for Halcyon's home page: a score of 79, the issue list on the left, the page in the middle with a button outlined, and the suggested fix on the right",
                 },
                 {
                   src: img("site-map.webp"),
-                  alt: "A UIScanner site audit of Halcyon: an average score of 94 across 18 pages, laid out as a sitemap with a score on every page",
+                  alt: "An EvenUI site audit of Halcyon: an average score of 94 across 18 pages, laid out as a sitemap with a score on every page",
                 },
                 {
                   src: img("scans.webp"),
-                  alt: "The UIScanner home screen: a scan box at the top and recent scans below, each with a page preview and a score",
+                  alt: "The EvenUI home screen: a scan box at the top and recent scans below, each with a page preview and a score",
                 },
                 {
                   src: img("report-dark.webp"),
-                  alt: "The same UIScanner page report in dark mode",
+                  alt: "The same EvenUI page report in dark mode",
                 },
               ]}
             />
             <p className={caption}>
-              UIScanner 1.0.2: a page report with one issue selected, a whole-site audit on its
+              EvenUI 1.0.2: a page report with one issue selected, a whole-site audit on its
               sitemap, the scan history, and the report in dark mode.
             </p>
           </section>
@@ -132,14 +141,14 @@ export default function UIScannerCaseStudy() {
               <CaseStudyCard
                 width="half"
                 image={img("first-version.webp")}
-                imageAlt="The first version of UIScanner in a browser: a list of issues on the left, a test page in the middle with one element outlined, and a suggested fix on the right"
+                imageAlt="The first version of EvenUI in a browser: a list of issues on the left, a test page in the middle with one element outlined, and a suggested fix on the right"
               >
                 The first version: a report in the browser, with one issue outlined on a test page.
               </CaseStudyCard>
               <CaseStudyCard
                 width="half"
                 image={img("history-1-first-desktop-build.webp")}
-                imageAlt="The first desktop build of UIScanner: a large headline, a scan box and cards explaining what it checks"
+                imageAlt="The first desktop build of EvenUI: a large headline, a scan box and cards explaining what it checks"
               >
                 The first desktop build. It worked, but it didn&apos;t look like a tool yet.
               </CaseStudyCard>
@@ -155,7 +164,7 @@ export default function UIScannerCaseStudy() {
                 cries wolf.
               </p>
               <p>
-                So UIScanner works out each page&apos;s own system before judging anything. It looks
+                So EvenUI works out each page&apos;s own system before judging anything. It looks
                 for the coarsest grid that explains the page, from 4 to 12px, then for a short set
                 of values the page sticks to. If neither fits, it says the page has no consistent
                 system and only flags near-duplicates and one-offs. On four real product sites it
@@ -163,16 +172,16 @@ export default function UIScannerCaseStudy() {
                 other two.
               </p>
               <p>
-                When a team has a design system, that becomes the rulebook instead. UIScanner can
-                learn one from a few pages that get it right, import a tokens file, or read the
-                tokens straight out of a git repo. Every report says which rules it used.
+                When a team has a design system, that becomes the rulebook instead. EvenUI can learn
+                one from a few pages that get it right, import a tokens file, or read the tokens
+                straight out of a git repo. Every report says which rules it used.
               </p>
             </div>
             <CaseStudyCards>
               <CaseStudyCard
                 width="full"
                 image={img("consistency.webp")}
-                imageAlt="UIScanner's consistency view for a site audit: a bar for each of Halcyon's pages showing how much of its spacing sits on the site's 4px grid"
+                imageAlt="EvenUI's consistency view for a site audit: a bar for each of Halcyon's pages showing how much of its spacing sits on the site's 4px grid"
               >
                 Every page in a site audit measured against the site&apos;s own spacing system,
                 least consistent first.
@@ -180,7 +189,7 @@ export default function UIScannerCaseStudy() {
               <CaseStudyCard
                 width="full"
                 image={img("design-system.webp")}
-                imageAlt="A UIScanner design system page for Halcyon, with its colours, spacing scale and an export panel of CSS variables"
+                imageAlt="An EvenUI design system page for Halcyon, with its colours, spacing scale and an export panel of CSS variables"
               >
                 A design system learned from Halcyon&apos;s own pages, ready to export as CSS
                 variables, a Tailwind theme or tokens.
@@ -213,7 +222,7 @@ export default function UIScannerCaseStudy() {
               <CaseStudyCard
                 width="full"
                 image={img("issue-pinned.webp")}
-                imageAlt="Close-up of a UIScanner report: a button on Halcyon's home page outlined with its selector, and the suggested fix replacing #2463eb with the brand colour #2563eb"
+                imageAlt="Close-up of an EvenUI report: a button on Halcyon's home page outlined with its selector, and the suggested fix replacing #2463eb with the brand colour #2563eb"
               >
                 A button one shade off the brand blue. The fix names the token to use and gives the
                 CSS to paste.
@@ -248,28 +257,28 @@ export default function UIScannerCaseStudy() {
               <CaseStudyCard
                 width="half"
                 image={img("history-2-top-bar.webp")}
-                imageAlt="An early build of UIScanner with a top bar, violet buttons and a getting-started checklist"
+                imageAlt="An early build of EvenUI with a top bar, violet buttons and a getting-started checklist"
               >
                 An early build with a top bar and violet buttons. It looked like a website.
               </CaseStudyCard>
               <CaseStudyCard
                 width="half"
                 image={img("history-3-sidebar.webp")}
-                imageAlt="A later build of UIScanner with a sidebar, still with violet buttons"
+                imageAlt="A later build of EvenUI with a sidebar, still with violet buttons"
               >
                 The sidebar came next. The violet went soon after.
               </CaseStudyCard>
               <CaseStudyCard
                 width="full"
                 image={img("scans.webp")}
-                imageAlt="UIScanner 1.0.2's home screen with a black New scan button, the scan box and a grid of recent scans"
+                imageAlt="EvenUI 1.0.2's home screen with a black New scan button, the scan box and a grid of recent scans"
               >
                 Version 1.0.2: monochrome, set in Satoshi, with every scan shown as a preview.
               </CaseStudyCard>
               <CaseStudyCard
                 width="full"
                 image={img("logo-options.webp")}
-                imageAlt="Six single-colour UIScanner icon options, each shown as an app icon, at small sizes and beside the wordmark"
+                imageAlt="Six single-colour EvenUI icon options, each shown as an app icon, at small sizes and beside the wordmark"
               >
                 Single-colour icon options at the sizes the app uses. Number 6 became the icon.
               </CaseStudyCard>
@@ -280,10 +289,10 @@ export default function UIScannerCaseStudy() {
             <div className={body}>
               <p>
                 A page scan can&apos;t tell you whether a site holds together, so I added whole-site
-                audits. Every page UIScanner finds goes on a sitemap with its score, so it&apos;s
-                easy to see what to fix. It follows the site&apos;s links and sitemap, scans every
-                page, and lays them out with the home page at the top, sections beneath it and child
-                pages under those.
+                audits. Every page EvenUI finds goes on a sitemap with its score, so it&apos;s easy
+                to see what to fix. It follows the site&apos;s links and sitemap, scans every page,
+                and lays them out with the home page at the top, sections beneath it and child pages
+                under those.
               </p>
               <p>
                 The first map wrapped sections onto new rows, which broke down on sites with a lot
@@ -310,7 +319,7 @@ export default function UIScannerCaseStudy() {
               <CaseStudyCard
                 width="full"
                 image={img("issues-across-pages.webp")}
-                imageAlt="UIScanner's Issues across pages tab filtered to spacing, with a 22px value off the 4px grid expanded to show the two pages it appears on"
+                imageAlt="EvenUI's Issues across pages tab filtered to spacing, with a 22px value off the 4px grid expanded to show the two pages it appears on"
               >
                 One spacing issue on two pages, with a link to fix it on each.
               </CaseStudyCard>
@@ -343,15 +352,16 @@ export default function UIScannerCaseStudy() {
             </div>
             <section className="w-full">
               <div className="flex flex-col gap-3 rounded-[16px] bg-[#ededed] p-5 md:p-10">
-                <img
-                  alt="The old UIScanner scan box: Single page and Whole site with a hint, the address field, then device buttons, Add a design system and Options on a third row"
+                <ZoomableImage
+                  alt="The old EvenUI scan box: Single page and Whole site with a hint, the address field, then device buttons, Add a design system and Options on a third row"
                   className={shot}
                   src={img("composer-before.webp")}
                 />
                 <p className={caption}>Before: three rows, with the device picked up front.</p>
-                <img
-                  alt="The new UIScanner scan box: the address field with Page, Whole site, the design system, Options and Scan page on one row beneath it"
-                  className={`${shot} mt-4`}
+                <ZoomableImage
+                  linkClassName="mt-4"
+                  alt="The new EvenUI scan box: the address field with Page, Whole site, the design system, Options and Scan page on one row beneath it"
+                  className={shot}
                   src={img("composer-after.webp")}
                 />
                 <p className={caption}>After: the address, and one row underneath.</p>
@@ -361,7 +371,7 @@ export default function UIScannerCaseStudy() {
               <CaseStudyCard
                 width="full"
                 image={img("report-mobile.webp")}
-                imageAlt="A UIScanner report for Halcyon's home page at mobile size, switched from the device bar above the page"
+                imageAlt="An EvenUI report for Halcyon's home page at mobile size, switched from the device bar above the page"
               >
                 The same report on mobile, one click from the desktop scan.
               </CaseStudyCard>
@@ -371,7 +381,7 @@ export default function UIScannerCaseStudy() {
           <CaseStudySection title="Checking what AI agents build">
             <div className={body}>
               <p>
-                I wanted AI coding agents to check their own work with UIScanner while they build
+                I wanted AI coding agents to check their own work with EvenUI while they build
                 prototypes. It runs an MCP server, the standard way agents like Claude Code connect
                 to tools, with 14 tools. An agent can fetch a design system as CSS variables or a
                 Tailwind theme before it starts, scan what it built, read each issue&apos;s selector
@@ -379,10 +389,10 @@ export default function UIScannerCaseStudy() {
                 and after to show a fix worked.
               </p>
               <p>
-                One button connects UIScanner to Claude Code, and another adds it to a
-                prototype&apos;s repo with a skill that walks the agent through building, scanning,
-                fixing and checking. Scans an agent runs show up in the app with a label, and a
-                command line tool lets a team fail a pull request that adds new issues.
+                One button connects EvenUI to Claude Code, and another adds it to a prototype&apos;s
+                repo with a skill that walks the agent through building, scanning, fixing and
+                checking. Scans an agent runs show up in the app with a label, and a command line
+                tool lets a team fail a pull request that adds new issues.
               </p>
               <p>
                 Testing it from a real project showed that agents only load their tools when a
@@ -393,14 +403,14 @@ export default function UIScannerCaseStudy() {
               <CaseStudyCard
                 width="full"
                 image={img("claude-code.webp")}
-                imageAlt="UIScanner's Claude Code page: the MCP server ready, Claude Code connected, a form to add UIScanner to a prototype repo, and example prompts"
+                imageAlt="EvenUI's Claude Code page: the MCP server ready, Claude Code connected, a form to add EvenUI to a prototype repo, and example prompts"
               >
                 Connect once, add it to a prototype repo, or copy a prompt to try.
               </CaseStudyCard>
               <CaseStudyCard
                 width="full"
                 image={img("compare.webp")}
-                imageAlt="A UIScanner comparison of Halcyon's pricing page: 86 before and 100 after, with 17 issues fixed and every category at 100"
+                imageAlt="An EvenUI comparison of Halcyon's pricing page: 86 before and 100 after, with 17 issues fixed and every category at 100"
               >
                 Before and after on the pricing page. Agents run the same comparison to check their
                 fixes.
@@ -411,7 +421,7 @@ export default function UIScannerCaseStudy() {
           <CaseStudySection title="Selling it">
             <div className={body}>
               <p>
-                I wanted UIScanner to be good enough to sell, with a free mode and a paid one.
+                I wanted EvenUI to be good enough to sell, with a free mode and a paid one.
                 Whole-site audits and shareable HTML reports are Pro, and everything else is free:
                 single-page scans, design systems, Claude Code, comparisons and CI. Pro is $49.99,
                 once, for up to three computers, and every install starts with a 14-day Pro trial.
@@ -428,21 +438,21 @@ export default function UIScannerCaseStudy() {
               <CaseStudyCard
                 width="half"
                 image={img("upgrade.webp")}
-                imageAlt="The UIScanner Pro window over a site audit, listing site audits and shareable reports, with Buy UIScanner Pro and I have a licence key buttons"
+                imageAlt="The EvenUI Pro window over a site audit, listing site audits and shareable reports, with Buy EvenUI Pro and I have a licence key buttons"
               >
                 On Free, auditing a site again opens this instead.
               </CaseStudyCard>
               <CaseStudyCard
                 width="half"
                 image={img("licence.webp")}
-                imageAlt="UIScanner Settings with the Licence section showing UIScanner Pro licensed to Halcyon Design, activated on this Mac, never expiring"
+                imageAlt="EvenUI Settings with the Licence section showing EvenUI Pro licensed to Halcyon Design, activated on this Mac, never expiring"
               >
                 An active licence in Settings, with the computer it&apos;s on.
               </CaseStudyCard>
               <CaseStudyCard
                 width="full"
                 image={img("shareable-report.webp")}
-                imageAlt="A UIScanner shareable report open in a browser: Halcyon's site audit with an average score of 94, category scores and page previews"
+                imageAlt="An EvenUI shareable report open in a browser: Halcyon's site audit with an average score of 94, category scores and page previews"
               >
                 A shareable report: a whole site audit as one HTML file that works offline.
               </CaseStudyCard>
@@ -461,22 +471,23 @@ export default function UIScannerCaseStudy() {
               </p>
               <p>
                 The Mac app runs on Apple silicon and Intel, and there&apos;s a Windows installer
-                that needs no admin rights. Both name Nifty as the publisher. Neither is code-signed
-                yet, so macOS and Windows both warn people the first time they open it.
+                that needs no admin rights. Both name Nifty, my holding company, as the publisher.
+                Neither is code-signed yet, so macOS and Windows both warn people the first time
+                they open it.
               </p>
             </div>
             <CaseStudyCards>
               <CaseStudyCard
                 width="half"
                 image={img("update-row.webp")}
-                imageAlt="Two crops of the UIScanner sidebar: an Update available row offering version 1.0.1, and below it the same row downloading at 37%"
+                imageAlt="Two crops of the EvenUI sidebar: an Update available row offering version 1.0.1, and below it the same row downloading at 37%"
               >
                 The update row in the sidebar, offered and then downloading.
               </CaseStudyCard>
               <CaseStudyCard
                 width="half"
                 image={img("whats-new.webp")}
-                imageAlt="UIScanner's What's new window after updating from 1.0.0 to 1.0.1, describing the new Windows version"
+                imageAlt="EvenUI's What's new window after updating from 1.0.0 to 1.0.1, describing the new Windows version"
               >
                 What&apos;s new after restarting, taken from the changelog.
               </CaseStudyCard>
@@ -486,8 +497,22 @@ export default function UIScannerCaseStudy() {
           <CaseStudySection title="Results">
             <div className={body}>
               <ul className="list-disc space-y-2 pl-5">
-                <li>UIScanner 1.0.2 is out for Mac and Windows.</li>
-                <li>UIScanner Pro is on sale through Lemon Squeezy at $49.99.</li>
+                <li>
+                  EvenUI is out for Mac and Windows. The latest release is 1.2.3, from 7 October
+                  2026, and you can{" "}
+                  <a
+                    href="https://github.com/soluxos/evenui-releases/releases/latest"
+                    className="underline"
+                  >
+                    download it from GitHub
+                  </a>
+                  .
+                </li>
+                <li>
+                  The first release came out on 6 October 2026. As of 7 October there are no
+                  downloads or sales to report yet.
+                </li>
+                <li>EvenUI Pro is on sale through Lemon Squeezy at $49.99.</li>
                 <li>Mac copies update themselves from the sidebar, from public GitHub Releases.</li>
                 <li>
                   It works three ways: as a desktop app, a command line tool, and an MCP server with

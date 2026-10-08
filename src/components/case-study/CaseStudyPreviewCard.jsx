@@ -47,10 +47,15 @@ export default function CaseStudyPreviewCard({
             left: 0,
           }}
         />
-        <motion.div
+        {/* Darkens the middle of the card, where the text sits, so the white text keeps
+            its contrast on the lightest parts of every gradient. */}
+        <div
+          aria-hidden="true"
           className="absolute inset-0"
-          animate={{ backgroundColor: hovered ? "rgba(0,0,0,0)" : "rgba(0,0,0,0)" }}
-          transition={{ duration: 0.4, ease: "easeOut" }}
+          style={{
+            background:
+              "radial-gradient(ellipse 90% 80% at 50% 52%, rgba(0,0,0,0.48), rgba(0,0,0,0.18) 80%, rgba(0,0,0,0)), rgba(0,0,0,0.36)",
+          }}
         />
         <div className="relative z-10 p-5 pb-10 w-full h-full flex flex-col justify-center items-center">
           {badge && (
@@ -71,12 +76,12 @@ export default function CaseStudyPreviewCard({
             )}
             <GlowTitle
               text={title}
-              as="p"
+              as="h2"
               className="font-ppmondwest text-[40px] leading-[1.5] text-white"
               replayKey={glowKey}
             />
             {description && (
-              <p className="text-[16px] max-w-[440px] font-medium leading-[1.5] text-[#ffffffbf]">
+              <p className="text-[16px] max-w-[440px] font-medium leading-[1.5] text-white">
                 {description}
               </p>
             )}

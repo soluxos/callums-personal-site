@@ -1,0 +1,26 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "dev",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "run",
+        "dev"
+      ],
+      "port": 3000
+    },
+    {
+      "name": "acquia-source",
+      "runtimeExecutable": "bash",
+      "runtimeArgs": [
+        "-c",
+        "cd \"/Users/callum.harrod/Work Projects/Source-prototype\" && source ~/.nvm/nvm.sh && nvm use 22.22.3 && pnpm --filter @workspace/acquia-source dev --port 5180 --strictPort"
+      ],
+      "port": 5180,
+      "env": {
+        "BASE_PATH": "/"
+      }
+    }
+  ]
+}

@@ -5,6 +5,7 @@ import CaseStudyLayout from "@/components/case-study/CaseStudyLayout";
 import CaseStudyRole from "@/components/case-study/CaseStudyRole";
 import CaseStudySection from "@/components/case-study/CaseStudySection";
 import { pageMetadata } from "@/lib/metadata";
+import ZoomableImage from "@/components/case-study/ZoomableImage";
 
 const img = name => `/images/case-studies/acquia-ai/${name}`;
 
@@ -34,7 +35,7 @@ export default function AcquiaAICaseStudy() {
     <>
       <CaseStudyFullHero
         title="Acquia AI"
-        description="AI agents that can publish and delete across a company's sites. I've designed it twice, and inside Acquia Source I designed and built how a person stays in charge of them."
+        description="AI agents that can publish and delete across a company's sites. I've designed it twice, and inside Acquia Source I designed how a person stays in charge of them, and built it in the prototype."
         logo="/images/logos/acquia-logo.svg"
         logoAlt="Acquia logo"
         preset="fire"
@@ -43,13 +44,16 @@ export default function AcquiaAICaseStudy() {
           label: "Try Acquia AI in the live prototype",
         }}
         metaItems={[
-          { label: "Role", value: "Lead designer (Senior Product Designer)" },
-          { label: "Team", value: "Product, engineering and design at Acquia" },
+          { label: "Role", value: "Lead Product Designer" },
+          {
+            label: "Team",
+            value: "Two designers under me, with product and engineering at Acquia",
+          },
           { label: "Timeline", value: "Aug 2025 - Now" },
           {
             label: "Outcome",
             value:
-              "The first version shipped in four months; agent permissions agreed with product and engineering leads",
+              "Both versions are live: the standalone app since December 2025, and inside Acquia Source",
           },
         ]}
       />
@@ -59,11 +63,13 @@ export default function AcquiaAICaseStudy() {
             summary="I was the lead designer on both versions of Acquia AI. On the first, a standalone app, I took a developer-built prototype, redesigned it end to end and saw the MVP through to shipping. On the second, inside Acquia Source, I designed how projects, agents and permissions work, mapped the agent role onto Cloud Platform's 79 real permissions, and built the AI area of the Source prototype myself. A few colleagues have since added features on top."
             owned={[
               "First version: the design system, and a full redesign of the developer-built prototype",
-              "First version: user testing, and design QA on the MVP until it shipped",
+              "First version: design QA on the MVP until it shipped",
               "Inside Source: the product design for projects, agents and their permissions, context, approvals and admin oversight",
               "Inside Source: building the AI area of the Source prototype, including chats, projects, context, activity, users, agent access and onboarding",
+              "Leading the two designers who work under me",
             ]}
             shared={[
+              "First version: user testing, run by UX researchers. What they found changed parts of our approach",
               "Product requirements, worked through with product management on both versions",
               "The rules for what agents can access, settled in a review with product and engineering leads",
             ]}
@@ -76,7 +82,7 @@ export default function AcquiaAICaseStudy() {
           <div className="flex flex-col gap-[120px]">
             <section className="w-full">
               <div className="flex flex-col gap-3 rounded-[16px] bg-[#ededed] p-5 md:p-10">
-                <img
+                <ZoomableImage
                   alt="An Acquia AI conversation summarising a campaign brief, listing the brand guidelines and brief it used"
                   className="h-auto w-full rounded-[12px] border border-[#dfdfdf]"
                   src={img("chat-context.webp")}
@@ -109,16 +115,17 @@ export default function AcquiaAICaseStudy() {
                   The first version of Acquia AI was a standalone app that framed AI as digital
                   teammates. You&apos;d ask for something like &quot;check my Cloud applications for
                   outdated modules and email me a ranked report every week&quot;, and it would hand
-                  the job to the teammate with the right tools. Phil was a full-stack engineer with
-                  access to GitHub and Cloud. Annie was a marketing specialist.
+                  the job to the AI teammate with the right tools. One, called Phil, was set up as a
+                  full-stack engineer with access to GitHub and Cloud. Another, Annie, was set up as
+                  a marketing specialist.
                 </p>
                 <p>
                   I joined as lead designer in August 2025. There was a prototype the developers had
                   built and no design system. I built the design system, redesigned the product from
-                  the ground up, and ran user testing to find out what worked and what didn&apos;t.
-                  Where the interface exposed a gap in the requirements, I pushed on them with
-                  product. I did design QA on everything engineering built until the MVP shipped in
-                  December 2025.
+                  the ground up, and UX researchers ran user testing with us to find out what worked
+                  and what didn&apos;t, which changed parts of our approach. Where the interface
+                  exposed a gap in the requirements, I pushed on them with product. I did design QA
+                  on everything engineering built until the MVP shipped in December 2025.
                 </p>
                 <p>
                   One idea carried straight into the version inside Source. When a teammate
@@ -290,12 +297,12 @@ export default function AcquiaAICaseStudy() {
                 <ul className="list-disc space-y-2 pl-5">
                   <li>
                     The first version&apos;s MVP shipped in December 2025, four months after I
-                    joined.
+                    joined, and the standalone app is still running.
                   </li>
                   <li>
-                    Acquia AI&apos;s model (projects, agent permissions, confirmed destructive
-                    actions, admin activity) runs in the Source prototype, and it&apos;s what the
-                    product team demos.
+                    Acquia AI is live inside Acquia Source, with all four parts of its model:
+                    projects, agent permissions, confirmed destructive actions and the admin
+                    activity page.
                   </li>
                   <li>
                     The agent access rules were reviewed and agreed with product and engineering
