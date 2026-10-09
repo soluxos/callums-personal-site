@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useId } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import DitherOverlay from "../DitherOverlay/DitherOverlay";
 
 /**
@@ -225,6 +225,61 @@ const DEFAULT_CONFIG = {
   dither: true,
 };
 
+// The blobs are drawn into one small canvas and stretched to fill the box. A gradient this
+// soft looks the same at a fraction of the resolution, and one small canvas costs the GPU
+// almost nothing. The old version gave every blob its own huge, blurred layer: six cards
+// came to roughly 70 layers and 700 MB of textures at 2x, so browsers dropped tiles, and
+// the cards flickered and showed hard-edged bands where the dark wash on top went missing.
+const SCALE_DOWN = 6; // canvas pixels per CSS pixel, inverted
+
+// Each blob drifts through the same five moves the CSS keyframes used, eased per step.
+const STEPS = [0, 0.2, 0.4, 0.6, 0.8, 1];
+const ease = t => t * t * (3 - 2 * t); // close to CSS ease-in-out
+
+function blobPath(index) {
+  const x = [
+    0,
+    35 + ((index * 17) % 40),
+    -30 - ((index * 13) % 35),
+    25 + ((index * 11) % 30),
+    -40 + ((index * 19) % 45),
+    0,
+  ];
+  const y = [
+    0,
+    -25 - ((index * 11) % 30),
+    40 + ((index * 15) % 35),
+    -35 + ((index * 9) % 25),
+    30 + ((index * 21) % 40),
+    0,
+  ];
+  const scale = [
+    1,
+    1.1 + (index % 3) * 0.15,
+    0.85 + (index % 4) * 0.1,
+    1.2 + (index % 2) * 0.1,
+    0.9 + (index % 5) * 0.08,
+    1,
+  ];
+  const rotate = [0, 5 + index * 2, -8 - index * 3, 10 + index, -5 - index * 2, 0];
+  return { x, y, scale, rotate };
+}
+
+// Where a blob is at `progress` (0 to 1) through its loop.
+function sample(path, progress) {
+  let k = 0;
+  while (k < STEPS.length - 2 && progress > STEPS[k + 1]) k++;
+  const t = ease((progress - STEPS[k]) / (STEPS[k + 1] - STEPS[k]));
+  const mix = values => values[k] + (values[k + 1] - values[k]) * t;
+  return { x: mix(path.x), y: mix(path.y), scale: mix(path.scale), rotate: mix(path.rotate) };
+}
+
+// "#rrggbb" plus a two-digit hex alpha, as an rgba() string the canvas understands.
+function withAlpha(hex, alphaHex) {
+  const n = parseInt(hex.slice(1, 7), 16);
+  return `rgba(${(n >> 16) & 255}, ${(n >> 8) & 255}, ${n & 255}, ${parseInt(alphaHex, 16) / 255})`;
+}
+
 export default function AnimatedGradientBackground({
   preset = "rachelChen",
   colors: customColors,
@@ -239,7 +294,8 @@ export default function AnimatedGradientBackground({
   style = {},
   children,
 }) {
-  const instanceId = useId().replace(/:/g, "-");
+  const boxRef = useRef(null);
+  const canvasRef = useRef(null);
 
   const { colors, backgroundColor } = useMemo(() => {
     const presetConfig = PRESETS[preset] || PRESETS.rachelChen;
@@ -249,49 +305,93 @@ export default function AnimatedGradientBackground({
     };
   }, [preset, customColors, customBgColor]);
 
-  // Build all keyframes as a single string, scoped to this instance
-  const keyframesCSS = useMemo(() => {
-    return colors
-      .map((_, index) => {
-        const name = `blob-${instanceId}-${index}`;
-        const xMoves = [
-          35 + ((index * 17) % 40),
-          -30 - ((index * 13) % 35),
-          25 + ((index * 11) % 30),
-          -40 + ((index * 19) % 45),
-        ];
-        const yMoves = [
-          -25 - ((index * 11) % 30),
-          40 + ((index * 15) % 35),
-          -35 + ((index * 9) % 25),
-          30 + ((index * 21) % 40),
-        ];
-        const scales = [
-          1.1 + (index % 3) * 0.15,
-          0.85 + (index % 4) * 0.1,
-          1.2 + (index % 2) * 0.1,
-          0.9 + (index % 5) * 0.08,
-        ];
-        return `
-        @keyframes ${name} {
-          0%, 100% { transform: translate(-50%, -50%) translate(0, 0) scale(1) rotate(0deg); }
-          20% { transform: translate(-50%, -50%) translate(${xMoves[0]}%, ${yMoves[0]}%) scale(${scales[0]}) rotate(${5 + index * 2}deg); }
-          40% { transform: translate(-50%, -50%) translate(${xMoves[1]}%, ${yMoves[1]}%) scale(${scales[1]}) rotate(${-8 - index * 3}deg); }
-          60% { transform: translate(-50%, -50%) translate(${xMoves[2]}%, ${yMoves[2]}%) scale(${scales[2]}) rotate(${10 + index}deg); }
-          80% { transform: translate(-50%, -50%) translate(${xMoves[3]}%, ${yMoves[3]}%) scale(${scales[3]}) rotate(${-5 - index * 2}deg); }
-        }`;
-      })
-      .join("\n");
-  }, [colors, instanceId]);
+  useEffect(() => {
+    const box = boxRef.current;
+    const canvas = canvasRef.current;
+    if (!box || !canvas) return;
+    const ctx = canvas.getContext("2d");
+    const paths = colors.map((_, i) => blobPath(i));
+    // The blobs lay out over an area larger than the box, as the CSS version did, so they
+    // can drift in from beyond the edges.
+    const pad = blurAmount * 2;
+    let width = 0;
+    let height = 0;
+    let frame = 0;
+    let visible = true;
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const started = performance.now();
 
-  // Generate dynamic keyframes with larger movements
-  const generateKeyframes = index => {
-    const name = `blob-${instanceId}-${index}`;
-    return { name };
-  };
+    function resize() {
+      width = box.offsetWidth + pad * 2;
+      height = box.offsetHeight + pad * 2;
+      canvas.width = Math.max(1, Math.ceil(width / SCALE_DOWN));
+      canvas.height = Math.max(1, Math.ceil(height / SCALE_DOWN));
+    }
+
+    function draw(now) {
+      const seconds = reduceMotion ? 0 : (now - started) / 1000;
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.scale(1 / SCALE_DOWN, 1 / SCALE_DOWN);
+      colors.forEach((blob, i) => {
+        const duration = animationDuration + i * 1.5;
+        const offset = i * (animationDuration / colors.length) * 0.8;
+        const progress = ((((seconds + offset) % duration) + duration) % duration) / duration;
+        const at = sample(paths[i], progress);
+        const size = (blob.size || 100) / 100;
+        const w = width * size;
+        const h = height * size;
+        const cx = (blob.x / 100) * width + (at.x / 100) * w;
+        const cy = (blob.y / 100) * height + (at.y / 100) * h;
+        // A soft ellipse that fades out a little past its edge, standing in for the old blur.
+        const spread = 1 + blurAmount / 250;
+        ctx.save();
+        ctx.translate(cx, cy);
+        ctx.rotate((at.rotate * Math.PI) / 180);
+        ctx.scale(at.scale, (at.scale * h) / w || at.scale);
+        const r = (w / 2) * spread;
+        const g = ctx.createRadialGradient(0, 0, 0, 0, 0, r);
+        g.addColorStop(0, withAlpha(blob.color, "ff"));
+        g.addColorStop(0.25, withAlpha(blob.color, "ee"));
+        g.addColorStop(0.5, withAlpha(blob.color, "99"));
+        g.addColorStop(0.7, withAlpha(blob.color, "44"));
+        g.addColorStop(1, withAlpha(blob.color, "00"));
+        ctx.fillStyle = g;
+        ctx.fillRect(-r, -r, r * 2, r * 2);
+        ctx.restore();
+      });
+    }
+
+    function loop(now) {
+      draw(now);
+      frame = visible && !reduceMotion ? requestAnimationFrame(loop) : 0;
+    }
+
+    resize();
+    draw(performance.now());
+
+    // Only animate while the box is on screen.
+    const io = new IntersectionObserver(([entry]) => {
+      visible = entry.isIntersecting;
+      if (visible && !frame && !reduceMotion) frame = requestAnimationFrame(loop);
+    });
+    io.observe(box);
+    const ro = new ResizeObserver(() => {
+      resize();
+      draw(performance.now());
+    });
+    ro.observe(box);
+
+    return () => {
+      cancelAnimationFrame(frame);
+      io.disconnect();
+      ro.disconnect();
+    };
+  }, [colors, animationDuration, blurAmount]);
 
   return (
     <div
+      ref={boxRef}
       className={className}
       style={{
         position: "relative",
@@ -300,44 +400,20 @@ export default function AnimatedGradientBackground({
         ...style,
       }}
     >
-      {/* Keyframes rendered in JSX — stable across remounts */}
-      <style dangerouslySetInnerHTML={{ __html: keyframesCSS }} />
-      {/* Gradient blobs container */}
-      <div
+      {/* The blobs, drawn small and stretched to fill (see SCALE_DOWN). */}
+      <canvas
+        ref={canvasRef}
+        aria-hidden="true"
         style={{
           position: "absolute",
           inset: `-${blurAmount * 2}px`,
-          overflow: "hidden",
-          filter: `blur(${blurAmount}px)`,
+          width: `calc(100% + ${blurAmount * 4}px)`,
+          height: `calc(100% + ${blurAmount * 4}px)`,
+          // The base styles cap a canvas at its container's width; this one overhangs on purpose.
+          maxWidth: "none",
           opacity,
         }}
-      >
-        {colors.map((blob, index) => {
-          const { name } = generateKeyframes(index, colors.length);
-          const baseDuration = animationDuration;
-          const duration = baseDuration + index * 1.5;
-          const delay = -(index * (baseDuration / colors.length) * 0.8);
-          const size = blob.size || 100;
-
-          return (
-            <div
-              key={index}
-              style={{
-                position: "absolute",
-                left: `${blob.x}%`,
-                top: `${blob.y}%`,
-                width: `${size}%`,
-                height: `${size}%`,
-                borderRadius: "50%",
-                background: `radial-gradient(circle at center, ${blob.color} 0%, ${blob.color}ee 25%, ${blob.color}99 50%, ${blob.color}44 70%, transparent 85%)`,
-                animation: `${name} ${duration}s ease-in-out ${delay}s infinite`,
-                willChange: "transform",
-                mixBlendMode: "normal",
-              }}
-            />
-          );
-        })}
-      </div>
+      />
 
       {/* Subtle color overlay for richness */}
       <div
