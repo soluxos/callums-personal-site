@@ -146,13 +146,13 @@ export default function UnionRoastedCaseStudy() {
           </CaseStudySection>
 
           <CaseStudySection title="What it looks like">
-            <div className="rounded-[16px] bg-[#ededed] p-5">
+            <div className="rounded-[16px] bg-[#e2e6e7] p-5">
               <ZoomableImage
                 src={img("full-product.webp")}
                 alt="Full-length Union Roasted product page, from product details to the farm story, related coffees and footer"
                 className="w-full"
               />
-              <p className="mt-3 text-[13px] font-medium text-[#6b6b6b]">
+              <p className="mt-3 text-[13px] font-medium text-[#636363]">
                 A full product page, from the coffee&apos;s details down to the farm it came from.
               </p>
             </div>

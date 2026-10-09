@@ -84,13 +84,13 @@ export default function AcquiaSourceCaseStudy() {
 
           <div className="flex flex-col gap-[120px]">
             <section className="w-full">
-              <div className="flex flex-col gap-3 rounded-[16px] bg-[#ededed] p-5 md:p-10">
+              <div className="flex flex-col gap-3 rounded-[16px] bg-[#e2e6e7] p-5 md:p-10">
                 <ZoomableImage
                   alt="The Acquia Source dashboard, with an Ask Acquia AI box above performance cards for every site"
                   className="h-auto w-full rounded-[12px] border border-[#dfdfdf]"
                   src={img("dashboard.webp")}
                 />
-                <p className="text-[13px] font-medium text-[#6b6b6b]">
+                <p className="text-[13px] font-medium text-[#636363]">
                   The Source dashboard in the prototype. Acquia AI sits at the top of the page,
                   above performance across every site.
                 </p>

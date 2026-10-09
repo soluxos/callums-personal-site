@@ -60,11 +60,12 @@ export default function AcquiaAICaseStudy() {
       <CaseStudyLayout sections={sections}>
         <main className="flex flex-col gap-[120px] mt-20">
           <CaseStudyRole
-            summary="I was the lead designer on both versions of Acquia AI. On the first, a standalone app, I took a developer-built prototype, redesigned it end to end and saw the MVP through to shipping. On the second, inside Acquia Source, I designed how projects, agents and permissions work, mapped the agent role onto Cloud Platform's 79 real permissions, and built the AI area of the Source prototype myself. A few colleagues have since added features on top."
+            summary="I was the lead designer on both versions of Acquia AI. On the first, a standalone app, I took a developer-built prototype, redesigned it end to end and saw the MVP through to shipping. On the second, inside Acquia Source, I designed the experience for the project model the Acquia AI team chose, where each project acts as the agent and holds its permissions, and worked through the alternatives. I also mapped the agent role onto Cloud Platform's real permissions and built the AI area of the Source prototype myself. A few colleagues have since added features on top."
             owned={[
               "First version: the design system, and a full redesign of the developer-built prototype",
               "First version: design QA on the MVP until it shipped",
-              "Inside Source: the product design for projects, agents and their permissions, context, approvals and admin oversight",
+              "Inside Source: the experience design for projects and their permissions, context, approvals and admin oversight",
+              "Inside Source: working through the alternatives to the project model (inheriting the user's permissions, locking to them, or acting as the user) and what each would mean",
               "Inside Source: building the AI area of the Source prototype, including chats, projects, context, activity, users, agent access and onboarding",
               "Leading the two designers who work under me",
             ]}
@@ -75,19 +76,20 @@ export default function AcquiaAICaseStudy() {
             ]}
             others={[
               "The first version's engineers built the original prototype and shipped the product",
+              "The Acquia AI team chose the project model, where each project is the agent and holds its permissions",
               "Inside Source, colleagues built parts of the chat and the agent access changes from the September review, on top of my designs",
             ]}
           />
 
           <div className="flex flex-col gap-[120px]">
             <section className="w-full">
-              <div className="flex flex-col gap-3 rounded-[16px] bg-[#ededed] p-5 md:p-10">
+              <div className="flex flex-col gap-3 rounded-[16px] bg-[#e2e6e7] p-5 md:p-10">
                 <ZoomableImage
                   alt="An Acquia AI conversation summarising a campaign brief, listing the brand guidelines and brief it used"
                   className="h-auto w-full rounded-[12px] border border-[#dfdfdf]"
                   src={img("chat-context.webp")}
                 />
-                <p className="text-[13px] font-medium text-[#6b6b6b]">
+                <p className="text-[13px] font-medium text-[#636363]">
                   Acquia AI in the Source prototype, answering from the project&apos;s brand
                   guidelines and campaign brief, and showing which sources it used.
                 </p>
@@ -154,10 +156,13 @@ export default function AcquiaAICaseStudy() {
                   users and agent access, and a first-run tour.
                 </p>
                 <p>
-                  My first pass inside Source gave one assistant the same permissions as the person
-                  using it, and raised an approval request whenever it hit a limit. I reworked that
-                  into a model built on projects and agents, which is what the rest of this page
-                  shows.
+                  The Acquia AI team decided access would work through projects. There&apos;s no
+                  separate agent to choose: the project is the agent and holds the permissions, and
+                  anyone added to it can ask it to do anything those permissions allow. My job was
+                  to design the experience for that model. To do it well, I also worked through the
+                  alternatives, an agent that inherits the user&apos;s permissions, one locked to
+                  them, and one that acts as the user, to see what each would mean when a person and
+                  an agent can do different things. The rest of this page shows the project model.
                 </p>
               </div>
               <CaseStudyCards>
@@ -184,9 +189,10 @@ export default function AcquiaAICaseStudy() {
               <div className={body}>
                 <p>
                   A project is a shared workspace for a piece of work, like a relaunch or day-to-day
-                  publishing. It has members, chats, resources and the agents allowed to act there.
-                  Every chat in a project is visible to its members. The top of each conversation
-                  says so, so nobody finds out later.
+                  publishing. It has members, chats and resources, and it acts as the agent: it
+                  holds the permissions, and any member can ask it to do anything those permissions
+                  allow. Every chat in a project is visible to its members. The top of each
+                  conversation says so, so nobody finds out later.
                 </p>
                 <p>
                   Context comes in four layers: the whole organisation, groups of shared material
@@ -215,10 +221,10 @@ export default function AcquiaAICaseStudy() {
             <CaseStudySection title="Agents only do what they're allowed to">
               <div className={body}>
                 <p>
-                  Agents have their own permissions, separate from the person asking. If a request
-                  needs something the project&apos;s agent can&apos;t do, it declines, explains why,
-                  and points to where that permission could be granted or which project already has
-                  it. It never quietly escalates.
+                  A project&apos;s permissions are separate from the person asking. If a request
+                  needs something the project can&apos;t do, it declines, explains why, and points
+                  to where that permission could be granted or which project already has it. It
+                  never quietly escalates.
                 </p>
                 <p>
                   To make the permissions believable, I mapped the agent role onto Cloud
@@ -249,25 +255,20 @@ export default function AcquiaAICaseStudy() {
             <CaseStudySection title="Destructive actions always ask">
               <div className={body}>
                 <p>
-                  Publishing, deploying and deleting need a person to confirm. The confirmation
-                  comes from the product&apos;s own interface and never from the conversation, so
-                  text in a chat can&apos;t approve anything, whether someone typed it or the AI
-                  picked it up from a web page. That protects against prompt injection at the
-                  product level, whatever the model does.
-                </p>
-                <p>
-                  Later, a colleague built inline approval cards into the conversation. They sit on
-                  top of the gate without replacing it.
+                  If a project has permission for something destructive, like publishing, deploying
+                  or deleting, the agent will do it, but not straight away. When you ask for one of
+                  those actions, a confirmation appears above the chat box, saying what&apos;s about
+                  to happen and what it will change. Nothing happens until you approve or reject it.
                 </p>
               </div>
               <CaseStudyCards>
                 <CaseStudyCard
                   width="full"
                   image={img("chat-approval.webp")}
-                  imageAlt="A publish approval card in the conversation with Reject and Approve buttons"
+                  imageAlt="A publish confirmation above the chat box, naming the page and with Reject and Approve buttons"
                 >
-                  Publishing a new page waits for approval. A colleague built the inline card and
-                  the usage meter under the composer. The gate behind them is mine.
+                  Publishing a new page waits for approval. Which actions stop for approval was my
+                  design. A colleague built the confirmation and the usage meter under the composer.
                 </CaseStudyCard>
               </CaseStudyCards>
             </CaseStudySection>

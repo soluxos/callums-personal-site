@@ -17,9 +17,9 @@ const HEIGHT = 320;
 const PAD = { top: 28, right: 64, bottom: 32, left: 44 };
 const LINE = "#0077d6"; // passes 3:1 against the card surface; the site's #0090ff doesn't
 const FILL = "rgba(0, 119, 214, 0.1)";
-const SURFACE = "#ededed";
-const INK_MUTED = "#6b6b6b";
-const GRID = "#d9d9d9";
+const SURFACE = "#e2e6e7";
+const INK_MUTED = "#636363"; // 4.8:1 on the card grey
+const GRID = "#c9cfd1";
 
 const points = CANVAS_USAGE.map(([week, sites]) => ({
   week,
@@ -113,7 +113,7 @@ export default function CanvasUsageChart() {
   }
 
   return (
-    <figure className="flex flex-col gap-4 rounded-[8px] bg-[#ededed] p-5 md:p-8">
+    <figure className="flex flex-col gap-4 rounded-[8px] bg-[#e2e6e7] p-5 md:p-8">
       <p className="text-[14px] font-medium leading-[1.5] text-[#484848]">
         Sites using Drupal Canvas each week
       </p>
@@ -241,7 +241,7 @@ export default function CanvasUsageChart() {
         )}
       </div>
 
-      <figcaption className="text-[13px] font-medium leading-[1.5] text-[#6b6b6b]">
+      <figcaption className="text-[13px] font-medium leading-[1.5] text-[#636363]">
         From{" "}
         <a href={CANVAS_USAGE_SOURCE} className="underline">
           drupal.org&apos;s usage statistics

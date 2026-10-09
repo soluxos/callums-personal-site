@@ -19,7 +19,7 @@ export default function CaseStudySlider({ images, caption }) {
 
   return (
     <section className="flex flex-col gap-6">
-      <div className="w-full rounded-[8px] bg-[#ededed] p-5 md:p-10">
+      <div className="w-full rounded-[8px] bg-[#e2e6e7] p-5 md:p-10">
         <Swiper
           slidesPerView={"auto"}
           centeredSlides={true}
@@ -66,7 +66,7 @@ export default function CaseStudySlider({ images, caption }) {
           <div className={`case-study-pagination case-study-pagination-${paginationId}`} />
         </div>
         {caption && (
-          <p className="mt-6 text-[13px] font-medium leading-[1.5] text-[#6b6b6b]">{caption}</p>
+          <p className="mt-6 text-[13px] font-medium leading-[1.5] text-[#636363]">{caption}</p>
         )}
       </div>
       <style jsx global>{`

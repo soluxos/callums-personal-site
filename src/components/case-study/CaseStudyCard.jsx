@@ -22,7 +22,7 @@ export default function CaseStudyCard({
   return (
     <div
       className={[
-        "flex flex-col overflow-hidden rounded-[8px] bg-[#ededed]",
+        "flex flex-col overflow-hidden rounded-[8px] bg-[#e2e6e7]",
         "h-[400px] md:h-[640px] w-full",
         isHalf ? "md:flex-1" : "md:w-full",
       ]
@@ -46,7 +46,7 @@ export default function CaseStudyCard({
 
       {/* Text strip at the bottom */}
       {children && (
-        <div className="relative z-10 w-full p-5 bg-[#ededed]">
+        <div className="relative z-10 w-full p-5 bg-[#e2e6e7]">
           <p className="text-[14px] font-medium leading-[1.5] text-[#656565]">{children}</p>
         </div>
       )}

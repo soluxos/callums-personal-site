@@ -15,7 +15,7 @@ export default function PasswordGate() {
   const error = state.error && dismissedState !== state;
 
   return (
-    <div className="flex flex-col items-center justify-center gap-8 rounded-[16px] bg-[#ededed] px-5 py-20">
+    <div className="flex flex-col items-center justify-center gap-8 rounded-[16px] bg-[#e2e6e7] px-5 py-20">
       <div className="flex max-w-[440px] flex-col items-center gap-2 text-center">
         <h2 className="font-ppmondwest text-[32px] leading-[1.25] text-[#484848]">
           The rest is password protected

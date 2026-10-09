@@ -11,7 +11,7 @@ import ZoomableImage from "@/components/case-study/ZoomableImage";
 const img = name => `/images/case-studies/evenui/${name}`;
 
 const body = "max-w-[588px] space-y-4 text-[14px] font-medium leading-[1.5] text-[#656565]";
-const caption = "text-[13px] font-medium text-[#6b6b6b]";
+const caption = "text-[13px] font-medium text-[#636363]";
 const shot = "h-auto w-full rounded-[12px] border border-[#dfdfdf]";
 
 export const metadata = pageMetadata({
@@ -351,7 +351,7 @@ export default function EvenUICaseStudy() {
               </p>
             </div>
             <section className="w-full">
-              <div className="flex flex-col gap-3 rounded-[16px] bg-[#ededed] p-5 md:p-10">
+              <div className="flex flex-col gap-3 rounded-[16px] bg-[#e2e6e7] p-5 md:p-10">
                 <ZoomableImage
                   alt="The old EvenUI scan box: Single page and Whole site with a hint, the address field, then device buttons, Add a design system and Options on a third row"
                   className={shot}

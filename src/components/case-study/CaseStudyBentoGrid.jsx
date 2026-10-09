@@ -186,7 +186,7 @@ export default function CaseStudyBentoGrid({
       classNames={{
         container: mergeClassName("w-full gap-5 p-0", containerClassName),
         elementContainer: mergeClassName(
-          "relative rounded-[8px] bg-[#ededed] overflow-hidden !p-0",
+          "relative rounded-[8px] bg-[#e2e6e7] overflow-hidden !p-0",
           elementContainerClassName
         ),
       }}
