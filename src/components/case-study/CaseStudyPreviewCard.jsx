@@ -47,16 +47,6 @@ export default function CaseStudyPreviewCard({
             left: 0,
           }}
         />
-        {/* Darkens the middle of the card, where the text sits, so the white text keeps
-            its contrast on the lightest parts of every gradient. */}
-        <div
-          aria-hidden="true"
-          className="absolute inset-0"
-          style={{
-            background:
-              "radial-gradient(ellipse 90% 80% at 50% 52%, rgba(0,0,0,0.48), rgba(0,0,0,0.18) 80%, rgba(0,0,0,0)), rgba(0,0,0,0.36)",
-          }}
-        />
         <div className="relative z-10 p-5 pb-10 w-full h-full flex flex-col justify-center items-center">
           {badge && (
             <p className="absolute top-5 left-5 font-satoshi font-bold uppercase text-[10px] leading-[1.5] bg-white text-[#6b6b6b] px-2 rounded-full self-start">
@@ -80,8 +70,9 @@ export default function CaseStudyPreviewCard({
               className="font-ppmondwest text-[40px] leading-[1.5] text-white"
               replayKey={glowKey}
             />
+            {/* The gradient shows at full brightness, so a soft shadow keeps the text legible. */}
             {description && (
-              <p className="text-[16px] max-w-[440px] font-medium leading-[1.5] text-white">
+              <p className="text-[16px] max-w-[440px] font-medium leading-[1.5] text-white [text-shadow:0_1px_14px_rgba(0,0,0,0.28)]">
                 {description}
               </p>
             )}
