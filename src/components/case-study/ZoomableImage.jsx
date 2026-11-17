@@ -16,7 +16,7 @@ export default function ZoomableImage({ src, alt = "", className = "", linkClass
       href={src}
       target="_blank"
       rel="noopener noreferrer"
-      className={`block cursor-zoom-in rounded-[8px] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#0090ff] ${linkClassName}`}
+      className={`block cursor-zoom-in rounded-[8px] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white ${linkClassName}`}
     >
       <img src={src} alt={alt} className={className} />
       <span className="sr-only"> (opens full size in a new tab)</span>

@@ -163,8 +163,7 @@ export default function IdeasCanvasPreview({
       <Link href="/ideas" className="block group">
         <div
           ref={containerRef}
-          className="relative w-full h-[400px] md:h-[540px] rounded-xl overflow-hidden cursor-pointer"
-          style={{ background: "#e2e6e7" }}
+          className="relative w-full h-[400px] md:h-[540px] rounded-xl overflow-hidden cursor-pointer bg-card"
         >
           {/* Notes layer — pointer-events: none so all clicks reach the Link */}
           <div

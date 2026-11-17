@@ -23,8 +23,8 @@ export const metadata = pageMetadata({
 
 export default function EvenUICaseStudy() {
   const sections = [
-    { label: "My role", id: "my-role" },
     "The problem",
+    { label: "My role", id: "my-role" },
     "Where it started",
     "Judging a page by its own rules",
     "Pointing at the exact element",
@@ -44,7 +44,6 @@ export default function EvenUICaseStudy() {
         description="A desktop app that checks any web page for inconsistent UI and points to the fix. I came up with it, designed and built it, and launched it for Mac and Windows."
         logo="/images/logos/evenui-logo.svg"
         logoAlt="EvenUI icon"
-        preset="midnight"
         link={{
           href: "https://github.com/soluxos/evenui-releases/releases/latest",
           label: "Download EvenUI",
@@ -65,6 +64,26 @@ export default function EvenUICaseStudy() {
       />
       <CaseStudyLayout sections={sections}>
         <main className="flex flex-col gap-[120px] mt-20">
+          <CaseStudySection
+            title="The problem"
+            lead="How do you check a page for inconsistent UI the way a picky designer would?"
+          >
+            <div className={body}>
+              <p>
+                Most inconsistent UI is small: a 22px gap where everything else uses 24, or a blue
+                one shade off the brand blue. It&apos;s hard to see in a screenshot review, and
+                finding it by hand means inspecting elements one at a time. AI agents add to it,
+                because they build pages faster than anyone can check them.
+              </p>
+              <p>
+                I wanted a tool that flags every value that doesn&apos;t fit with the rest of the
+                page, and shows exactly where it is. It had to work on a live site, a local dev
+                server or a single HTML file, and AI coding agents had to be able to use it to check
+                the prototypes they build.
+              </p>
+            </div>
+          </CaseStudySection>
+
           <CaseStudyRole
             summary="EvenUI is my own product, a side project alongside my job at Acquia. I started it on 5 October 2026 and put out the first release the next day. I came up with it, designed it and built it with Claude Code, then launched it with Free and Pro plans, a store and releases for Mac and Windows."
             owned={[
@@ -105,23 +124,6 @@ export default function EvenUICaseStudy() {
               sitemap, the scan history, and the report in dark mode.
             </p>
           </section>
-
-          <CaseStudySection title="The problem">
-            <div className={body}>
-              <p>
-                Most inconsistent UI is small: a 22px gap where everything else uses 24, or a blue
-                one shade off the brand blue. It&apos;s hard to see in a screenshot review, and
-                finding it by hand means inspecting elements one at a time. AI agents add to it,
-                because they build pages faster than anyone can check them.
-              </p>
-              <p>
-                I wanted a tool that looks at a rendered page the way a picky designer would, flags
-                every value that doesn&apos;t fit with the rest, and shows exactly where it is. It
-                had to work on a live site, a local dev server or a single HTML file, and AI coding
-                agents had to be able to use it to check the prototypes they build.
-              </p>
-            </div>
-          </CaseStudySection>
 
           <CaseStudySection title="Where it started">
             <div className={body}>
@@ -351,7 +353,7 @@ export default function EvenUICaseStudy() {
               </p>
             </div>
             <section className="w-full">
-              <div className="flex flex-col gap-3 rounded-[16px] bg-[#e2e6e7] p-5 md:p-10">
+              <div className="flex flex-col gap-3 rounded-[16px] bg-card p-5 md:p-10">
                 <ZoomableImage
                   alt="The old EvenUI scan box: Single page and Whole site with a hint, the address field, then device buttons, Add a design system and Options on a third row"
                   className={shot}

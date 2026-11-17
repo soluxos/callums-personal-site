@@ -15,7 +15,7 @@ export default function PasswordGate() {
   const error = state.error && dismissedState !== state;
 
   return (
-    <div className="flex flex-col items-center justify-center gap-8 rounded-[16px] bg-[#e2e6e7] px-5 py-20">
+    <div className="flex flex-col items-center justify-center gap-8 rounded-[16px] bg-card px-5 py-20">
       <div className="flex max-w-[440px] flex-col items-center gap-2 text-center">
         <h2 className="font-ppmondwest text-[32px] leading-[1.25] text-[#484848]">
           The rest is password protected
@@ -25,7 +25,7 @@ export default function PasswordGate() {
           don&apos;t have the password,{" "}
           <a
             href="mailto:callumharrod1994@hotmail.co.uk?subject=Portfolio%20password"
-            className="text-[#484848] underline underline-offset-2 hover:text-[#1a1a1a]"
+            className="text-[#484848] underline underline-offset-2 hover:text-white/80"
           >
             email me
           </a>{" "}
@@ -47,7 +47,7 @@ export default function PasswordGate() {
             "w-full rounded-[10px] border bg-white px-4 py-3 text-[14px] font-medium text-[#1a1a1a] outline-none transition-colors placeholder:text-[#b0b0b0]",
             error
               ? "border-red-300 focus:border-red-400"
-              : "border-[#e0e0e0] focus:border-[#a0a0a0]",
+              : "border-transparent focus:border-[#1a1a1a]",
           ].join(" ")}
           placeholder="Password"
           type="password"
@@ -57,12 +57,12 @@ export default function PasswordGate() {
           }}
         />
         {error && (
-          <p id="case-study-password-error" className="text-[13px] font-medium text-red-500">
+          <p id="case-study-password-error" className="text-[13px] font-medium text-white">
             Incorrect password. Please try again.
           </p>
         )}
         <button
-          className="w-full rounded-[10px] bg-[#1a1a1a] px-4 py-3 text-[14px] font-semibold text-white transition-opacity hover:opacity-80 disabled:opacity-60"
+          className="w-full rounded-[10px] bg-white px-4 py-3 text-[14px] font-semibold text-[#1a1a1a] transition-opacity hover:opacity-85 disabled:opacity-60"
           type="submit"
           disabled={pending}
         >

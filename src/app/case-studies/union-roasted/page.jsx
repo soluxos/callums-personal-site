@@ -17,18 +17,15 @@ export const metadata = pageMetadata({
   path: "/case-studies/union-roasted",
 });
 
-// A chat bubble for the brief. `me` puts it on the right in blue.
+// A chat bubble for the brief. `me` puts it on the right in a brighter blue; the client's sit
+// on the left in the see-through white of the cards.
 function Bubble({ me = false, children }) {
   return (
     <div className={`flex ${me ? "justify-end" : "justify-start"}`}>
       <div
-        className={`relative max-w-[467px] rounded-[8px] px-4 py-2 ${me ? "bg-[#0090ff]" : "bg-[#ededed]"}`}
+        className={`relative max-w-[467px] rounded-[8px] px-4 py-2 ${me ? "bg-[#0090ff]" : "bg-card"}`}
       >
-        <p
-          className={`font-satoshi text-[14px] font-medium leading-[1.25] ${me ? "text-white" : "text-[#656565]"}`}
-        >
-          {children}
-        </p>
+        <p className="font-satoshi text-[14px] font-medium leading-[1.25] text-white">{children}</p>
         <svg
           className={`absolute -bottom-[6px] ${me ? "right-[16px]" : "left-[16px]"}`}
           width="10"
@@ -37,7 +34,10 @@ function Bubble({ me = false, children }) {
           fill="none"
           aria-hidden="true"
         >
-          <path d={me ? "M10 0L0 0L10 6Z" : "M0 0L10 0L0 6Z"} fill={me ? "#0090ff" : "#ededed"} />
+          <path
+            d={me ? "M10 0L0 0L10 6Z" : "M0 0L10 0L0 6Z"}
+            fill={me ? "#0090ff" : "var(--color-card)"}
+          />
         </svg>
       </div>
     </div>
@@ -46,11 +46,12 @@ function Bubble({ me = false, children }) {
 
 export default function UnionRoastedCaseStudy() {
   const sections = [
-    { label: "My role", id: "my-role" },
     "The brief",
+    { label: "My role", id: "my-role" },
     "Understanding the client",
     "What it looks like",
     "Results",
+    "Reflection",
   ];
 
   return (
@@ -60,7 +61,6 @@ export default function UnionRoastedCaseStudy() {
         description="A Shopify site for one of the UK's best-known specialty coffee roasters. I designed every page and built the whole site, and Union still use the design today."
         logo="/images/logos/union-logo.png"
         logoAlt="Union Roasted logo"
-        preset="rachelChen"
         metaItems={[
           { label: "Role", value: "Web designer and developer" },
           { label: "Team", value: "Me and a Project Manager at WeMakeWebsites" },
@@ -70,6 +70,34 @@ export default function UnionRoastedCaseStudy() {
       />
       <CaseStudyLayout sections={sections}>
         <main className="flex flex-col gap-[120px] mt-20">
+          <CaseStudySection
+            title="The brief"
+            lead="How do you make a Shopify site that doesn't look like a Shopify site?"
+          >
+            <p className="text-[13px] font-medium text-[#6b6b6b]">
+              Paraphrased from the kick-off, not a real transcript.
+            </p>
+            <div className="flex w-full max-w-[710px] flex-col gap-5 text-left">
+              <Bubble>
+                We really want a new site for our coffee brand. We know WeMakeWebsites makes Shopify
+                sites. We don&apos;t want our site to look like a Shopify site though. We want
+                something that represents our brand.
+              </Bubble>
+              <Bubble me>
+                No problem. I&apos;ll get to know your brand and design something that represents
+                it. I wouldn&apos;t want it to look like everything else either.
+              </Bubble>
+              <Bubble>
+                We make coffee and want to show off our process. We want to show off our team. We
+                want to sell our freshly roasted coffee. Can you capture all of that in your design?
+              </Bubble>
+              <Bubble me>
+                Absolutely. I&apos;ll make sure I understand your process, your team and your
+                coffee. Let&apos;s get cracking.
+              </Bubble>
+            </div>
+          </CaseStudySection>
+
           <CaseStudyRole
             summary="I was the only designer and developer on this project. I worked alongside a Project Manager, and we did the discovery together."
             owned={[
@@ -103,31 +131,6 @@ export default function UnionRoastedCaseStudy() {
             </p>
           </section>
 
-          <CaseStudySection title="The brief">
-            <p className="text-[13px] font-medium text-[#6b6b6b]">
-              Paraphrased from the kick-off, not a real transcript.
-            </p>
-            <div className="flex max-w-[710px] flex-col gap-5">
-              <Bubble>
-                We really want a new site for our coffee brand. We know WeMakeWebsites makes Shopify
-                sites. We don&apos;t want our site to look like a Shopify site though. We want
-                something that represents our brand.
-              </Bubble>
-              <Bubble me>
-                No problem. I&apos;ll get to know your brand and design something that represents
-                it. I wouldn&apos;t want it to look like everything else either.
-              </Bubble>
-              <Bubble>
-                We make coffee and want to show off our process. We want to show off our team. We
-                want to sell our freshly roasted coffee. Can you capture all of that in your design?
-              </Bubble>
-              <Bubble me>
-                Absolutely. I&apos;ll make sure I understand your process, your team and your
-                coffee. Let&apos;s get cracking.
-              </Bubble>
-            </div>
-          </CaseStudySection>
-
           <CaseStudySection title="Understanding the client">
             <div className={body}>
               <p>
@@ -146,7 +149,7 @@ export default function UnionRoastedCaseStudy() {
           </CaseStudySection>
 
           <CaseStudySection title="What it looks like">
-            <div className="rounded-[16px] bg-[#e2e6e7] p-5">
+            <div className="rounded-[16px] bg-card p-5">
               <ZoomableImage
                 src={img("full-product.webp")}
                 alt="Full-length Union Roasted product page, from product details to the farm story, related coffees and footer"
@@ -168,10 +171,18 @@ export default function UnionRoastedCaseStudy() {
                 </a>{" "}
                 still uses my design.
               </p>
+            </div>
+          </CaseStudySection>
+
+          <CaseStudySection title="Reflection">
+            <div className={body}>
               <p>
-                It&apos;s been a while, and the wireframes and early work didn&apos;t survive, but
-                it&apos;s still one of my favourite projects. I was named Employee of the Month for
+                It&apos;s still one of my favourite projects. I was named Employee of the Month for
                 it before I left WeMakeWebsites, and I&apos;ve still got the trophy to prove it.
+              </p>
+              <p>
+                If I did it again, I&apos;d keep my working files. The wireframes and early designs
+                didn&apos;t survive, so all I can show here is the finished site.
               </p>
             </div>
           </CaseStudySection>

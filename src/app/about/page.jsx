@@ -13,7 +13,7 @@ export const metadata = pageMetadata({
 
 const sectionTitle = "font-ppmondwest text-[24px] leading-[1.25]";
 const copy = "space-y-4 text-[14px] font-medium leading-[1.6] text-[#6b6b6b]";
-const inlineLink = "text-[#484848] underline underline-offset-2 hover:text-black";
+const inlineLink = "text-[#484848] underline underline-offset-2 hover:text-white/75";
 
 // Two versions of the same CV: one leads with product design, the other with engineering.
 const CVS = [
@@ -49,12 +49,11 @@ const EXPERIENCE = [
           <a href="/case-studies/drupal-canvas" className={inlineLink}>
             Drupal Canvas
           </a>
-          , Drupal&apos;s new page builder, which is now on over 13,000 sites. I&apos;ve been acting
+          , Drupal&apos;s new page builder, which was on over 13,500 sites within ten months of its 1.0 release. I&apos;ve been acting
           as design lead since August 2025, starting on Acquia AI.
         </p>
         <p>
-          I got here from engineering. I joined Canvas as a front-end engineer, saw it had no design
-          system, and built one. From there I redesigned the whole product. Over the year three
+          I joined Canvas as a front-end engineer, saw it had no design system, and built one. From there I redesigned the whole product. Over the year three
           junior designers joined under me, and I led and mentored them, working with one product
           manager and around 20 engineers.
         </p>
@@ -177,9 +176,9 @@ export default function About() {
             <div className="flex flex-col gap-2">
               <h1 className="font-ppmondwest text-[64px] leading-[1.25]">About me</h1>
               <p className="max-w-[480px] text-[14px] font-medium leading-[1.5] text-[#6b6b6b]">
-                I&apos;m a design lead at Acquia and a design engineer, based in Brighton. I&apos;ve
-                spent over ten years designing and building for the web, nearly five of them as a
-                software engineer, and I still build a lot of what I design.
+                I&apos;m a product designer and design engineer in Brighton, leading design on Acquia AI
+                and Acquia Source. For over ten years I&apos;ve worked as a designer, an engineer and
+                usually both, mostly on B2B SaaS, and I still build a lot of what I design.
               </p>
             </div>
 
@@ -203,7 +202,7 @@ export default function About() {
                   <li key={link.href}>
                     <a
                       href={link.href}
-                      className="inline-flex items-center gap-1 text-[#484848] underline underline-offset-2 hover:text-black"
+                      className="inline-flex items-center gap-1 text-[#484848] underline underline-offset-2 hover:text-white/75"
                     >
                       {link.label}
                       {!link.href.startsWith("mailto:") && (
@@ -225,11 +224,11 @@ export default function About() {
       <FadeInUp>
         <section className="flex flex-col gap-6">
           <h2 className={sectionTitle}>Experience</h2>
-          <ol className="border-b border-black/[0.08]">
+          <ol className="border-b border-white/20">
             {EXPERIENCE.map(job => (
               <li
                 key={`${job.company}-${job.dates}`}
-                className="grid gap-4 border-t border-black/[0.08] py-8 md:grid-cols-12 md:gap-10 md:py-10"
+                className="grid gap-4 border-t border-white/20 py-8 md:grid-cols-12 md:gap-10 md:py-10"
               >
                 <div className="flex flex-col gap-1.5 md:col-span-5 lg:col-span-4">
                   <h3 className="font-ppmondwest text-[20px] leading-[1.25]">{job.role}</h3>

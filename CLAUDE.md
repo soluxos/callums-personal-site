@@ -23,8 +23,28 @@ Two rules follow from that, and they outrank any visual idea:
    Callum owned, what he shared, and what other people did.
 2. **Navigation is boring on purpose.** Links look like links, sections are
    labelled in plain words, and nothing has to be learned before it can be used.
-   Playful things (the ideas canvas, the ball pit, live cursors) can stay, but
+   Playful things (the ideas canvas, the ball pit) can stay, but
    never between a reader and the work.
+
+## The blue wall
+
+As of November 2026 every page, the ideas board included, sits on the blue wall with white
+text. `SiteShell` draws it (`Daylight` with a blue tint) and wraps the site in `.bluewall`.
+
+- **Text.** The grey text classes in the code (`text-[#484848]`, `text-[#6b6b6b]` and their
+  neighbours) were written for a light wall. `.bluewall` in `src/app/globals.css` turns them
+  white wherever they sit on the wall: the primary greys to full white, the secondary greys to
+  a soft white (82%). Keep using those classes for text on the wall. Don't put red, mid-grey or
+  another blue straight on it.
+- **Cards.** A card is a see-through white: `bg-card` (`--color-card`, `rgba(255, 255, 255,
+  0.2)`, set once in `globals.css`). Callum asked for this in place of the old grey `#e2e6e7`.
+  Text on a card must be full white, because the soft white drops under 4.5:1 there; `.bluewall
+  .bg-card` already does this for the grey classes.
+- **Light surfaces.** Post-its, polaroids, the phone menu and tooltips keep dark ink. Inside
+  `bg-white` the greys are put back by `globals.css`; a post-it sets its ink inline
+  (`color: "#2a2a2a"`), because a grey text class on it would turn white.
+- The case study preview cards are the exception to `bg-card`: they sit in a deeper shade of the
+  wall (see below).
 
 ## Case studies
 
@@ -33,17 +53,24 @@ skill in `.claude/skills/case-study/SKILL.md`. It holds the full checklist. The
 short version:
 
 - **Where things live.** Pages are `src/app/case-studies/<slug>/page.jsx`. Card
-  data (title, one-liner) is `src/data/caseStudies.js`. Images are
+  data (title, one-liner, status and years) is `src/data/caseStudies.js`. Images are
   `public/images/case-studies/<slug>/`,
   as WebP around 2400px wide for product screens.
-- **Required order.** Hero (with Role, Team, Timeline, Outcome) → `CaseStudyRole`
-  ("My role": owned / shared / others) → the work → results. There are no STAR
-  breakdowns; Callum removed them in October 2026. `CaseStudyRole` comes before
-  anything else in `<main>`.
+- **Required order.** Hero (with Role, Team, Timeline, Outcome) → the problem
+  (`CaseStudySection` with a `lead`: the question the project answered, then a
+  short paragraph or two) → `CaseStudyRole` ("My role": owned / shared / others)
+  → the work → results → a Reflection on completed projects. Callum asked for
+  the problem first in November 2026; it stays short so the role section is
+  close behind, and the hero already states Role and Team. The problem is set
+  out like a pull quote: centred, the question in large type, with room above
+  and below it (also November 2026). There are no STAR
+  breakdowns; Callum removed them in October 2026. Reflections are his opinions,
+  so draft them only from what he's said or what's on the page, and check them
+  with him.
 - **Password gates.** Every case study is public as of October 2026; Callum chose
   to open up Acquia Source and Acquia AI. The gate pieces below are still in the
-  codebase if a future case study needs one. For confidential work, the hero and
-  `CaseStudyRole` sit outside the gate, so a reader without the password still
+  codebase if a future case study needs one. For confidential work, the hero, the
+  problem and `CaseStudyRole` sit outside the gate, so a reader without the password still
   learns the role and outcome. Screens and detail go inside it. Keep the public role summary free
   of unreleased product detail. The page checks access on the server
   (`await hasCaseStudyAccess()` from `src/lib/caseStudyAccess.js`) and renders
@@ -70,18 +97,83 @@ short version:
 ## Components worth knowing
 
 - `CaseStudyFullHero`: title, a brief description (one or two sentences, about 30
-  words), `metaItems`.
+  words), `metaItems`. It has no background of its own: Callum had the gradients
+  removed in November 2026, so it sits straight on the blue wall.
 - `CaseStudyRole`: the "My role" section. Props: `summary`, `owned`, `shared`,
   `others`, optional `note`. Each item is a post-it (about 164px square, tape,
   coloured shadow, slight tilt, 12px text): yellow for "What I owned", orange for
   "What I shared", blue for "What others did". The groups sit side by side on
   large screens and stack below that. The summary uses the same paragraph
   style as the rest of the page.
-- `CaseStudySection`, `CaseStudyCards` / `CaseStudyCard` (`width="half" | "full"`),
-  `CaseStudySlider`, `CaseStudyBentoGrid`.
+- `CaseStudySection` (optional `lead`, the problem statement: with one, the section
+  is centred like a pull quote, the title a small label over the question),
+  `CaseStudyCards` / `CaseStudyCard` (`width="half" | "full"`), `CaseStudySlider`,
+  `CaseStudyBentoGrid`.
+- `CaseStudyPreviewCard`: the cards on the home page and /case-studies. Each
+  sits in a deeper shade of the wall (set in the component, the same for
+  every card; Callum tried light grey in November 2026 and went back to
+  this). The card is a label stuck over a reel, a short loop of the product
+  being used. The label shows the project's logo (the hero's, white) with its
+  name under it, and its bottom right corner is peeled back so a little of
+  the reel shows and moves underneath. Hovering or focusing the card peels
+  the label back across the card; it ends up lifted along the left edge and
+  lies back down on leaving. On phones, with no hover, it peels when the card
+  is on screen. Callum's rules for the peel (November 2026): it has to read
+  as a physical label, so its edges curl (no straight folds), it is matt and
+  close to the card's own colour (not shiny), its shadow is faint, it is
+  allowed to overflow the card, and it never disappears when peeled.
+  `CaseStudyThumbnail` holds the peel and picks the logo and reel by slug from
+  `src/components/case-study/reels/`. Callum's rules for reels, all learned the
+  hard way:
+  - **Real size, one canvas.** Every reel is drawn at its product's real pixel
+    sizes on the same 800x640 canvas, which scales as a whole to the card
+    (`ProductFrame` in `reels/source.jsx`). No shrunken screenshots.
+  - **Show the tool being used.** Each reel is a little story of the product
+    doing its job, with a pointer: Acquia AI builds a site in a conversation,
+    Canvas edits a component's text and image, Source moves between pages,
+    EvenUI scans a page and finds issues, Site Studio adds and reorders
+    elements and shows the page they make. Text is typed, buttons are pressed,
+    results arrive. A reel that only fades between stills isn't done.
+  - **Fill the card, edge to edge.** The UI spans the whole card: 40px in from
+    the sides, or running off an edge (cut by the card, or faded out). Never a
+    shrunken island with empty bands round it, never a piece narrower than the
+    one above it for no reason, and never anything scaled down to fit. Show
+    more of the real UI instead.
+  - **Clean and modular.** The product's pieces float on the card as separate
+    modules. No app window, browser frame or page background behind them.
+    Union Roasted is the agreed exception: its card is the site itself, full
+    bleed.
+  - **Never deviate from the product's design tokens.** Fonts, colours, sizes,
+    spacing, icons and logos are the product's own. Anything that has to
+    change as it's used (typed text, a ticking checklist, a picked option) is
+    code built from values read off the live product: Acquia AI and Source
+    from the prototype's computed styles, EvenUI from the running app's.
+    Anything that only has to be shown is a 2x capture of the real thing
+    (EvenUI's scanned page and fix card, Source asset cards, Canvas and Union
+    Roasted crops). Measuring from a screenshot is the last resort (Site
+    Studio, Canvas's panel). Fonts: Proxima Nova for Acquia, Inter for Canvas,
+    Roboto for Site Studio, JetBrains Mono for EvenUI's code (all in
+    `public/fonts`), Satoshi for EvenUI. Icons and logos come from the product
+    (`reels/sourceIcons.js` is generated, don't hand-edit). Hover and pressed
+    looks come from the product's own CSS; if you can't find one, leave it
+    out rather than guess.
+  - **No screen recordings** (too soft), no approximated UI, and never a state
+    or result the product doesn't have.
+  - **Nothing moves to make room.** Every piece keeps a fixed place and changes
+    in place. The one thing that scrolls is a conversation, as a whole strip
+    (Acquia AI). Motion eases on the shared springs (`soft`, `swift`); nothing
+    snaps or cuts.
+  - **Never empty.** The first frame already has the product on it.
+  - Reels only play while the card is on screen, and hold on one frame for
+    reduced motion (`useReel` in `reels/shared.jsx`, which also has the typing,
+    count-up and ticker helpers).
+  Under the card is one line: "Acquia AI / Live 2025 to now". Callum doesn't
+  want more text on the cards than that; the one-liner is read to screen
+  readers only.
 - `CaseStudyTableOfContents`: the ruler pinned to the bottom of the screen, with
   a labelled tick per section that scrolls with the page. Callum wants the ruler
-  kept, so don't replace or restyle it. Password-gated pages pass it no sections
+  kept, so don't replace or restyle it. Its colours follow the blue wall (a
+  deeper frosted strip, white ticks and labels); its shape and behaviour are his. Password-gated pages pass it no sections
   while locked, which hides it.
 
 ## Things Callum has asked to keep

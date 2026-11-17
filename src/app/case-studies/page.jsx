@@ -28,7 +28,7 @@ export default function Home() {
 
         <FadeInUp delay={0.1}>
           <section className="flex flex-col gap-4">
-            <div className="grid gap-4 md:grid-cols-2">
+            <div className="grid gap-x-4 gap-y-10 md:grid-cols-2">
               {CASE_STUDIES.map(cs => (
                 <CaseStudyPreviewCard key={cs.slug} {...cs} />
               ))}

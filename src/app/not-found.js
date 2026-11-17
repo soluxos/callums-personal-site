@@ -9,13 +9,13 @@ export default function NotFound() {
         <div className="flex flex-col items-center text-center max-w-[750px] px-10 md:px-15 lg:px-20">
           {/* 404 Number */}
           <div className="mb-8">
-            <h1 className="text-[#FF2B00] font-departure-mono text-8xl md:text-9xl lg:text-[12rem] font-bold leading-none">
+            <h1 className="text-white font-departure-mono text-8xl md:text-9xl lg:text-[12rem] font-bold leading-none">
               404
             </h1>
           </div>
           {/* Error Message */}
           <div className="mb-8">
-            <p className="text-[#626262] text-[12px] mb-4 font-departure-mono uppercase">
+            <p className="text-white/80 text-[12px] mb-4 font-departure-mono uppercase">
               Oops, looks like you&apos;re lost
             </p>
           </div>

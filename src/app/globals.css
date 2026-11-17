@@ -53,7 +53,8 @@
     margin: 0;
     padding: 0;
     color: #484848;
-    background-color: #f5f5f5;
+    /* The blue wall's own colour, for the moment before it draws and for overscroll. */
+    background-color: #0052e4;
   }
 
   body {
@@ -118,6 +119,9 @@
 @theme {
   --breakpoint-xs: 30rem;
   --font-satoshi: "Satoshi", sans-serif;
+  /* Cards on the blue wall: a see-through white, so the wall's light shows through them.
+     Used as bg-card. */
+  --color-card: rgba(255, 255, 255, 0.2);
 }
 
 /* PPMondwest Font */
@@ -349,4 +353,124 @@
 *::-webkit-selection {
   background: #00000070;
   color: #ffffff;
+}
+
+/* The blue wall. SiteShell puts .bluewall round every page. The site's grey text classes were
+   written for a light wall, so here the ones that sit on the wall turn white: the secondary greys
+   to a soft white, the primary greys (and the hovers that go to them) to full white. The second
+   block puts text inside a white surface (the phone menu, a polaroid) back to its own colour.
+   The utilities above are imported unlayered, so these are too: they win by coming later at the
+   same weight, and :where() keeps them at a plain class's weight so hover states still win. */
+:where(.bluewall) .text-\[\#6b6b6b\],
+:where(.bluewall) .text-\[\#656565\],
+:where(.bluewall) .text-\[\#636363\],
+:where(.bluewall) .text-\[\#59636e\] {
+  color: rgb(255 255 255 / 0.82);
+}
+:where(.bluewall) .text-\[\#484848\],
+:where(.bluewall) .text-\[\#2b2b2b\],
+:where(.bluewall) .text-\[\#2a2a2a\] {
+  color: #ffffff;
+}
+@media (hover: hover) {
+  :where(.bluewall) .hover\:text-\[\#484848\]:hover,
+  :where(.bluewall) .hover\:text-\[\#2a2a2a\]:hover {
+    color: #ffffff;
+  }
+}
+:where(.bluewall .bg-white) .text-\[\#6b6b6b\] {
+  color: #6b6b6b;
+}
+:where(.bluewall .bg-white) .text-\[\#59636e\] {
+  color: #59636e;
+}
+:where(.bluewall .bg-white) .text-\[\#484848\],
+:where(.bluewall .bg-white) .hover\:text-\[\#484848\]:hover {
+  color: #484848;
+}
+:where(.bluewall .bg-white) .text-\[\#2a2a2a\] {
+  color: #2a2a2a;
+}
+/* A card's see-through white lifts the blue behind its text, and the soft white would fall
+   under 4.5:1 there (about 3.7:1 where the wall is brightest). So text on a card is full white,
+   which measures 4.7:1 at that brightest point and more everywhere else. */
+:where(.bluewall .bg-card) .text-\[\#6b6b6b\],
+:where(.bluewall .bg-card) .text-\[\#656565\],
+:where(.bluewall .bg-card) .text-\[\#636363\] {
+  color: #ffffff;
+}
+
+/* Proxima Nova, the Acquia products' typeface, for the card reels rebuilt from the Acquia Source
+   prototype (see src/components/case-study/reels). The files are the ones the prototype serves. */
+@font-face {
+  font-family: "Proxima Nova";
+  src: url("/fonts/proxima-nova/proxima-nova-400.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Proxima Nova";
+  src: url("/fonts/proxima-nova/proxima-nova-500.woff2") format("woff2");
+  font-weight: 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Proxima Nova";
+  src: url("/fonts/proxima-nova/proxima-nova-600.woff2") format("woff2");
+  font-weight: 600;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Proxima Nova";
+  src: url("/fonts/proxima-nova/proxima-nova-700.woff2") format("woff2");
+  font-weight: 700;
+  font-display: swap;
+}
+
+/* Inter (Drupal Canvas's typeface) and Roboto (Site Studio's), for the card reels rebuilt from
+   those products. Both are open-licence fonts. */
+@font-face {
+  font-family: "Inter Reel";
+  src: url("/fonts/inter/inter-latin-wght-normal.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Roboto Reel";
+  src: url("/fonts/roboto/roboto-400.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Roboto Reel";
+  src: url("/fonts/roboto/roboto-500.woff2") format("woff2");
+  font-weight: 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Roboto Reel";
+  src: url("/fonts/roboto/roboto-700.woff2") format("woff2");
+  font-weight: 700;
+  font-display: swap;
+}
+
+/* The text cursor in the case study card reels. */
+@keyframes reel-caret {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+/* JetBrains Mono, EvenUI's code face (SIL Open Font License), for its card reel. */
+@font-face {
+  font-family: "JetBrains Mono Reel";
+  src: url("/fonts/jetbrains-mono/jetbrains-mono-latin-wght-normal.woff2") format("woff2");
+  font-weight: 100 800;
+  font-display: swap;
+  font-style: normal;
 }

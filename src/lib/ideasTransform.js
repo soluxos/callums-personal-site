@@ -1,7 +1,6 @@
 // Shared motion values for the Ideas canvas pan/zoom transform.
-// Both IdeasCanvas (writer) and LivePresence (reader) import from here so
-// cursor positions can be converted between canvas-space and viewport-space
-// without prop-drilling or context.
+// IdeasCanvas writes them; anything else that needs the canvas's pan and zoom can read them
+// from here without prop-drilling or context.
 import { motionValue } from "motion/react";
 
 export const canvasPanX = motionValue(0);

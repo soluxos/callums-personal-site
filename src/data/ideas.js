@@ -32,15 +32,6 @@ const ideas = [
     author: "Callum",
   },
   {
-    id: "1773668083632",
-    x: 184,
-    y: -119,
-    color: "green",
-    rotation: -1,
-    text: "I'd like to find a new role in design and engineering to make insane stuff like this in the future...",
-    author: "Callum",
-  },
-  {
     id: "1773668206214",
     x: 276,
     y: 227,

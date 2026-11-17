@@ -15,11 +15,15 @@ import {
 
 const HEIGHT = 320;
 const PAD = { top: 28, right: 64, bottom: 32, left: 44 };
-const LINE = "#0077d6"; // passes 3:1 against the card surface; the site's #0090ff doesn't
-const FILL = "rgba(0, 119, 214, 0.1)";
-const SURFACE = "#e2e6e7";
-const INK_MUTED = "#636363"; // 4.8:1 on the card grey
-const GRID = "#c9cfd1";
+// Drawn in white on the see-through card, which sits on the blue wall. All the text is full
+// white: anything softer drops under 4.5:1 on the card where the wall is brightest.
+const LINE = "#ffffff";
+const FILL = "rgba(255, 255, 255, 0.14)";
+const INK = "#ffffff";
+const RULE = "rgba(255, 255, 255, 0.6)";
+const GRID = "rgba(255, 255, 255, 0.22)";
+// A ring of deeper blue round each dot, so it stands off the line and the fill behind it.
+const DOT_RING = "rgba(0, 22, 105, 0.5)";
 
 const points = CANVAS_USAGE.map(([week, sites]) => ({
   week,
@@ -113,7 +117,7 @@ export default function CanvasUsageChart() {
   }
 
   return (
-    <figure className="flex flex-col gap-4 rounded-[8px] bg-[#e2e6e7] p-5 md:p-8">
+    <figure className="flex flex-col gap-4 rounded-[8px] bg-card p-5 md:p-8">
       <p className="text-[14px] font-medium leading-[1.5] text-[#484848]">
         Sites using Drupal Canvas each week
       </p>
@@ -125,7 +129,7 @@ export default function CanvasUsageChart() {
           role="img"
           aria-label={`Weekly sites using Drupal Canvas, rising from ${count(points[0].sites)} in early September 2025 to ${count(latest.sites)} in the week of ${day(latest.week)}. Use the left and right arrow keys to read each week.`}
           tabIndex={0}
-          className="block touch-pan-y outline-none focus-visible:ring-2 focus-visible:ring-[#0077d6] rounded-[4px]"
+          className="block touch-pan-y outline-none focus-visible:ring-2 focus-visible:ring-white rounded-[4px]"
           onPointerMove={e => setActive(nearest(e.clientX))}
           onPointerLeave={() => setActive(null)}
           onKeyDown={onKeyDown}
@@ -141,7 +145,7 @@ export default function CanvasUsageChart() {
                 textAnchor="end"
                 dominantBaseline="middle"
                 fontSize="12"
-                fill={INK_MUTED}
+                fill={INK}
               >
                 {tick === 0 ? "0" : `${tick / 1000}k`}
               </text>
@@ -154,7 +158,7 @@ export default function CanvasUsageChart() {
               y={HEIGHT - 8}
               textAnchor="middle"
               fontSize="12"
-              fill={INK_MUTED}
+              fill={INK}
             >
               {m.label}
             </text>
@@ -166,10 +170,10 @@ export default function CanvasUsageChart() {
             x2={x(release)}
             y1={PAD.top - 6}
             y2={y(0)}
-            stroke={INK_MUTED}
+            stroke={RULE}
             strokeDasharray="3 4"
           />
-          <text x={x(release) + 6} y={PAD.top} fontSize="12" fill="#656565">
+          <text x={x(release) + 6} y={PAD.top} fontSize="12" fill={INK}>
             {CANVAS_RELEASE.label}
           </text>
 
@@ -189,7 +193,7 @@ export default function CanvasUsageChart() {
             cy={y(latest.sites)}
             r="4"
             fill={LINE}
-            stroke={SURFACE}
+            stroke={DOT_RING}
             strokeWidth="2"
           />
           <text
@@ -198,7 +202,7 @@ export default function CanvasUsageChart() {
             dominantBaseline="middle"
             fontSize="12"
             fontWeight="600"
-            fill="#484848"
+            fill={INK}
           >
             {count(latest.sites)}
           </text>
@@ -211,15 +215,15 @@ export default function CanvasUsageChart() {
                 x2={x(shown.time)}
                 y1={PAD.top}
                 y2={y(0)}
-                stroke="#484848"
-                strokeOpacity="0.35"
+                stroke={INK}
+                strokeOpacity="0.5"
               />
               <circle
                 cx={x(shown.time)}
                 cy={y(shown.sites)}
                 r="5"
                 fill={LINE}
-                stroke={SURFACE}
+                stroke={DOT_RING}
                 strokeWidth="2"
               />
             </g>
@@ -228,7 +232,7 @@ export default function CanvasUsageChart() {
 
         {shown && (
           <div
-            className="pointer-events-none absolute z-10 whitespace-nowrap rounded-[6px] bg-[#25292e] px-2 py-1 text-[12px] leading-[1.5] text-white"
+            className="pointer-events-none absolute z-10 whitespace-nowrap rounded-[6px] bg-white px-2 py-1 text-[12px] leading-[1.5] text-[#1f2328] shadow-[0_4px_16px_rgba(0,0,0,0.18)]"
             style={{
               left: Math.min(Math.max(x(shown.time), 70), width - 70),
               top: y(shown.sites) - 12,

@@ -34,30 +34,59 @@ Every case study page follows this order:
    about 30 words, that says what the product is and what Callum did on it, in
    plain words. Detail belongs further down the page. `metaItems`: Role, Team,
    Timeline, Outcome.
-2. **My role** (`CaseStudyRole`). One or two sentences answering "did he design
+2. **The problem** (`CaseStudySection` with a `lead`). The `lead` is the
+   question the project answered, in one sentence ("How do you make half a dozen
+   products feel like one platform?"). Under it, a short paragraph or two of
+   context. Keep it brief: the reader should reach the role section in seconds.
+   The component sets it out like a pull quote: centred, the question in large
+   type, with room above and below. This section is always first in `<main>` and
+   outside any password gate. Union Roasted calls it "The brief".
+3. **My role** (`CaseStudyRole`). One or two sentences answering "did he design
    it, build it, or join to work on one part?", then the owned / shared / others
-   lists. This section is always first in `<main>` and always outside any
-   password gate.
-3. **The work.** Real screens first, then the problem and the decisions. Each
-   section should name a decision and why it was made, with a screen that shows
-   it. Captions say what the reader is looking at.
-4. **Who built what** (for team projects, optional). What Callum built versus
+   lists. It comes straight after the problem, and always outside any password
+   gate. The hero's Role and Team already say who he was before this.
+4. **The work.** Real screens first, then the decisions. Each section should
+   name a decision and why it was made, with a screen that shows it. Captions say
+   what the reader is looking at.
+5. **Who built what** (for team projects, optional). What Callum built versus
    what the team built, by role, with no names. On gated pages this goes inside
    the gate.
-5. **Results.** Concrete and verifiable. If there's no number, say what's true
-   now (it shipped, who uses it, what it replaced). This is the last section;
-   there are no STAR breakdowns any more.
+6. **Results.** Concrete and verifiable. If there's no number, say what's true
+   now (it shipped, who uses it, what it replaced). There are no STAR breakdowns
+   any more.
+7. **Reflection** (completed projects only). What Callum would keep or change,
+   and what carried into later work. It's opinion, so it has to be his: draft it
+   only from what he has said or what's on the page, and check it with him before
+   it ships. Projects he's still working on (Acquia AI, Acquia Source, EvenUI)
+   don't get one yet.
 
-Also update the card's `description` in `src/data/caseStudies.js` (one line
-of what it is). The cards deliberately show no role or date text underneath;
-don't add any.
+Also update the card in `src/data/caseStudies.js`. `status` and `years` show as
+the one line under the card ("Acquia AI / Live 2025 to now"). Take them from the
+hero, and use Live (in use now), Launched (his own product, released) or Shipped
+(released, and he has moved on). `description` is one line of what it is, read
+to screen readers only; don't put it back on screen. The card's background is
+the same deeper shade of the wall for every project, set in
+`CaseStudyPreviewCard`. The thumbnail is a reel: a short loop of the
+product being used, in `reels/<Name>Reel.jsx` and registered by slug in
+`CaseStudyThumbnail.jsx`. The rules are in CLAUDE.md under
+`CaseStudyPreviewCard`; read them before touching a reel. In short: the reel
+shows the tool being used (typing, pressing, results arriving), it fills the
+card edge to edge (40px in, or running off an edge; never a shrunken island),
+real pixel sizes on the shared 800x640 canvas (`ProductFrame`), separate
+floating pieces with no window behind them, the product's own fonts, colours,
+icons and logo (captured at 2x from the real thing where possible, otherwise
+read from the live product), every piece in a fixed place, eased motion, no
+screen recordings, never empty, and never a state the product doesn't have.
 
 ## 3. Review checklist
 
 Run this on every draft, and when asked to critique an existing case study.
 
+- [ ] Does the page open with the problem as a question, and is it short enough
+      that the role section is close behind?
 - [ ] Could a reader say what Callum owned after reading only the hero and the
       role section? If they'd have to guess, rewrite the role section.
+- [ ] Does a completed project end with a Reflection that Callum has checked?
 - [ ] Is anything in "owned" really shared? Does any screen show someone else's
       work without saying so (by role)? Is anyone other than Callum named? Remove
       the name.

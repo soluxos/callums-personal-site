@@ -214,12 +214,11 @@ function Note() {
   return (
     <div
       className="@container relative flex aspect-square items-center rounded-[4px] p-[12%]"
-      style={{ background: "oklch(0.92 0.18 82.45)" }}
+      // Dark ink on the note, whatever colour the text around it is.
+      style={{ background: "oklch(0.92 0.18 82.45)", color: "#2a2a2a" }}
     >
       <Tape rotate={-2} />
-      <p className="text-[13cqw] font-medium leading-[1.2] text-[#2a2a2a]">
-        Here&apos;s some piccies
-      </p>
+      <p className="text-[13cqw] font-medium leading-[1.2]">Here&apos;s some piccies</p>
     </div>
   );
 }

@@ -67,7 +67,7 @@ export default function CaseStudyRole({ summary, owned = [], shared = [], others
           >
             <div className="flex items-center gap-3">
               <h3 className="font-ppmondwest text-[20px] leading-[1.25] text-[#484848]">{title}</h3>
-              <span className="rounded-full bg-black/[0.06] px-2 text-[12px] font-semibold leading-[20px] text-[#656565]">
+              <span className="rounded-full bg-card px-2 text-[12px] font-semibold leading-[20px] text-[#656565]">
                 {lists[key].length}
               </span>
             </div>
@@ -84,12 +84,14 @@ export default function CaseStudyRole({ summary, owned = [], shared = [], others
                     className="relative min-h-[96px] w-[148px] rotate-[var(--tilt)] rounded-[4px] px-3.5 pt-5 pb-3.5 sm:aspect-square sm:pt-6 sm:pb-4 sm:min-h-0 sm:w-[164px] transition-[rotate,translate] duration-300 ease-out hover:-translate-y-1 hover:rotate-0 motion-reduce:transition-none"
                     style={{
                       background: bg,
+                      // Dark ink on the note, whatever colour the text around it is.
+                      color: "#2a2a2a",
                       boxShadow: `0 4px 18px ${shadow}, 0 1px 3px rgba(0,0,0,0.10)`,
                       "--tilt": `${TILTS[i % TILTS.length]}deg`,
                     }}
                   >
                     <Tape />
-                    <p className="text-[12px] font-medium leading-[1.45] text-[#2a2a2a]">{item}</p>
+                    <p className="text-[12px] font-medium leading-[1.45]">{item}</p>
                   </li>
                 );
               })}

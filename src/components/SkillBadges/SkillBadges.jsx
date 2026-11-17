@@ -482,7 +482,7 @@ export default function SkillBadges() {
           maxWidth: 1400,
           userSelect: "none",
           touchAction: "pan-y",
-          backgroundColor: "#e2e6e7",
+          backgroundColor: "var(--color-card)",
         }}
       >
         {/* Balls rendered behind badges */}

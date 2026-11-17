@@ -16,29 +16,29 @@ const body = "max-w-[588px] space-y-4 text-[14px] font-medium leading-[1.5] text
 export const metadata = pageMetadata({
   title: "Drupal Canvas · Callum Harrod",
   description:
-    "I led design on Drupal Canvas, Drupal's new page builder: the whole design system and a ground-up redesign of the product. It's now on over 13,000 sites.",
+    "I led design on Drupal Canvas, Drupal's new page builder: the whole design system and a ground-up redesign of the product. It's now on over 13,500 sites.",
   path: "/case-studies/drupal-canvas",
 });
 
 export default function DrupalCanvasCaseStudy() {
   const sections = [
-    { label: "My role", id: "my-role" },
     "The problem",
+    { label: "My role", id: "my-role" },
     "How I got involved",
     "Building the design system",
     "Structuring the shell",
     "Designing new features",
     "Results",
+    "Reflection",
   ];
 
   return (
     <>
       <CaseStudyFullHero
         title="Drupal Canvas"
-        description="Drupal's new page builder, now on over 13,000 sites. I joined as a front-end engineer and ended up leading its design, from the design system to a redesign of the whole product."
+        description="Drupal's new page builder, now on over 13,500 sites. I joined as a front-end engineer and ended up leading its design, from the design system to a redesign of the whole product."
         logo="/images/logos/acquia-logo.svg"
         logoAlt="Acquia logo"
-        preset="ocean"
         metaItems={[
           {
             label: "Role",
@@ -58,6 +58,22 @@ export default function DrupalCanvasCaseStudy() {
       />
       <CaseStudyLayout sections={sections}>
         <main className="flex flex-col gap-[120px] mt-20">
+          <FadeInUp>
+            <CaseStudySection
+              title="The problem"
+              lead="How do you make building and editing pages in Drupal approachable, without losing the power and flexibility its users rely on?"
+            >
+              <div className={body}>
+                <p>
+                  Drupal is one of the most powerful content management systems around, and it has a
+                  long reputation for being hard to use. Editing content was clunky and building
+                  sites was worse. Canvas is Drupal&apos;s new page builder, and it was meant to fix
+                  that.
+                </p>
+              </div>
+            </CaseStudySection>
+          </FadeInUp>
+
           <CaseStudyRole
             summary="I led the design of Drupal Canvas, but I didn't start it. When I joined, engineering had already chosen the tech, including Radix for components, and earlier designers had produced a first UI. I designed the whole design system, then redesigned the entire UI so it held together as one product, rethinking its foundations along the way: the shell, the panels and how every feature flows. I also designed the new features and reviewed the UI engineering shipped."
             owned={[
@@ -99,22 +115,6 @@ export default function DrupalCanvasCaseStudy() {
                 caption="Canvas as it is now: the page editor, the content list and the code editor. I designed all three, and the Canvas engineers built them."
               />
             </section>
-          </FadeInUp>
-
-          <FadeInUp>
-            <CaseStudySection title="The problem">
-              <div className={body}>
-                <p>
-                  Drupal is one of the most powerful content management systems around, and it has a
-                  long reputation for being hard to use. Editing content was clunky and building
-                  sites was worse. That hurt the people using it, and it hurt Drupal as a platform.
-                </p>
-                <p>
-                  Canvas had to make building and editing pages approachable without losing the
-                  power and flexibility that Drupal&apos;s users rely on.
-                </p>
-              </div>
-            </CaseStudySection>
           </FadeInUp>
 
           <FadeInUp>
@@ -255,8 +255,8 @@ export default function DrupalCanvasCaseStudy() {
             <CaseStudySection title="Results">
               <div className={body}>
                 <p>
-                  Canvas 1.0 was released on 4 December 2025. Three and a half months later it was
-                  on over 4,500 sites. In{" "}
+                  Canvas 1.0 was released on 4 December 2025, and within ten months it was on over
+                  13,500 sites. In{" "}
                   <a href="https://www.drupal.org/project/usage/canvas" className="underline">
                     drupal.org&apos;s usage count
                   </a>{" "}
@@ -265,6 +265,25 @@ export default function DrupalCanvasCaseStudy() {
                 </p>
               </div>
               <CanvasUsageChart />
+            </CaseStudySection>
+          </FadeInUp>
+
+          <FadeInUp>
+            <CaseStudySection title="Reflection">
+              <div className={body}>
+                <p>
+                  Canvas is where I went from the engineer on the team to its design lead, and it
+                  started with a job nobody had got round to: pulling the design work into a system.
+                  I&apos;d do that part the same way again. Building the Figma library on Radix,
+                  with every unused option taken out, meant designers couldn&apos;t draw something
+                  the codebase didn&apos;t have.
+                </p>
+                <p>
+                  I&apos;ve taken the same idea further on Acquia Source. Instead of a design file
+                  that mirrors the code, the prototype&apos;s pages are being rebuilt on GEL,
+                  Acquia&apos;s design system, so engineering can take the code straight from them.
+                </p>
+              </div>
             </CaseStudySection>
           </FadeInUp>
         </main>

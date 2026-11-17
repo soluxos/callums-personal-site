@@ -20,8 +20,8 @@ export const metadata = pageMetadata({
 
 export default function AcquiaAICaseStudy() {
   const sections = [
-    { label: "My role", id: "my-role" },
     "The problem",
+    { label: "My role", id: "my-role" },
     "Part one: the standalone app",
     "Part two: inside Acquia Source",
     "Projects hold the context",
@@ -38,7 +38,6 @@ export default function AcquiaAICaseStudy() {
         description="AI agents that can publish and delete across a company's sites. I've designed it twice, and inside Acquia Source I designed how a person stays in charge of them, and built it in the prototype."
         logo="/images/logos/acquia-logo.svg"
         logoAlt="Acquia logo"
-        preset="fire"
         link={{
           href: "https://acquia-source-prototype.netlify.app/ai",
           label: "Try Acquia AI in the live prototype",
@@ -52,13 +51,27 @@ export default function AcquiaAICaseStudy() {
           { label: "Timeline", value: "Aug 2025 - Now" },
           {
             label: "Outcome",
-            value:
-              "Both versions are live: the standalone app since December 2025, and inside Acquia Source",
+            value: "Out to a few hundred customers as of October 2026, with both versions live",
           },
         ]}
       />
       <CaseStudyLayout sections={sections}>
         <main className="flex flex-col gap-[120px] mt-20">
+          <CaseStudySection
+            title="The problem"
+            lead="What can an AI agent do across a company's sites, and how does a person stay in charge of it?"
+          >
+            <div className={body}>
+              <p>
+                Businesses want to hand work to AI, and Acquia&apos;s products hold the things that
+                work touches: sites, content, assets and code. An assistant that can publish or
+                delete across a company&apos;s sites is useful. It&apos;s also a liability if nobody
+                can tell what it&apos;s allowed to do, or who asked it to do something. I&apos;ve
+                designed Acquia AI twice, and both versions came back to those two questions.
+              </p>
+            </div>
+          </CaseStudySection>
+
           <CaseStudyRole
             summary="I was the lead designer on both versions of Acquia AI. On the first, a standalone app, I took a developer-built prototype, redesigned it end to end and saw the MVP through to shipping. On the second, inside Acquia Source, I designed the experience for the project model the Acquia AI team chose, where each project acts as the agent and holds its permissions, and worked through the alternatives. I also mapped the agent role onto Cloud Platform's real permissions and built the AI area of the Source prototype myself. A few colleagues have since added features on top."
             owned={[
@@ -70,7 +83,7 @@ export default function AcquiaAICaseStudy() {
               "Leading the two designers who work under me",
             ]}
             shared={[
-              "First version: user testing, run by UX researchers. What they found changed parts of our approach",
+              "First version: user testing, run by UX researchers, which found people wanted one agent rather than a team",
               "Product requirements, worked through with product management on both versions",
               "The rules for what agents can access, settled in a review with product and engineering leads",
             ]}
@@ -83,7 +96,7 @@ export default function AcquiaAICaseStudy() {
 
           <div className="flex flex-col gap-[120px]">
             <section className="w-full">
-              <div className="flex flex-col gap-3 rounded-[16px] bg-[#e2e6e7] p-5 md:p-10">
+              <div className="flex flex-col gap-3 rounded-[16px] bg-card p-5 md:p-10">
                 <ZoomableImage
                   alt="An Acquia AI conversation summarising a campaign brief, listing the brand guidelines and brief it used"
                   className="h-auto w-full rounded-[12px] border border-[#dfdfdf]"
@@ -95,21 +108,6 @@ export default function AcquiaAICaseStudy() {
                 </p>
               </div>
             </section>
-
-            <CaseStudySection title="The problem">
-              <div className={body}>
-                <p>
-                  Businesses want to hand work to AI, and Acquia&apos;s products hold the things
-                  that work touches: sites, content, assets and code. An assistant that can publish
-                  or delete across a company&apos;s sites is useful. It&apos;s also a liability if
-                  nobody can tell what it&apos;s allowed to do, or who asked it to do something.
-                </p>
-                <p>
-                  Both versions of this product came back to the same two questions. What can the AI
-                  do? And how does a person stay in charge of it?
-                </p>
-              </div>
-            </CaseStudySection>
 
             <CaseStudySection title="Part one: the standalone app">
               <div className={body}>
@@ -125,9 +123,11 @@ export default function AcquiaAICaseStudy() {
                   I joined as lead designer in August 2025. There was a prototype the developers had
                   built and no design system. I built the design system, redesigned the product from
                   the ground up, and UX researchers ran user testing with us to find out what worked
-                  and what didn&apos;t, which changed parts of our approach. Where the interface
-                  exposed a gap in the requirements, I pushed on them with product. I did design QA
-                  on everything engineering built until the MVP shipped in December 2025.
+                  and what didn&apos;t. The biggest finding was about the teammates themselves:
+                  people didn&apos;t like handing work to a team of AI agents. They wanted one agent
+                  that would get their tasks done. Where the interface exposed a gap in the
+                  requirements, I pushed on them with product. I did design QA on everything
+                  engineering built until the MVP shipped in December 2025.
                 </p>
                 <p>
                   One idea carried straight into the version inside Source. When a teammate
@@ -158,11 +158,13 @@ export default function AcquiaAICaseStudy() {
                 <p>
                   The Acquia AI team decided access would work through projects. There&apos;s no
                   separate agent to choose: the project is the agent and holds the permissions, and
-                  anyone added to it can ask it to do anything those permissions allow. My job was
-                  to design the experience for that model. To do it well, I also worked through the
-                  alternatives, an agent that inherits the user&apos;s permissions, one locked to
-                  them, and one that acts as the user, to see what each would mean when a person and
-                  an agent can do different things. The rest of this page shows the project model.
+                  anyone added to it can ask it to do anything those permissions allow. It also
+                  gives people the single agent they asked for when we tested the first version. My
+                  job was to design the experience for that model. To do it well, I also worked
+                  through the alternatives, an agent that inherits the user&apos;s permissions, one
+                  locked to them, and one that acts as the user, to see what each would mean when a
+                  person and an agent can do different things. The rest of this page shows the
+                  project model.
                 </p>
               </div>
               <CaseStudyCards>
@@ -296,6 +298,7 @@ export default function AcquiaAICaseStudy() {
             <CaseStudySection title="Results">
               <div className={body}>
                 <ul className="list-disc space-y-2 pl-5">
+                  <li>As of October 2026, Acquia AI is out to a few hundred customers.</li>
                   <li>
                     The first version&apos;s MVP shipped in December 2025, four months after I
                     joined, and the standalone app is still running.

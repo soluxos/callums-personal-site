@@ -221,7 +221,7 @@ export default function IdeasCanvas({ notes: initialNotes, isDev }) {
   const selectedIdRef = useRef(null);
   const isDraggingRef = useRef(false);
 
-  // Use module-level motion values so LivePresence can read pan/zoom for
+  // Module-level motion values, so anything outside the canvas can read pan/zoom for
   // canvas-space cursor positioning without prop-drilling.
   const panX = canvasPanX;
   const panY = canvasPanY;
@@ -564,7 +564,6 @@ export default function IdeasCanvas({ notes: initialNotes, isDev }) {
           position: "fixed",
           inset: 0,
           overflow: "hidden",
-          background: "#ebebeb",
           zIndex: 1,
         }}
         onMouseDown={e => {
@@ -600,13 +599,6 @@ export default function IdeasCanvas({ notes: initialNotes, isDev }) {
               onTextBlur={handleTextBlur}
             />
           ))}
-          {/* Cursor layer — LivePresence portals into this on /ideas.
-               Lives inside the canvas transform group so cursors are automatically
-               positioned in canvas-space and clipped by overflow:hidden when panned off-screen. */}
-          <div
-            id="ideas-cursor-layer"
-            style={{ position: "absolute", top: 0, left: 0, pointerEvents: "none", zIndex: 9000 }}
-          />
         </motion.div>
       </motion.div>
 

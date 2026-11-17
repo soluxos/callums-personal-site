@@ -3,7 +3,6 @@ import "./globals.css";
 import Navigation from "@/components/Navigation/Navigation";
 import DitherOverlay from "@/components/DitherOverlay/DitherOverlay";
 import PageTransition from "@/components/PageTransition/PageTransition";
-import LivePresence from "@/components/LivePresence/LivePresence";
 import MatCuts from "@/components/CuttingMat/MatCuts";
 import DraggableCanvas from "@/components/DraggableCanvas/DraggableCanvas";
 import EditModeProvider from "@/contexts/EditModeContext";
@@ -59,7 +58,6 @@ export default function RootLayout({ children }) {
                     <ConditionalFooter />
                   </PageWrapper>
                 </div>
-                <LivePresence />
                 <MatCuts />
               </DraggableCanvas>
             </PasswordGateProvider>

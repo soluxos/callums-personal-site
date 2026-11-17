@@ -102,7 +102,7 @@ const buildElement = (item, variants) => {
           <p
             className={mergeClassName(
               mergeClassName(
-                "text-[18px] font-medium leading-[1.5] text-[#0f0f0f]",
+                "text-[18px] font-medium leading-[1.5] text-white",
                 variant.titleClassName
               ),
               item.titleClassName
@@ -186,7 +186,7 @@ export default function CaseStudyBentoGrid({
       classNames={{
         container: mergeClassName("w-full gap-5 p-0", containerClassName),
         elementContainer: mergeClassName(
-          "relative rounded-[8px] bg-[#e2e6e7] overflow-hidden !p-0",
+          "relative rounded-[8px] bg-card overflow-hidden !p-0",
           elementContainerClassName
         ),
       }}

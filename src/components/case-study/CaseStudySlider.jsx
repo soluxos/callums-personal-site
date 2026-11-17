@@ -19,7 +19,7 @@ export default function CaseStudySlider({ images, caption }) {
 
   return (
     <section className="flex flex-col gap-6">
-      <div className="w-full rounded-[8px] bg-[#e2e6e7] p-5 md:p-10">
+      <div className="w-full rounded-[8px] bg-card p-5 md:p-10">
         <Swiper
           slidesPerView={"auto"}
           centeredSlides={true}
@@ -86,14 +86,14 @@ export default function CaseStudySlider({ images, caption }) {
           width: 8px;
           height: 8px;
           border-radius: 9999px;
-          background: #bfbfbf;
+          background: rgb(255 255 255 / 0.4);
           opacity: 1;
           transition:
             background 150ms ease-in-out,
             transform 150ms ease-in-out;
         }
         .case-study-pagination .swiper-pagination-bullet-active {
-          background: #484848;
+          background: #ffffff;
           transform: scale(1.15);
         }
       `}</style>

@@ -21,8 +21,8 @@ export const metadata = pageMetadata({
 
 export default function SiteStudioCaseStudy() {
   const sections = [
-    { label: "My role", id: "my-role" },
     "The problem",
+    { label: "My role", id: "my-role" },
     "Becoming an expert",
     "Teaching and pitching",
     "What else the job involved",
@@ -30,6 +30,7 @@ export default function SiteStudioCaseStudy() {
     "Being acquired",
     "Rebuilding it in React",
     "Results",
+    "Reflection",
   ];
 
   return (
@@ -39,7 +40,6 @@ export default function SiteStudioCaseStudy() {
         description="A low-code site builder for Drupal. I helped land a £1m ARR deal with Bayer for it, and after Acquia acquired us, I rebuilt the whole app in React with one other engineer."
         logo="/images/logos/acquia-logo.svg"
         logoAlt="Acquia logo"
-        preset="forest"
         metaItems={[
           { label: "Role", value: "Senior Frontend Designer, then Senior Software Engineer" },
           { label: "Team", value: "A 12-person startup, then Acquia" },
@@ -52,6 +52,28 @@ export default function SiteStudioCaseStudy() {
       />
       <CaseStudyLayout sections={sections}>
         <main className="flex flex-col gap-[120px] mt-20">
+          <FadeInUp>
+            <CaseStudySection
+              title="The problem"
+              lead="How do you get people building good Drupal sites with a low-code tool that's still technical underneath?"
+            >
+              <div className={body}>
+                <p>
+                  Good Drupal developers are hard to find, and building websites on Drupal is hard
+                  too. Site Studio offered a low-code way to build Drupal sites, but it was still a
+                  technical product. To get good results, people had to know how to build a sensible
+                  component library and understand front-end development.
+                </p>
+                <p>
+                  I was hired as a Senior Frontend Designer to bridge that gap: teach individuals
+                  and whole companies how to build websites with Site Studio. After Acquia bought
+                  us, the problem became the app itself: over 100,000 lines of AngularJS, and two of
+                  us to rebuild it.
+                </p>
+              </div>
+            </CaseStudySection>
+          </FadeInUp>
+
           <CaseStudyRole
             summary="I had two jobs at Site Studio. Until the acquisition I made people good at the product and helped sell it: I learned it inside out by building sites with it, taught it through videos, webinars and training, and demoed it to prospects, including the weekend prototype that won our biggest deal. After Acquia bought us I moved into engineering, and spent nearly five years as one of the two front-end engineers responsible for the whole app."
             owned={[
@@ -99,23 +121,6 @@ export default function SiteStudioCaseStudy() {
                 caption="Site Studio after the React rebuild. The product's original designer designed these screens, and the other front-end engineer and I built them."
               />
             </section>
-          </FadeInUp>
-
-          <FadeInUp>
-            <CaseStudySection title="The problem">
-              <div className={body}>
-                <p>
-                  Good Drupal developers are hard to find, and building websites on Drupal is hard
-                  too. Site Studio offered a low-code way to build Drupal sites, but it was still a
-                  technical product. To get good results, people had to know how to build a sensible
-                  component library and understand front-end development.
-                </p>
-                <p>
-                  I was hired as a Senior Frontend Designer to bridge that gap: teach individuals
-                  and whole companies how to build websites with Site Studio.
-                </p>
-              </div>
-            </CaseStudySection>
           </FadeInUp>
 
           <FadeInUp>
@@ -244,6 +249,25 @@ export default function SiteStudioCaseStudy() {
                     attached revenue, from hosting deals that included it.
                   </li>
                 </ul>
+              </div>
+            </CaseStudySection>
+          </FadeInUp>
+
+          <FadeInUp>
+            <CaseStudySection title="Reflection">
+              <div className={body}>
+                <p>
+                  The Bayer weekend is still how I like to make a case for something: build it in
+                  the real product, with the customer&apos;s brand on it, and show them that. On
+                  Acquia Source the product team demos from a coded prototype I set up, for the same
+                  reason.
+                </p>
+                <p>
+                  Nearly five years as one of the two front-end engineers on the whole app changed
+                  how I design. I spent that time building and maintaining mostly someone
+                  else&apos;s designs, so I think about how mine will be built before I hand them
+                  over.
+                </p>
               </div>
             </CaseStudySection>
           </FadeInUp>

@@ -112,9 +112,12 @@ export default function CaseStudyTableOfContents({ sections = [] }) {
         right: 0,
         zIndex: 50,
         height: 64,
-        background: "#f5f5f5",
-        borderTop: "solid 1px #dfdfdf",
-        backdropFilter: "blur(8px)",
+        // A deeper, frosted strip of the blue wall, so the page reads through it as it scrolls
+        // under and the white ticks and labels stay clear over anything.
+        background: "rgba(0, 34, 140, 0.6)",
+        borderTop: "solid 1px rgba(255, 255, 255, 0.2)",
+        backdropFilter: "blur(12px)",
+        WebkitBackdropFilter: "blur(12px)",
       }}
     >
       {/* Centering wrapper */}
@@ -163,7 +166,7 @@ export default function CaseStudyTableOfContents({ sections = [] }) {
                       fontFamily: "var(--font-satoshi), Satoshi, sans-serif",
                       fontWeight: isActive ? 600 : 500,
                       lineHeight: 1,
-                      color: isActive || isHovered ? "#2a2a2a" : filled[i] ? "#888" : "#888",
+                      color: "#ffffff",
                       background: "none",
                       border: "none",
                       padding: "0 4px",
@@ -191,7 +194,7 @@ export default function CaseStudyTableOfContents({ sections = [] }) {
               {ticks.map((tick, i) => {
                 const isTall = tick.type === "section";
                 const height = isTall ? TICK_H : Math.round(TICK_H / 2);
-                const color = filled[i] ? "#656565" : "#d0d0d0";
+                const color = filled[i] ? "#ffffff" : "rgba(255, 255, 255, 0.35)";
 
                 const line = (
                   <div

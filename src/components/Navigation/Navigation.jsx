@@ -3,13 +3,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { usePathname } from "next/navigation";
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
-  const pathname = usePathname();
-  // Every case study opens with a dark gradient hero, gated or not.
-  const isWhite = /^\/case-studies\/.+/.test(pathname);
 
   return (
     <header
@@ -17,35 +13,21 @@ export default function Navigation() {
       style={{ zIndex: 200, position: "relative" }}
     >
       <Link href="/" className="flex items-center gap-3">
-        <span
-          className={`text-[20px] font-ppmondwest font-medium leading-[1.25] ${isWhite ? "text-white" : "text-[#484848]"}`}
-        >
+        <span className="text-[20px] font-ppmondwest font-medium leading-[1.25] text-[#484848]">
           Callum Harrod
         </span>
       </Link>
       <nav className="hidden items-center gap-6 text-[16px] font-medium leading-[24px] sm:flex">
-        <Link
-          href="/"
-          className={`text-[14px] ${isWhite ? "text-white/70 hover:text-white" : "text-[#6b6b6b] hover:text-[#484848]"}`}
-        >
+        <Link href="/" className="text-[14px] text-[#6b6b6b] hover:text-[#484848]">
           Home
         </Link>
-        <Link
-          href="/about"
-          className={`text-[14px] ${isWhite ? "text-white/70 hover:text-white" : "text-[#6b6b6b] hover:text-[#484848]"}`}
-        >
+        <Link href="/about" className="text-[14px] text-[#6b6b6b] hover:text-[#484848]">
           About
         </Link>
-        <Link
-          href="/case-studies"
-          className={`text-[14px] ${isWhite ? "text-white/70 hover:text-white" : "text-[#6b6b6b] hover:text-[#484848]"}`}
-        >
+        <Link href="/case-studies" className="text-[14px] text-[#6b6b6b] hover:text-[#484848]">
           Case studies
         </Link>
-        <Link
-          href="/ideas"
-          className={`text-[14px] ${isWhite ? "text-white/70 hover:text-white" : "text-[#6b6b6b] hover:text-[#484848]"}`}
-        >
+        <Link href="/ideas" className="text-[14px] text-[#6b6b6b] hover:text-[#484848]">
           Ideas
         </Link>
       </nav>
@@ -54,7 +36,7 @@ export default function Navigation() {
         aria-label="Toggle navigation"
         aria-expanded={isOpen}
         onClick={() => setIsOpen(open => !open)}
-        className={`flex h-8 w-8 items-center justify-center rounded-md ml-auto sm:hidden ${isWhite ? "text-white" : "text-[#484848]"}`}
+        className="flex h-8 w-8 items-center justify-center rounded-md ml-auto sm:hidden text-[#484848]"
       >
         <span className="relative block h-[2px] w-4 bg-current">
           <span className="absolute -top-[6px] left-0 h-[2px] w-4 bg-current" />

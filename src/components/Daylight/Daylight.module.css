@@ -1,0 +1,42 @@
+/* The lit wall's layers, fixed to the window, where the cutting mat was: under the page
+   content, which PageWrapper lifts to z-10. The wall is drawn lighter than it looks on the 2026
+   home, where the veil goes back over it and the words alike. Here the veil only goes over the
+   wall. The grain is a faint film over both. */
+.layer {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* The wall's own colour shows before the light starts, and without WebGL. */
+.wall {
+  background: #f3efea;
+}
+
+.veil {
+  mix-blend-mode: multiply;
+  opacity: 0.2;
+}
+
+/* The blue wall: the shade is stronger than on a plain wall, because white text only gains
+   from it, and the colour multiplies over the wall and the shade together. */
+.veilTinted {
+  opacity: 0.55;
+}
+
+.tint {
+  mix-blend-mode: multiply;
+}
+
+.grain {
+  mix-blend-mode: overlay;
+  opacity: 0.11;
+}
+
+.wall canvas,
+.veil canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
