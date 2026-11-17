@@ -357,7 +357,7 @@
 
 /* The blue wall. SiteShell puts .bluewall round every page. The site's grey text classes were
    written for a light wall, so here the ones that sit on the wall turn white: the secondary greys
-   to a soft white, the primary greys (and the hovers that go to them) to full white. The second
+   to a soft white (66%), the primary greys (and the hovers that go to them) to full white. The second
    block puts text inside a white surface (the phone menu, a polaroid) back to its own colour.
    The utilities above are imported unlayered, so these are too: they win by coming later at the
    same weight, and :where() keeps them at a plain class's weight so hover states still win. */
@@ -365,7 +365,7 @@
 :where(.bluewall) .text-\[\#656565\],
 :where(.bluewall) .text-\[\#636363\],
 :where(.bluewall) .text-\[\#59636e\] {
-  color: rgb(255 255 255 / 0.82);
+  color: rgb(255 255 255 / 0.66);
 }
 :where(.bluewall) .text-\[\#484848\],
 :where(.bluewall) .text-\[\#2b2b2b\],

@@ -12,30 +12,25 @@ export default function CaseStudyFullHero({
   link,
 }) {
   return (
-    <div className="flex min-h-[560px] flex-col gap-12 pt-10 pb-[50px] sm:min-h-[660px] sm:pt-[60px] sm:pb-[64px]">
-      {/* Logo + title + description — vertically centred in the remaining space */}
-      <div className="flex-1 flex flex-col items-start justify-center text-left gap-3">
-        {logo && (
-          <div className="h-10 flex items-end justify-center mb-2">
-            <img src={logo} alt={logoAlt} className="max-w-[80px]" />
-          </div>
-        )}
+    <div className="flex flex-col gap-14 py-24 sm:gap-20 sm:py-[160px]">
+      <div className="flex flex-col items-start text-left">
+        {logo && <img src={logo} alt={logoAlt} className="mb-6 max-h-10 max-w-[80px]" />}
         <GlowTitle
           text={title}
-          className="font-ppmondwest text-[40px] sm:text-[64px] leading-[1.2] text-white"
+          className="font-ppmondwest text-[40px] sm:text-[64px] leading-[1.15] text-white"
         />
         {description && (
-          <p className="text-[16px] max-w-[560px] font-medium leading-[1.5] text-white">
+          <p className="mt-4 max-w-[480px] text-[14px] font-medium leading-[1.5] text-white/[0.66]">
             {description}
           </p>
         )}
-        {/* Optional link to the live work, e.g. a public prototype. */}
+        {/* Optional link to the live work, e.g. a public prototype. A plain white button. */}
         {link && (
           <a
             href={link.href}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-[16px] font-medium leading-[1.5] text-white underline underline-offset-4 hover:text-white/80"
+            className="mt-6 inline-flex items-center gap-1.5 bg-white px-3.5 py-2 text-[13px] font-semibold leading-[1.4] text-[#0046d5] transition-colors hover:bg-white/85 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
           >
             {link.label} <span aria-hidden="true">↗</span>
             <span className="sr-only"> (opens in a new tab)</span>
@@ -43,18 +38,20 @@ export default function CaseStudyFullHero({
         )}
       </div>
 
-      {/* Meta grid, at the bottom */}
+      {/* Role, Team, Timeline and Outcome, on even columns. */}
       {metaItems && metaItems.length > 0 && (
-        <div className="flex flex-wrap gap-x-10 gap-y-5">
+        <dl className="grid max-w-[1040px] grid-cols-2 gap-x-8 gap-y-6 sm:grid-cols-4 sm:gap-x-10">
           {metaItems.map(item => (
-            <div key={item.label} className="flex flex-col gap-1">
-              <p className="font-ppmondwest text-[18px] leading-[1.25] text-white">{item.label}</p>
-              <p className="text-[13px] font-medium leading-[1.5] text-white max-w-[240px]">
+            <div key={item.label} className="flex flex-col gap-1.5">
+              <dt className="font-ppmondwest text-[18px] leading-[1.25] text-white">
+                {item.label}
+              </dt>
+              <dd className="max-w-[240px] text-[13px] font-medium leading-[1.5] text-white/[0.66]">
                 {item.value}
-              </p>
+              </dd>
             </div>
           ))}
-        </div>
+        </dl>
       )}
     </div>
   );

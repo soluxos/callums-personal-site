@@ -36,10 +36,10 @@ Every case study page follows this order:
    Timeline, Outcome.
 2. **The problem** (`CaseStudySection` with a `lead`). The `lead` is the
    question the project answered, in one sentence ("How do you make half a dozen
-   products feel like one platform?"). Under it, a short paragraph or two of
-   context. Keep it brief: the reader should reach the role section in seconds.
-   The component sets it out like a pull quote: centred, the question in large
-   type, with room above and below. This section is always first in `<main>` and
+   products feel like one platform?"). Under it, a paragraph or two of context,
+   each two or three lines at most on a desktop (about 250 characters). Keep it
+   brief: the reader should reach the role section in seconds. The component
+   sets it left aligned, the question in large type, with room above and below. This section is always first in `<main>` and
    outside any password gate. Union Roasted calls it "The brief".
 3. **My role** (`CaseStudyRole`). One or two sentences answering "did he design
    it, build it, or join to work on one part?", then the owned / shared / others

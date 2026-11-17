@@ -25,7 +25,7 @@ function Bubble({ me = false, children }) {
       <div
         className={`relative max-w-[467px] rounded-[8px] px-4 py-2 ${me ? "bg-[#0090ff]" : "bg-card"}`}
       >
-        <p className="font-satoshi text-[14px] font-medium leading-[1.25] text-white">{children}</p>
+        <p className="font-satoshi text-[14px] font-medium leading-[1.5] text-white">{children}</p>
         <svg
           className={`absolute -bottom-[6px] ${me ? "right-[16px]" : "left-[16px]"}`}
           width="10"
@@ -64,12 +64,12 @@ export default function UnionRoastedCaseStudy() {
         metaItems={[
           { label: "Role", value: "Web designer and developer" },
           { label: "Team", value: "Me and a Project Manager at WeMakeWebsites" },
-          { label: "Timeline", value: "Aug 2018 - Sep 2018" },
+          { label: "Timeline", value: "Aug 2018 to Sep 2018" },
           { label: "Outcome", value: "A site that looks like Union, still in use years later" },
         ]}
       />
       <CaseStudyLayout sections={sections}>
-        <main className="flex flex-col gap-[120px] mt-20">
+        <main className="flex flex-col gap-[120px]">
           <CaseStudySection
             title="The brief"
             lead="How do you make a Shopify site that doesn't look like a Shopify site?"
@@ -166,7 +166,10 @@ export default function UnionRoastedCaseStudy() {
               <p>
                 The client was very happy with it. They expected a generic Shopify site and got one
                 that looked like them. Years later,{" "}
-                <a href="https://unionroasted.com" className="underline">
+                <a
+                  href="https://unionroasted.com"
+                  className="text-white underline underline-offset-2 hover:text-white/[0.66]"
+                >
                   unionroasted.com
                 </a>{" "}
                 still uses my design.

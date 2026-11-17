@@ -10,5 +10,11 @@ export const metadata = pageMetadata({
 
 export default function IdeasPage() {
   const isDev = process.env.NODE_ENV === "development";
-  return <IdeasCanvas notes={ideas} isDev={isDev} />;
+  return (
+    <>
+      {/* The board has no visible title, so screen readers get one here. */}
+      <h1 className="sr-only">Ideas</h1>
+      <IdeasCanvas notes={ideas} isDev={isDev} />
+    </>
+  );
 }

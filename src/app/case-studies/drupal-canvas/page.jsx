@@ -49,7 +49,7 @@ export default function DrupalCanvasCaseStudy() {
             value:
               "Around 20 engineers, a product manager, and three junior designers who joined under me",
           },
-          { label: "Timeline", value: "Jan 2025 - Dec 2025" },
+          { label: "Timeline", value: "Jan 2025 to Dec 2025" },
           {
             label: "Outcome",
             value: "13,604 sites in the week of 20 Sept 2026, under ten months after 1.0",
@@ -57,7 +57,7 @@ export default function DrupalCanvasCaseStudy() {
         ]}
       />
       <CaseStudyLayout sections={sections}>
-        <main className="flex flex-col gap-[120px] mt-20">
+        <main className="flex flex-col gap-[120px]">
           <FadeInUp>
             <CaseStudySection
               title="The problem"
@@ -257,7 +257,10 @@ export default function DrupalCanvasCaseStudy() {
                 <p>
                   Canvas 1.0 was released on 4 December 2025, and within ten months it was on over
                   13,500 sites. In{" "}
-                  <a href="https://www.drupal.org/project/usage/canvas" className="underline">
+                  <a
+                    href="https://www.drupal.org/project/usage/canvas"
+                    className="text-white underline underline-offset-2 hover:text-white/[0.66]"
+                  >
                     drupal.org&apos;s usage count
                   </a>{" "}
                   for the week of 20 September 2026 it was on 13,604, and it hasn&apos;t dropped

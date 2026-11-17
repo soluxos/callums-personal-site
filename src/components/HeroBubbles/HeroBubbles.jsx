@@ -35,7 +35,7 @@ const textStyle = {
   fontSize: 14,
   fontFamily: "var(--font-satoshi), Satoshi, sans-serif",
   fontWeight: 500,
-  lineHeight: 1.25,
+  lineHeight: 1.5,
 };
 
 export default function HeroBubbles({ messages }) {

@@ -43,7 +43,7 @@ export default function SiteStudioCaseStudy() {
         metaItems={[
           { label: "Role", value: "Senior Frontend Designer, then Senior Software Engineer" },
           { label: "Team", value: "A 12-person startup, then Acquia" },
-          { label: "Timeline", value: "Sep 2018 - Jan 2025" },
+          { label: "Timeline", value: "Sep 2018 to Jan 2025" },
           {
             label: "Outcome",
             value: "A £1m ARR customer, an acquisition, and the whole app rebuilt in React",
@@ -51,7 +51,7 @@ export default function SiteStudioCaseStudy() {
         ]}
       />
       <CaseStudyLayout sections={sections}>
-        <main className="flex flex-col gap-[120px] mt-20">
+        <main className="flex flex-col gap-[120px]">
           <FadeInUp>
             <CaseStudySection
               title="The problem"
@@ -59,16 +59,14 @@ export default function SiteStudioCaseStudy() {
             >
               <div className={body}>
                 <p>
-                  Good Drupal developers are hard to find, and building websites on Drupal is hard
-                  too. Site Studio offered a low-code way to build Drupal sites, but it was still a
-                  technical product. To get good results, people had to know how to build a sensible
-                  component library and understand front-end development.
+                  Good Drupal developers are hard to find. Site Studio offered a low-code way to
+                  build Drupal sites, but getting good results still took front-end knowledge and a
+                  sensible component library.
                 </p>
                 <p>
-                  I was hired as a Senior Frontend Designer to bridge that gap: teach individuals
-                  and whole companies how to build websites with Site Studio. After Acquia bought
-                  us, the problem became the app itself: over 100,000 lines of AngularJS, and two of
-                  us to rebuild it.
+                  I was hired as a Senior Frontend Designer to teach people and whole companies to
+                  build with it. After Acquia bought us, the problem became the app itself: over
+                  100,000 lines of AngularJS, and two of us to rebuild it.
                 </p>
               </div>
             </CaseStudySection>

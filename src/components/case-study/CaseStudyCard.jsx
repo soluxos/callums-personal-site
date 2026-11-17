@@ -22,7 +22,7 @@ export default function CaseStudyCard({
   return (
     <div
       className={[
-        "flex flex-col overflow-hidden rounded-[8px] bg-card",
+        "flex flex-col overflow-hidden rounded-[16px] bg-card",
         "h-[400px] md:h-[640px] w-full",
         isHalf ? "md:flex-1" : "md:w-full",
       ]

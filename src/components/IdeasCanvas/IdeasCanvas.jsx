@@ -158,7 +158,7 @@ function StickyNote({
             resize: "none",
             overflow: "hidden",
             fontSize: 13,
-            lineHeight: "1.55",
+            lineHeight: "1.5",
             color: "#2a2a2a",
             fontFamily: FONT,
             fontWeight: 500,
@@ -171,7 +171,7 @@ function StickyNote({
           style={{
             margin: 0,
             fontSize: 13,
-            lineHeight: "1.55",
+            lineHeight: "1.5",
             color: "#2a2a2a",
             whiteSpace: "pre-wrap",
             wordBreak: "break-word",

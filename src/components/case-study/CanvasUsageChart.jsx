@@ -117,7 +117,7 @@ export default function CanvasUsageChart() {
   }
 
   return (
-    <figure className="flex flex-col gap-4 rounded-[8px] bg-card p-5 md:p-8">
+    <figure className="flex flex-col gap-4 rounded-[16px] bg-card p-5 md:p-8">
       <p className="text-[14px] font-medium leading-[1.5] text-[#484848]">
         Sites using Drupal Canvas each week
       </p>
@@ -247,7 +247,10 @@ export default function CanvasUsageChart() {
 
       <figcaption className="text-[13px] font-medium leading-[1.5] text-[#636363]">
         From{" "}
-        <a href={CANVAS_USAGE_SOURCE} className="underline">
+        <a
+          href={CANVAS_USAGE_SOURCE}
+          className="text-white underline underline-offset-2 hover:text-white/[0.66]"
+        >
           drupal.org&apos;s usage statistics
         </a>
         , as of {CANVAS_USAGE_AS_OF}. Each point is one week.

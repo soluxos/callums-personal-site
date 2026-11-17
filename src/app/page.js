@@ -11,7 +11,7 @@ export default function Home() {
     <main className="flex flex-col gap-[120px]">
       <div className="flex flex-col gap-[120px] md:gap-[240px]">
         <FadeInUp>
-          <section className="flex w-full flex-col gap-2 items-center justify-center text-center pb-[120px]">
+          <section className="flex w-full flex-col gap-2 items-center justify-center text-center pt-6 pb-[120px] sm:pt-20">
             <div className="hero-text-container w-full flex flex-col gap-2 items-center justify-start">
               <HeroBubbles
                 messages={[
@@ -28,7 +28,7 @@ export default function Home() {
                   "I wonder if you've stayed around for this?",
                 ]}
               />
-              <h1 className="font-ppmondwest text-[64px] leading-[1.25]">Hey, I&apos;m Callum.</h1>
+              <h1 className="font-ppmondwest text-[64px] leading-[1.15]">Hey, I&apos;m Callum.</h1>
               <p className="max-w-[480px] text-[14px] font-medium leading-[1.5] text-[#6b6b6b]">
                 I&apos;m a product designer and design engineer, leading design on Acquia AI and
                 Acquia Source. I&apos;ve spent over ten years designing and building B2B products,

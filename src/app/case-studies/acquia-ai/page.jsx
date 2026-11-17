@@ -48,7 +48,7 @@ export default function AcquiaAICaseStudy() {
             label: "Team",
             value: "Two designers under me, with product and engineering at Acquia",
           },
-          { label: "Timeline", value: "Aug 2025 - Now" },
+          { label: "Timeline", value: "Aug 2025 to now" },
           {
             label: "Outcome",
             value: "Out to a few hundred customers as of October 2026, with both versions live",
@@ -56,18 +56,17 @@ export default function AcquiaAICaseStudy() {
         ]}
       />
       <CaseStudyLayout sections={sections}>
-        <main className="flex flex-col gap-[120px] mt-20">
+        <main className="flex flex-col gap-[120px]">
           <CaseStudySection
             title="The problem"
             lead="What can an AI agent do across a company's sites, and how does a person stay in charge of it?"
           >
             <div className={body}>
               <p>
-                Businesses want to hand work to AI, and Acquia&apos;s products hold the things that
-                work touches: sites, content, assets and code. An assistant that can publish or
-                delete across a company&apos;s sites is useful. It&apos;s also a liability if nobody
-                can tell what it&apos;s allowed to do, or who asked it to do something. I&apos;ve
-                designed Acquia AI twice, and both versions came back to those two questions.
+                Acquia&apos;s products hold a company&apos;s sites, content, assets and code. An
+                agent that can publish or delete across them is a liability if nobody can tell what
+                it&apos;s allowed to do, or who asked. I&apos;ve designed Acquia AI twice, around
+                those two questions.
               </p>
             </div>
           </CaseStudySection>
@@ -99,7 +98,7 @@ export default function AcquiaAICaseStudy() {
               <div className="flex flex-col gap-3 rounded-[16px] bg-card p-5 md:p-10">
                 <ZoomableImage
                   alt="An Acquia AI conversation summarising a campaign brief, listing the brand guidelines and brief it used"
-                  className="h-auto w-full rounded-[12px] border border-[#dfdfdf]"
+                  className="h-auto w-full rounded-[8px] border border-[#dfdfdf]"
                   src={img("chat-context.webp")}
                 />
                 <p className="text-[13px] font-medium text-[#636363]">

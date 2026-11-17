@@ -24,7 +24,7 @@ export default function CaseStudyPreviewCard({
         <CaseStudyThumbnail slug={slug} title={title} surface={SURFACE} />
       </div>
 
-      <div className="flex flex-wrap items-baseline gap-x-2 px-1 text-[15px] font-medium leading-[1.5]">
+      <div className="flex flex-wrap items-baseline gap-x-2 px-1 text-[14px] font-medium leading-[1.5]">
         <h2 className="text-[#2b2b2b] decoration-1 underline-offset-4 group-hover:underline">
           {title}
         </h2>

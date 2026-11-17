@@ -8,8 +8,11 @@
  * Every item is a post-it, styled like the notes on the ideas canvas: the same
  * colours, tape, coloured shadow and slight tilt. Each group has its own colour
  * (yellow for what I owned, orange for what I shared, blue for what others did)
- * as well as its heading. On wide screens the groups sit side by side, each
- * taking room in proportion to how many notes it has; on narrower ones they stack.
+ * as well as its heading.
+ *
+ * Every note is the same size and sits on one shared grid: six columns on wide
+ * screens, four on tablets, two on phones. A group is as wide as its notes, so
+ * short groups share a row and every note lines up with the ones above it.
  *
  * Props:
  *  - summary: string — one or two sentences: did I design it, build it, or join for one part?
@@ -25,13 +28,17 @@ const ORANGE = { bg: "oklch(0.92 0.18 51.45)", shadow: "rgba(255,152,0,0.22)" };
 const BLUE = { bg: "oklch(0.92 0.18 -100.55)", shadow: "rgba(33,150,243,0.18)" };
 
 // Small, uneven tilts, like notes stuck up by hand.
-const TILTS = [-1.8, 1.2, -0.6, 2, -1.3, 0.7, -2.2, 1.5];
+const TILTS = [-1.2, 0.8, -0.5, 1.3, -0.9, 0.5, -1.4, 1];
 
 const GROUPS = [
   { key: "owned", title: "What I owned", colour: YELLOW },
   { key: "shared", title: "What I shared", colour: ORANGE },
   { key: "others", title: "What others did", colour: BLUE },
 ];
+
+// The gap between columns. The groups and the notes inside them use the same one, which is
+// what keeps every note on the same columns.
+const GAP = "gap-x-4 md:gap-x-5 xl:gap-x-6";
 
 function Tape() {
   return (
@@ -49,30 +56,35 @@ export default function CaseStudyRole({ summary, owned = [], shared = [], others
   let n = 0;
 
   return (
-    <section id="my-role" className="flex flex-col gap-10 scroll-mt-8">
+    <section id="my-role" className="flex flex-col gap-12 scroll-mt-8">
       <div className="flex flex-col gap-4">
-        <h2 className="font-ppmondwest text-[32px] leading-[1.25] text-[#484848]">My role</h2>
+        <h2 className="font-ppmondwest text-[24px] leading-[1.25] text-[#484848]">My role</h2>
         <p className="max-w-[588px] text-[14px] font-medium leading-[1.5] text-[#656565]">
           {summary}
         </p>
       </div>
 
-      <div className="flex flex-col gap-8 sm:gap-12 lg:flex-row lg:gap-10">
+      <div className={`grid grid-cols-2 gap-y-12 md:grid-cols-4 xl:grid-cols-6 ${GAP}`}>
         {GROUPS.filter(({ key }) => lists[key].length > 0).map(({ key, title, colour }) => (
           <div
             key={key}
-            className="flex flex-col gap-4 sm:gap-6 lg:min-w-[164px] lg:basis-0"
-            // Side by side, a group with more notes gets more of the row.
-            style={{ flexGrow: lists[key].length }}
+            className="col-span-full flex flex-col gap-5 md:[grid-column:span_var(--four)] xl:[grid-column:span_var(--six)]"
+            // How many columns the group takes: one per note, up to a full row.
+            style={{
+              "--four": Math.min(lists[key].length, 4),
+              "--six": Math.min(lists[key].length, 6),
+            }}
           >
-            <div className="flex items-center gap-3">
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
               <h3 className="font-ppmondwest text-[20px] leading-[1.25] text-[#484848]">{title}</h3>
               <span className="rounded-full bg-card px-2 text-[12px] font-semibold leading-[20px] text-[#656565]">
                 {lists[key].length}
               </span>
             </div>
 
-            <ul className="flex flex-wrap gap-x-4 gap-y-5 sm:gap-x-5 sm:gap-y-7">
+            <ul
+              className={`grid grid-cols-2 gap-y-6 md:[grid-template-columns:repeat(var(--four),minmax(0,1fr))] xl:[grid-template-columns:repeat(var(--six),minmax(0,1fr))] ${GAP}`}
+            >
               {lists[key].map(item => {
                 const i = n++;
                 const { bg, shadow } = colour;
@@ -81,7 +93,7 @@ export default function CaseStudyRole({ summary, owned = [], shared = [], others
                     key={item}
                     // Square from tablet width up, free to grow if the text needs it. On phones a
                     // note is only as tall as its text, so the work isn't pushed far down.
-                    className="relative min-h-[96px] w-[148px] rotate-[var(--tilt)] rounded-[4px] px-3.5 pt-5 pb-3.5 sm:aspect-square sm:pt-6 sm:pb-4 sm:min-h-0 sm:w-[164px] transition-[rotate,translate] duration-300 ease-out hover:-translate-y-1 hover:rotate-0 motion-reduce:transition-none"
+                    className="relative min-h-[96px] rotate-[var(--tilt)] rounded-[4px] px-4 pt-6 pb-4 transition-[rotate,translate] duration-300 ease-out hover:-translate-y-1 hover:rotate-0 motion-reduce:transition-none md:aspect-square md:min-h-0"
                     style={{
                       background: bg,
                       // Dark ink on the note, whatever colour the text around it is.
@@ -91,7 +103,7 @@ export default function CaseStudyRole({ summary, owned = [], shared = [], others
                     }}
                   >
                     <Tape />
-                    <p className="text-[12px] font-medium leading-[1.45]">{item}</p>
+                    <p className="text-[12px] font-medium leading-[1.5] xl:text-[13px]">{item}</p>
                   </li>
                 );
               })}

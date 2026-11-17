@@ -84,7 +84,7 @@ function StickyNotePreview({ note }) {
         style={{
           margin: 0,
           fontSize: 14,
-          lineHeight: "1.55",
+          lineHeight: "1.5",
           color: "#2a2a2a",
           whiteSpace: "pre-wrap",
           wordBreak: "break-word",
@@ -125,7 +125,7 @@ export default function HomeStickyNotes() {
         <h2 className="font-ppmondwest text-[24px] leading-[1.25]">Ideas</h2>
         <Link
           href="/ideas"
-          className="text-[13px] font-medium text-[#6b6b6b] hover:text-[#2a2a2a] transition-colors"
+          className="text-[14px] font-medium text-[#484848] underline underline-offset-2 hover:text-white/[0.66]"
         >
           View all →
         </Link>

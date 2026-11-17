@@ -17,9 +17,9 @@ export default async function RecentlyRead() {
           <h2 className="font-ppmondwest text-[24px] leading-[1.25]">Recently read</h2>
           <a
             href={BOOKCASE_URL}
-            className="shrink-0 text-[13px] font-medium text-[#6b6b6b] transition-colors hover:text-[#2a2a2a]"
+            className="shrink-0 text-[14px] font-medium text-[#484848] underline underline-offset-2 hover:text-white/[0.66]"
           >
-            View on Your Next Tale →
+            View on Your Next Tale ↗
           </a>
         </div>
 
@@ -43,11 +43,11 @@ export default async function RecentlyRead() {
                   />
                 </div>
                 <div className="flex flex-col gap-0.5">
-                  <p className="line-clamp-2 text-[13px] font-medium leading-[1.4] text-[#2a2a2a]">
+                  <p className="line-clamp-2 text-[13px] font-medium leading-[1.5] text-[#2a2a2a]">
                     {book.title}
                   </p>
                   {book.author && (
-                    <p className="truncate text-[12px] font-medium leading-[1.4] text-[#6b6b6b]">
+                    <p className="truncate text-[12px] font-medium leading-[1.5] text-[#6b6b6b]">
                       {book.author}
                     </p>
                   )}

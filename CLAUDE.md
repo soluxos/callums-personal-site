@@ -34,7 +34,7 @@ text. `SiteShell` draws it (`Daylight` with a blue tint) and wraps the site in `
 - **Text.** The grey text classes in the code (`text-[#484848]`, `text-[#6b6b6b]` and their
   neighbours) were written for a light wall. `.bluewall` in `src/app/globals.css` turns them
   white wherever they sit on the wall: the primary greys to full white, the secondary greys to
-  a soft white (82%). Keep using those classes for text on the wall. Don't put red, mid-grey or
+  a soft white (66%). Keep using those classes for text on the wall. Don't put red, mid-grey or
   another blue straight on it.
 - **Cards.** A card is a see-through white: `bg-card` (`--color-card`, `rgba(255, 255, 255,
   0.2)`, set once in `globals.css`). Callum asked for this in place of the old grey `#e2e6e7`.
@@ -45,6 +45,32 @@ text. `SiteShell` draws it (`Daylight` with a blue tint) and wraps the site in `
   (`color: "#2a2a2a"`), because a grey text class on it would turn white.
 - The case study preview cards are the exception to `bg-card`: they sit in a deeper shade of the
   wall (see below).
+
+## Site-wide design rules
+
+Callum approved these after a full audit in November 2026. Keep new work on them.
+
+- **Text.** Two levels only: full white, and quiet white at 66% for everything secondary (body
+  copy, nav, footer, meta, tags). He knows 66% on the wall is about 3:1 and has accepted it;
+  don't raise it. Body copy is 14px Satoshi medium at line height 1.5, everywhere, including
+  bubbles and post-its. Captions and small notes are 13px.
+- **Headings.** Page titles are 64px at 1.15 (40px on phones in the case study hero). Section
+  headings are 24px on every page. The wordmark and all other headings in that typeface are
+  regular weight.
+- **Measure.** 588px for body copy, 480px for intros and hero descriptions.
+- **Links.** An inline link is full white and underlined (`underline-offset-2`), 14px, and
+  fades to 66% on hover. "↗" marks a link that leaves the site; "→" one that stays on it. Nav
+  and footer links are quiet (66%) and go full white on hover; the nav's current page is full
+  white.
+- **Buttons.** Solid white, square corners, 13px semibold label in `#0046d5`. No dark or
+  rounded buttons.
+- **Spacing.** 120px between sections on every page. 160px above and below the case study
+  hero and the footer (96px on phones), and 160px between the nav and the top of a page. The
+  home hero is centred and stays where it is.
+- **Corners.** 4px for paper (post-its, book covers), 8px for images and screens, 16px for
+  cards and containers. Polaroids, the contribution grid and the ball pit keep their own.
+- **Copy.** "GitHub", not "Github". Date ranges are written "Aug 2025 to now", with "to" and
+  no dash.
 
 ## Case studies
 
@@ -61,9 +87,11 @@ short version:
   short paragraph or two) → `CaseStudyRole` ("My role": owned / shared / others)
   → the work → results → a Reflection on completed projects. Callum asked for
   the problem first in November 2026; it stays short so the role section is
-  close behind, and the hero already states Role and Team. The problem is set
-  out like a pull quote: centred, the question in large type, with room above
-  and below it (also November 2026). There are no STAR
+  close behind, and the hero already states Role and Team. The problem is left
+  aligned like the rest of the page: the title as a small label, the question in
+  large type, with room above and below it. Each paragraph under it is two or
+  three lines at most on a desktop (Callum, November 2026; it was centred like a
+  pull quote before that, and he had it changed). There are no STAR
   breakdowns; Callum removed them in October 2026. Reflections are his opinions,
   so draft them only from what he's said or what's on the page, and check them
   with him.
@@ -96,17 +124,25 @@ short version:
 
 ## Components worth knowing
 
-- `CaseStudyFullHero`: title, a brief description (one or two sentences, about 30
-  words), `metaItems`. It has no background of its own: Callum had the gradients
-  removed in November 2026, so it sits straight on the blue wall.
+- `CaseStudyFullHero`: logo, title, a brief description (one or two sentences, about 30
+  words, set small at 14px), an optional `link`, then `metaItems` on four even columns (no
+  rule or divider above them; Callum had one removed). The description and the meta values are
+  white at 66% (`text-white/[0.66]`) and the hero has 160px of padding above and below on
+  desktop (96px on phones); both are Callum's numbers. It has no background of its own: Callum had the gradients removed in November
+  2026, so it sits straight on the blue wall. If the hero has a button (the `link`), it is a
+  solid white, square-cornered button with a small label (13px); Callum asked for that in
+  November 2026, so don't go back to an underlined link or a pill.
 - `CaseStudyRole`: the "My role" section. Props: `summary`, `owned`, `shared`,
-  `others`, optional `note`. Each item is a post-it (about 164px square, tape,
-  coloured shadow, slight tilt, 12px text): yellow for "What I owned", orange for
-  "What I shared", blue for "What others did". The groups sit side by side on
-  large screens and stack below that. The summary uses the same paragraph
-  style as the rest of the page.
+  `others`, optional `note`. Each item is a post-it (tape, coloured shadow, slight tilt):
+  yellow for "What I owned", orange for "What I shared", blue for "What others did". Every
+  note is the same size and sits on one shared grid (six columns on wide screens, four on
+  tablets, two on phones). A group is as wide as its notes, so short groups share a row and
+  every note lines up with the ones above it. Callum asked for this in November 2026 because
+  the old layout (groups of different widths, notes wrapping on their own) looked uneven;
+  keep the groups and the notes on the same columns and gaps. The summary uses the same
+  paragraph style as the rest of the page.
 - `CaseStudySection` (optional `lead`, the problem statement: with one, the section
-  is centred like a pull quote, the title a small label over the question),
+  is left aligned, the title a small label over the question in large type),
   `CaseStudyCards` / `CaseStudyCard` (`width="half" | "full"`), `CaseStudySlider`,
   `CaseStudyBentoGrid`.
 - `CaseStudyPreviewCard`: the cards on the home page and /case-studies. Each

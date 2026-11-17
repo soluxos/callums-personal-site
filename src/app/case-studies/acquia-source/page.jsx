@@ -48,7 +48,7 @@ export default function AcquiaSourceCaseStudy() {
             label: "Team",
             value: "Two designers under me, with engineers and product leads across Acquia",
           },
-          { label: "Timeline", value: "Jan 2026 - Now" },
+          { label: "Timeline", value: "Jan 2026 to now" },
           {
             label: "Outcome",
             value:
@@ -57,24 +57,21 @@ export default function AcquiaSourceCaseStudy() {
         ]}
       />
       <CaseStudyLayout sections={sections}>
-        <main className="flex flex-col gap-[120px] mt-20">
+        <main className="flex flex-col gap-[120px]">
           <CaseStudySection
             title="The problem"
             lead="How do you make half a dozen products, each with its own interface, feel like one platform?"
           >
             <div className={body}>
               <p>
-                Acquia grew by building and buying products: Cloud Platform for hosting, Drupal CMS
-                and Canvas for building sites, a DAM for assets, Web Governance, and more. Each one
-                came with its own interface, its own navigation and its own way of managing people.
-                A customer running a few sites could bounce between several of them in a day,
-                relearning where things live every time.
+                Acquia grew by building and buying products: hosting, site building, a DAM, Web
+                Governance and more. Each came with its own interface, navigation and way of
+                managing people, so customers relearn where things live every time they switch.
               </p>
               <p>
-                Acquia wants to compete as a digital experience platform, and that&apos;s a hard
-                sell when the experience is split across half a dozen products. Source is one
-                platform with one navigation and one way of doing the common jobs, with Acquia AI
-                working across all of it.
+                That&apos;s a hard sell for a company competing as a digital experience platform.
+                Source is one platform with one navigation and one way of doing the common jobs,
+                with Acquia AI working across all of it.
               </p>
             </div>
           </CaseStudySection>
@@ -107,7 +104,7 @@ export default function AcquiaSourceCaseStudy() {
               <div className="flex flex-col gap-3 rounded-[16px] bg-card p-5 md:p-10">
                 <ZoomableImage
                   alt="The Acquia Source dashboard, with an Ask Acquia AI box above performance cards for every site"
-                  className="h-auto w-full rounded-[12px] border border-[#dfdfdf]"
+                  className="h-auto w-full rounded-[8px] border border-[#dfdfdf]"
                   src={img("dashboard.webp")}
                 />
                 <p className="text-[13px] font-medium text-[#636363]">
@@ -323,7 +320,10 @@ export default function AcquiaSourceCaseStudy() {
                   </li>
                   <li>
                     The prototype has 104 routes, and it&apos;s what the product team demos.{" "}
-                    <a href="https://acquia-source-prototype.netlify.app/" className="underline">
+                    <a
+                      href="https://acquia-source-prototype.netlify.app/"
+                      className="text-white underline underline-offset-2 hover:text-white/[0.66]"
+                    >
                       You can try it yourself
                     </a>
                     .

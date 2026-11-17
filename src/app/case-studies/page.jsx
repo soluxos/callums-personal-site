@@ -13,13 +13,11 @@ export const metadata = pageMetadata({
 export default function Home() {
   return (
     <>
-      <main className="flex flex-col gap-[80px]">
+      <main className="flex flex-col gap-[120px]">
         <FadeInUp>
-          <section className="flex w-full flex-col gap-5">
-            <h1 className="w-full max-w-[591px] font-ppmondwest text-[48px] leading-[1.25]">
-              Case studies
-            </h1>
-            <p className="w-full max-w-[591px] text-[14px] font-medium leading-[1.5] text-[#6b6b6b]">
+          <section className="flex w-full flex-col gap-2">
+            <h1 className="w-full font-ppmondwest text-[64px] leading-[1.15]">Case studies</h1>
+            <p className="w-full max-w-[480px] text-[14px] font-medium leading-[1.5] text-[#6b6b6b]">
               A selection of projects I&apos;ve worked on. Each one starts with what I owned, what I
               shared and what other people did.
             </p>

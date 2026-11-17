@@ -477,7 +477,7 @@ export default function SkillBadges() {
 
       <div
         ref={containerRef}
-        className="relative h-[540px] overflow-hidden rounded-xl"
+        className="relative h-[540px] overflow-hidden rounded-[16px]"
         style={{
           maxWidth: 1400,
           userSelect: "none",

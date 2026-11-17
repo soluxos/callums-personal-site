@@ -64,9 +64,9 @@ export default async function GitHubGrid({ tone = "dark" }) {
           <h2 className="font-ppmondwest text-[24px] leading-[1.25]">GitHub contributions</h2>
           <a
             href={PROFILE_URL}
-            className="shrink-0 text-[13px] font-medium text-[#6b6b6b] transition-colors hover:text-[#2a2a2a]"
+            className="shrink-0 text-[14px] font-medium text-[#484848] underline underline-offset-2 hover:text-white/[0.66]"
           >
-            View on GitHub →
+            View on GitHub ↗
           </a>
         </div>
 

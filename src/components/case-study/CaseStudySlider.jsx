@@ -19,7 +19,7 @@ export default function CaseStudySlider({ images, caption }) {
 
   return (
     <section className="flex flex-col gap-6">
-      <div className="w-full rounded-[8px] bg-card p-5 md:p-10">
+      <div className="w-full rounded-[16px] bg-card p-5 md:p-10">
         <Swiper
           slidesPerView={"auto"}
           centeredSlides={true}

@@ -12,8 +12,8 @@ export const metadata = pageMetadata({
 });
 
 const sectionTitle = "font-ppmondwest text-[24px] leading-[1.25]";
-const copy = "space-y-4 text-[14px] font-medium leading-[1.6] text-[#6b6b6b]";
-const inlineLink = "text-[#484848] underline underline-offset-2 hover:text-white/75";
+const copy = "space-y-4 text-[14px] font-medium leading-[1.5] text-[#6b6b6b]";
+const inlineLink = "text-[#484848] underline underline-offset-2 hover:text-white/[0.66]";
 
 // Two versions of the same CV: one leads with product design, the other with engineering.
 const CVS = [
@@ -31,7 +31,7 @@ const EXPERIENCE = [
   {
     role: "Senior Product Designer, then Lead Product Designer",
     company: "Acquia",
-    dates: "Jan 2025 – Now",
+    dates: "Jan 2025 to now",
     body: (
       <>
         <p>
@@ -49,13 +49,14 @@ const EXPERIENCE = [
           <a href="/case-studies/drupal-canvas" className={inlineLink}>
             Drupal Canvas
           </a>
-          , Drupal&apos;s new page builder, which was on over 13,500 sites within ten months of its 1.0 release. I&apos;ve been acting
-          as design lead since August 2025, starting on Acquia AI.
+          , Drupal&apos;s new page builder, which was on over 13,500 sites within ten months of its
+          1.0 release. I&apos;ve been acting as design lead since August 2025, starting on Acquia
+          AI.
         </p>
         <p>
-          I joined Canvas as a front-end engineer, saw it had no design system, and built one. From there I redesigned the whole product. Over the year three
-          junior designers joined under me, and I led and mentored them, working with one product
-          manager and around 20 engineers.
+          I joined Canvas as a front-end engineer, saw it had no design system, and built one. From
+          there I redesigned the whole product. Over the year three junior designers joined under
+          me, and I led and mentored them, working with one product manager and around 20 engineers.
         </p>
         <p>
           I also built the{" "}
@@ -71,7 +72,7 @@ const EXPERIENCE = [
   {
     role: "Senior Software Engineer",
     company: "Acquia",
-    dates: "May 2020 – Jan 2025",
+    dates: "May 2020 to Jan 2025",
     body: (
       <>
         <p>
@@ -96,7 +97,7 @@ const EXPERIENCE = [
   {
     role: "Senior Frontend Designer",
     company: "Cohesion, then Acquia",
-    dates: "Sep 2018 – May 2020",
+    dates: "Sep 2018 to May 2020",
     body: (
       <>
         <p>
@@ -116,7 +117,7 @@ const EXPERIENCE = [
   {
     role: "Frontend Designer",
     company: "WeMakeWebsites",
-    dates: "May 2018 – Sep 2018",
+    dates: "May 2018 to Sep 2018",
     body: (
       <>
         <p>
@@ -139,7 +140,7 @@ const EXPERIENCE = [
   {
     role: "Designer & Developer",
     company: "Pragmatic",
-    dates: "Jun 2016 – May 2018",
+    dates: "Jun 2016 to May 2018",
     body: (
       <p>
         I joined Pragmatic as a developer. I was experienced with WordPress, and I helped create
@@ -153,7 +154,7 @@ const EXPERIENCE = [
   {
     role: "Web Developer",
     company: "UnitedUs",
-    dates: "Apr 2015 – Jun 2016",
+    dates: "Apr 2015 to Jun 2016",
     body: (
       <p>
         My first job out of university! I worked on some incredible sites for small and large
@@ -167,18 +168,19 @@ const EXPERIENCE = [
 
 export default function About() {
   return (
-    <main className="flex flex-col gap-[120px] md:gap-[160px]">
+    <main className="flex flex-col gap-[120px]">
       <FadeInUp>
         <section className="grid items-center gap-12 lg:grid-cols-12 lg:gap-10">
           {/* Who I am and the things a hiring manager reaches for first. */}
           <div className="flex flex-col gap-10 lg:col-span-5">
             {/* Same type as the homepage hero. */}
             <div className="flex flex-col gap-2">
-              <h1 className="font-ppmondwest text-[64px] leading-[1.25]">About me</h1>
+              <h1 className="font-ppmondwest text-[64px] leading-[1.15]">About me</h1>
               <p className="max-w-[480px] text-[14px] font-medium leading-[1.5] text-[#6b6b6b]">
-                I&apos;m a product designer and design engineer in Brighton, leading design on Acquia AI
-                and Acquia Source. For over ten years I&apos;ve worked as a designer, an engineer and
-                usually both, mostly on B2B SaaS, and I still build a lot of what I design.
+                I&apos;m a product designer and design engineer in Brighton, leading design on
+                Acquia AI and Acquia Source. For over ten years I&apos;ve worked as a designer, an
+                engineer and usually both, mostly on B2B SaaS, and I still build a lot of what I
+                design.
               </p>
             </div>
 
@@ -189,10 +191,10 @@ export default function About() {
                     <a
                       href={cv.href}
                       download
-                      className="inline-flex items-center gap-2 rounded-[10px] bg-[#1a1a1a] px-4 py-3 text-[14px] font-semibold leading-[1.25] text-white transition-[opacity,transform] hover:opacity-85 active:translate-y-px"
+                      className="inline-flex items-center gap-1.5 bg-white px-3.5 py-2 text-[13px] font-semibold leading-[1.4] text-[#0046d5] transition-colors hover:bg-white/85 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
                     >
-                      <Download size={16} strokeWidth={2.25} aria-hidden="true" />
-                      {cv.label} <span className="font-medium text-white/55">PDF</span>
+                      <Download size={14} strokeWidth={2.25} aria-hidden="true" />
+                      {cv.label} <span className="font-medium text-[#0046d5]/[0.66]">PDF</span>
                     </a>
                   </li>
                 ))}
@@ -202,7 +204,7 @@ export default function About() {
                   <li key={link.href}>
                     <a
                       href={link.href}
-                      className="inline-flex items-center gap-1 text-[#484848] underline underline-offset-2 hover:text-white/75"
+                      className="inline-flex items-center gap-1 text-[#484848] underline underline-offset-2 hover:text-white/[0.66]"
                     >
                       {link.label}
                       {!link.href.startsWith("mailto:") && (
@@ -236,7 +238,7 @@ export default function About() {
                     {job.company} · {job.dates}
                   </p>
                 </div>
-                <div className={`${copy} max-w-[640px] md:col-span-7 lg:col-span-8`}>
+                <div className={`${copy} max-w-[588px] md:col-span-7 lg:col-span-8`}>
                   {job.body}
                 </div>
               </li>

@@ -22,8 +22,8 @@ import UnionRoastedReel from "@/components/case-study/reels/UnionRoastedReel";
 // ends up lifted along the card's left edge, standing a little proud of the card, and lies back
 // down when you leave. A phone has no hover, so there the label peels when the card is on screen.
 //
-// The label is drawn as a physical thing: it is the card's own colour on the front and a shade
-// paler on the back, it is not clipped by the card, and the card's surface is cut away wherever
+// The label is drawn as a physical thing: it is the card's own colour on the front and darker
+// on the back, it is not clipped by the card, and the card's surface is cut away wherever
 // the lifted label lies, so the label reads as one solid piece inside the card and out.
 //
 // Every reel is drawn at its product's real pixel sizes on an 800 x 640 canvas that scales with
@@ -61,22 +61,71 @@ const CORNER = 23; // how much of the corner is up at rest
 // degrees. As the label is pulled it swings round and travels across the card, the way a hand
 // peels: by the end it runs nearly straight up the left edge.
 const LINE = {
-  angle: [45, 9], // which way the line faces, in degrees from pointing right
-  x: [W - CORNER / 2, 9], // a point the line passes through
+  angle: [45, 3], // which way the line faces, in degrees from pointing right
+  x: [W - CORNER / 2, 3], // a point the line passes through
   y: [H - CORNER / 2, 40],
 };
 
 // Past the line the label doesn't fold flat. It bends up and over the way paper does: sharply
 // at first, then less and less, until it is heading back at `turn`. At rest it goes most of the
-// way over (162 degrees) and lies back on itself; pulled right back it is held up, just past
-// upright (108), leaning back over the card's edge and whatever is beside it. Seen from above, a point of the
+// way over (168 degrees) and lies back on itself; pulled right back it comes most of the way
+// over too (about 142), so nearly all of it lies off the card's edge, over whatever is beside
+// it, as if it were being peeled off. Seen from above, a point of the
 // label `d` past the line shows up `across(d)` past it: further out while the label climbs, then
 // back over the line as it comes over the top. The label's edges trace that same curve, which
 // is what makes them curl.
-const TURN = [162, 108];
-const BEND = [6, 5]; // how far the tight part of the bend runs
+const TURN = [168, 142];
+const BEND = [3.2, 2.4]; // how far the tight part of the bend runs
 const STEP = 0.02;
 const LIMIT = 8;
+
+// Where the label ends up when it's pulled back. Each pull picks its own: how far round the line
+// swings, where it stops, and how far back the label leans, so no two openings are the same.
+const between = (from, to) => from + Math.random() * (to - from);
+// What stays stuck varies as well, but it is always a good length of the card's left side, so
+// the label still reads as attached to its card: the whole side, or a part of it (a quarter
+// to three quarters) running down from the top corner or up from the bottom one. That is just
+// the way the line faces when the pull ends. A degree or two is enough: the stuck strip is
+// only about 20px deep, so a steeper line would leave the label hanging by a corner.
+const HOLDS = [
+  () => between(-0.5, 0.5), // the whole left side
+  () => between(-0.5, 0.5),
+  () => between(1.1, 3.4), // part of it, from the top corner
+  () => between(-3.4, -1.1), // or from the bottom one
+];
+
+// An opened label must leave the reel clear. The reel's pieces start 40px in from the card's
+// sides, and Callum's rule is that the label never sits more than about 20px into the card
+// (3cqw). So what is still on the card (the stuck part, and the curl standing up from it)
+// stays inside that. The rest of the label lies off the card.
+const PAD = 3;
+
+// How far the curl stands out past the line it lifts along.
+function reach(turn, bend) {
+  const rad = (turn * Math.PI) / 180;
+  const top = -Math.log(1 - Math.PI / 2 / rad);
+  let sum = 0;
+  for (let u = STEP / 2; u < top; u += STEP) sum += Math.cos(rad * (1 - Math.exp(-u))) * STEP;
+  return bend * sum;
+}
+
+function anOpening(angle = HOLDS[Math.floor(Math.random() * HOLDS.length)]()) {
+  const turn = between(130, 154);
+  const rad = (angle * Math.PI) / 180;
+  const nx = Math.cos(rad);
+  const ny = Math.sin(rad);
+  // As far in as the line can sit with the curl still short of the nearest piece of the reel.
+  // Pieces can run off the top and bottom of the card, so only the side padding is free.
+  // It is measured from the corner the line is nearest: the top one, or the bottom one.
+  const m =
+    Math.min(0, H * ny) + Math.max(0.5, PAD * nx - reach(turn, BEND[1]) - between(0.1, 0.5));
+  // The point on that line nearest the middle of the card's left edge.
+  const off = m - (H / 2) * ny;
+  return { angle, x: off * nx, y: H / 2 + off * ny, turn };
+}
+
+// With no pull to pick one (the first draw), the label opens along its side.
+const OPEN = anOpening(0);
 
 const mix = ([from, to], t) => from + (to - from) * t;
 const n = value => value.toFixed(2);
@@ -111,18 +160,18 @@ function cut(nx, ny, m, lifted) {
 }
 
 // Everything the peel needs to draw itself at one moment.
-function measure(t) {
+function measure(t, open = OPEN) {
   const e = Math.max(0, t);
-  const angle = (mix(LINE.angle, e) * Math.PI) / 180;
+  const angle = (mix([LINE.angle[0], open.angle], e) * Math.PI) / 180;
   // Out from the line, towards the lifted side, and along it.
   const nx = Math.cos(angle);
   const ny = Math.sin(angle);
   const ux = Math.sin(angle);
   const uy = -Math.cos(angle);
-  const m = mix(LINE.x, e) * nx + mix(LINE.y, e) * ny;
-  const along = mix(LINE.x, e) * ux + mix(LINE.y, e) * uy;
+  const m = mix([LINE.x[0], open.x], e) * nx + mix([LINE.y[0], open.y], e) * ny;
+  const along = mix([LINE.x[0], open.x], e) * ux + mix([LINE.y[0], open.y], e) * uy;
 
-  const turn = (mix(TURN, Math.min(1, e)) * Math.PI) / 180;
+  const turn = (mix([TURN[0], open.turn], Math.min(1, e)) * Math.PI) / 180;
   const bend = mix(BEND, Math.min(1, e));
   const table = [0];
   let sum = 0;
@@ -198,15 +247,19 @@ function measure(t) {
     }
   }
 
-  const whole = [...outer, ...[...inner].reverse()];
+  // The part of the label that has come over, back side up. Only this part is a separate
+  // piece: where the label is still climbing it is the card's own surface, shaded.
+  const over = [...backTop, ...[...backEnd].reverse()];
   const point = out => at(along, out).map(n);
 
   return {
     whole: path(outer, inner),
     rise: path(riseTop, riseFoot),
     back: path(backTop, backEnd),
-    // The card's surface, with the lifted label's outline cut out of it.
-    surface: `polygon(evenodd, 0cqw 0cqw, ${W}cqw 0cqw, ${W}cqw ${H}cqw, 0cqw ${H}cqw, 0cqw 0cqw, ${cq(whole)}, ${cq([whole[0]])}, 0cqw 0cqw)`,
+    // The card's surface, with the turned-over label cut out of it.
+    surface: over.length
+      ? `polygon(evenodd, 0cqw 0cqw, ${W}cqw 0cqw, ${W}cqw ${H}cqw, 0cqw ${H}cqw, 0cqw 0cqw, ${cq(over)}, ${cq([over[0]])}, 0cqw 0cqw)`
+      : "none",
     reel: `polygon(${cq([...reelNear, ...[...reelFar].reverse()])})`,
     // The label's front: the part still stuck down. Its print fades as it lifts, so the
     // label's back never passes over the logo.
@@ -225,6 +278,7 @@ export default function CaseStudyThumbnail({ slug, title, surface }) {
   const ref = useRef(null);
   const id = useId().replace(/[^a-zA-Z0-9]/g, "");
   const peel = useMotionValue(0);
+  const opening = useRef(OPEN);
   const reduced = useReducedMotion();
   const onScreen = useInView(ref, { amount: 0.8 });
   const touch = useRef(false);
@@ -236,7 +290,7 @@ export default function CaseStudyThumbnail({ slug, title, surface }) {
   useMotionValueEvent(peel, "change", t => {
     const root = ref.current;
     if (!root) return;
-    const now = measure(t);
+    const now = measure(t, opening.current);
     const set = (name, apply) => root.querySelectorAll(`[data-peel="${name}"]`).forEach(apply);
     set("surface", el => (el.style.clipPath = now.surface));
     set("reel", el => (el.style.clipPath = now.reel));
@@ -244,7 +298,6 @@ export default function CaseStudyThumbnail({ slug, title, surface }) {
       el.style.clipPath = now.front;
       el.style.opacity = now.print;
     });
-    set("whole", el => el.setAttribute("d", now.whole));
     set("rise", el => el.setAttribute("d", now.rise));
     set("back", el => el.setAttribute("d", now.back));
     const line = (el, [x1, y1], [x2, y2]) => {
@@ -258,6 +311,8 @@ export default function CaseStudyThumbnail({ slug, title, surface }) {
   });
 
   const move = open => {
+    // A fresh way of opening each time, chosen while the label is still down.
+    if (open && peel.get() < 0.05) opening.current = anOpening();
     if (reduced) peel.set(open ? 1 : 0);
     else {
       animate(peel, open ? 1 : 0, {
@@ -300,7 +355,7 @@ export default function CaseStudyThumbnail({ slug, title, surface }) {
   return (
     <div ref={ref} className="absolute inset-0 [container-type:inline-size]" aria-hidden="true">
       {/* The card itself, with its rounded corners. Only the label is allowed outside it. */}
-      <div className="absolute inset-0 overflow-hidden rounded-[16px]">
+      <div className="absolute inset-0 overflow-hidden rounded-[16px] shadow-[0_1px_3px_rgba(0,9,58,0.28)]">
         <div
           data-peel="surface"
           className="absolute inset-0"
@@ -320,16 +375,12 @@ export default function CaseStudyThumbnail({ slug, title, surface }) {
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           {logo && <img src={logo.src} alt="" style={{ width: logo.width }} />}
-          <span
-            className="leading-none font-medium text-white"
-            style={{ fontSize: "clamp(13px, 2.5cqw, 17px)" }}
-          >
-            {title}
-          </span>
+          {/* The same type as the caption under the card. */}
+          <span className="text-[14px] leading-none font-medium text-white">{title}</span>
         </div>
       </div>
 
-      {/* The lifted label: its front in shade where it climbs, its back, a shade paler and matt,
+      {/* The lifted label: its front in shade where it climbs, its back, darker than its front and matt,
           where it comes over, and the faint shadow it leaves around itself. */}
       <svg
         viewBox={`0 0 ${W} ${H}`}
@@ -345,8 +396,8 @@ export default function CaseStudyThumbnail({ slug, title, surface }) {
             x2={REST.crest[0]}
             y2={REST.crest[1]}
           >
-            <stop offset="0" stopColor="#00093a" stopOpacity="0" />
-            <stop offset="1" stopColor="#00093a" stopOpacity="0.26" />
+            <stop offset="0" stopColor="#001669" stopOpacity="0" />
+            <stop offset="1" stopColor="#001669" stopOpacity="0.3" />
           </linearGradient>
           <linearGradient
             data-peel="over"
@@ -357,40 +408,19 @@ export default function CaseStudyThumbnail({ slug, title, surface }) {
             x2={REST.flat[0]}
             y2={REST.flat[1]}
           >
-            <stop offset="0" stopColor="#00093a" stopOpacity="0.2" />
-            <stop offset="0.35" stopColor="#fff" stopOpacity="0.07" />
+            <stop offset="0" stopColor="#fff" stopOpacity="0" />
+            <stop offset="0.4" stopColor="#fff" stopOpacity="0.05" />
             <stop offset="1" stopColor="#fff" stopOpacity="0.02" />
           </linearGradient>
-          <filter id={`${id}-soft`} x="-30%" y="-30%" width="160%" height="160%">
-            <feGaussianBlur stdDeviation="1" />
-          </filter>
-          <mask
-            id={`${id}-around`}
-            maskUnits="userSpaceOnUse"
-            x="-60"
-            y="-60"
-            width="220"
-            height="200"
-          >
-            <rect x="-60" y="-60" width="220" height="200" fill="#fff" />
-            <path data-peel="whole" d={REST.whole} fill="#000" />
-          </mask>
         </defs>
-        <g mask={`url(#${id}-around)`}>
-          <path
-            data-peel="whole"
-            d={REST.whole}
-            fill="#00093a"
-            fillOpacity="0.16"
-            filter={`url(#${id}-soft)`}
-          />
+        {/* The turned-over label. It is solid (a base in the wall's blue under its own colour), so
+            it hides whatever it lies over, and it drops a small, faint shadow to sit above it. */}
+        <g style={{ filter: "drop-shadow(0 0.5cqw 0.7cqw rgba(0, 9, 58, 0.28))" }}>
+          <path data-peel="back" d={REST.back} fill="#0a52e8" />
+          <path data-peel="back" d={REST.back} fill="rgba(0, 22, 105, 0.5)" />
+          <path data-peel="back" d={REST.back} fill={`url(#${id}-over)`} />
         </g>
-        {/* A solid base in the wall's blue, so the label hides whatever it lies over. */}
-        <path data-peel="whole" d={REST.whole} fill="#0a52e8" />
-        <path data-peel="rise" d={REST.rise} fill={surface} />
         <path data-peel="rise" d={REST.rise} fill={`url(#${id}-climb)`} />
-        <path data-peel="back" d={REST.back} fill="rgba(0, 22, 105, 0.16)" />
-        <path data-peel="back" d={REST.back} fill={`url(#${id}-over)`} />
       </svg>
     </div>
   );

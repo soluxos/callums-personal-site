@@ -12,7 +12,7 @@ const img = name => `/images/case-studies/evenui/${name}`;
 
 const body = "max-w-[588px] space-y-4 text-[14px] font-medium leading-[1.5] text-[#656565]";
 const caption = "text-[13px] font-medium text-[#636363]";
-const shot = "h-auto w-full rounded-[12px] border border-[#dfdfdf]";
+const shot = "h-auto w-full rounded-[8px] border border-[#dfdfdf]";
 
 export const metadata = pageMetadata({
   title: "EvenUI · Callum Harrod",
@@ -63,7 +63,7 @@ export default function EvenUICaseStudy() {
         ]}
       />
       <CaseStudyLayout sections={sections}>
-        <main className="flex flex-col gap-[120px] mt-20">
+        <main className="flex flex-col gap-[120px]">
           <CaseStudySection
             title="The problem"
             lead="How do you check a page for inconsistent UI the way a picky designer would?"
@@ -71,15 +71,13 @@ export default function EvenUICaseStudy() {
             <div className={body}>
               <p>
                 Most inconsistent UI is small: a 22px gap where everything else uses 24, or a blue
-                one shade off the brand blue. It&apos;s hard to see in a screenshot review, and
-                finding it by hand means inspecting elements one at a time. AI agents add to it,
-                because they build pages faster than anyone can check them.
+                one shade off the brand blue. Finding it by hand means inspecting elements one at a
+                time, and AI agents build pages faster than anyone can check them.
               </p>
               <p>
-                I wanted a tool that flags every value that doesn&apos;t fit with the rest of the
-                page, and shows exactly where it is. It had to work on a live site, a local dev
-                server or a single HTML file, and AI coding agents had to be able to use it to check
-                the prototypes they build.
+                I wanted a tool that flags every value that doesn&apos;t fit the rest of the page
+                and shows exactly where it is, on a live site, a local dev server or a single HTML
+                file. AI coding agents had to be able to use it too.
               </p>
             </div>
           </CaseStudySection>
@@ -504,7 +502,7 @@ export default function EvenUICaseStudy() {
                   2026, and you can{" "}
                   <a
                     href="https://github.com/soluxos/evenui-releases/releases/latest"
-                    className="underline"
+                    className="text-white underline underline-offset-2 hover:text-white/[0.66]"
                   >
                     download it from GitHub
                   </a>
