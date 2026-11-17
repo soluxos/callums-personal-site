@@ -83,7 +83,7 @@ export default function CaseStudyRole({ summary, owned = [], shared = [], others
             </div>
 
             <ul
-              className={`grid grid-cols-2 gap-y-6 md:[grid-template-columns:repeat(var(--four),minmax(0,1fr))] xl:[grid-template-columns:repeat(var(--six),minmax(0,1fr))] ${GAP}`}
+              className={`grid grid-cols-2 gap-y-6 md:auto-rows-fr md:[grid-template-columns:repeat(var(--four),minmax(0,1fr))] xl:[grid-template-columns:repeat(var(--six),minmax(0,1fr))] ${GAP}`}
             >
               {lists[key].map(item => {
                 const i = n++;
@@ -91,9 +91,11 @@ export default function CaseStudyRole({ summary, owned = [], shared = [], others
                 return (
                   <li
                     key={item}
-                    // Square from tablet width up, free to grow if the text needs it. On phones a
-                    // note is only as tall as its text, so the work isn't pushed far down.
-                    className="relative min-h-[96px] rotate-[var(--tilt)] rounded-[4px] px-4 pt-6 pb-4 transition-[rotate,translate] duration-300 ease-out hover:-translate-y-1 hover:rotate-0 motion-reduce:transition-none md:aspect-square md:min-h-0"
+                    // Square from tablet width up (the empty ::before holds the note open to its own
+                    // width), and free to grow if the text needs it; the row then grows with it, so
+                    // every note in a group stays the same size. On phones a note is only as tall as
+                    // its text, so the work isn't pushed far down.
+                    className="relative min-h-[96px] rotate-[var(--tilt)] rounded-[4px] px-4 pt-6 pb-4 transition-[rotate,translate] duration-300 ease-out hover:-translate-y-1 hover:rotate-0 motion-reduce:transition-none md:grid md:min-h-0 md:before:[grid-area:1/1] md:before:pb-[calc(100%-8px)] md:before:content-['']"
                     style={{
                       background: bg,
                       // Dark ink on the note, whatever colour the text around it is.
@@ -103,7 +105,9 @@ export default function CaseStudyRole({ summary, owned = [], shared = [], others
                     }}
                   >
                     <Tape />
-                    <p className="text-[12px] font-medium leading-[1.5] xl:text-[13px]">{item}</p>
+                    <p className="text-[12px] font-medium leading-[1.5] md:[grid-area:1/1] xl:text-[13px]">
+                      {item}
+                    </p>
                   </li>
                 );
               })}

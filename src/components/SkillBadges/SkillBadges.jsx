@@ -7,9 +7,19 @@ const PAD_Y = 7;
 const WALL = 60;
 const INNER_PAD = 20;
 
-// Ball config
+// Ball config. BALL_COUNT is the most there can be; the pit takes as many as fill about
+// half of it, so a narrow one (a phone) isn't packed so tight that things get crushed.
 const BALL_COUNT = 200;
 const BALL_RADIUS = 18;
+const BALL_RADIUS_SMALL = 13;
+const FILL = 0.5;
+
+// The physics runs in fixed steps, whatever the screen's frame rate, so it behaves the
+// same everywhere and doesn't jitter when a frame is late.
+const STEP = 1000 / 60;
+// How many still steps before a body is put to rest (about three seconds). Long enough that
+// things squashed together by a blast have pushed themselves apart first.
+const REST = 180;
 
 const DYNAMITE_W = 20;
 const DYNAMITE_H = 80;
@@ -100,18 +110,21 @@ export default function SkillBadges() {
 
     (async () => {
       await new Promise(r => requestAnimationFrame(r));
+      // The badges are measured below, so their fonts have to be in first. Measured too
+      // early, a badge's body is a different size from the badge you can see.
+      if (document.fonts?.ready) await document.fonts.ready;
       if (cancelled) return;
 
       const Matter = await import("matter-js");
       if (cancelled) return;
 
-      const { Engine, Bodies, Body, World, Mouse, MouseConstraint, Query } = Matter;
+      const { Engine, Bodies, Body, World, Mouse, MouseConstraint, Query, Sleeping } = Matter;
 
       const container = containerRef.current;
       if (!container) return;
 
-      const W = container.offsetWidth;
-      const H = container.offsetHeight;
+      let W = container.offsetWidth;
+      let H = container.offsetHeight;
       if (W === 0 || H === 0) return;
 
       // Read actual rendered dimensions from DOM
@@ -119,12 +132,10 @@ export default function SkillBadges() {
         el ? { w: el.offsetWidth, h: el.offsetHeight } : { w: 80, h: 30 }
       );
 
-      badgeRefsRef.current.forEach(el => {
-        if (el) el.style.visibility = "visible";
-      });
-
       const engine = Engine.create({
-        gravity: { y: 1.8 },
+        // Once things come to rest they stay at rest, instead of trembling for ever.
+        enableSleeping: true,
+        gravity: { y: 1.4 },
         positionIterations: 10,
         velocityIterations: 6,
         constraintIterations: 4,
@@ -141,6 +152,7 @@ export default function SkillBadges() {
           restitution: 0.1,
           friction: 0.6,
           frictionAir: 0.08,
+          sleepThreshold: REST,
           chamfer: { radius: chamferRadius },
         });
         body._w = w;
@@ -150,13 +162,17 @@ export default function SkillBadges() {
       });
 
       // Ball bodies — fixed radius, staggered above the visible area
-      const ballData = Array.from({ length: BALL_COUNT }, (_, i) => ({
-        r: BALL_RADIUS,
+      const radius = W < 600 ? BALL_RADIUS_SMALL : BALL_RADIUS;
+      const badgeArea = dims.reduce((sum, { w, h }) => sum + w * h, 0);
+      const room = (W - INNER_PAD * 2) * (H - INNER_PAD * 2) * FILL - badgeArea;
+      const ballCount = Math.max(0, Math.min(BALL_COUNT, Math.floor(room / (radius * 2) ** 2)));
+      const ballData = Array.from({ length: ballCount }, (_, i) => ({
+        r: radius,
         colour: BALL_COLOURS[i % BALL_COLOURS.length],
       }));
 
       const innerW = W - INNER_PAD * 2;
-      const ballDiam = BALL_RADIUS * 2 + 2;
+      const ballDiam = radius * 2 + 2;
       const ballCols = Math.max(1, Math.floor(innerW / ballDiam));
 
       const ballBodies = ballData.map(({ r }, i) => {
@@ -170,6 +186,7 @@ export default function SkillBadges() {
           friction: 0.3,
           frictionAir: 0.04,
           density: 0.002,
+          sleepThreshold: REST,
         });
         body._r = r;
         body._isBall = true;
@@ -181,7 +198,9 @@ export default function SkillBadges() {
       // Pattern: designBadge → engBadge → ~18 balls → repeat
       const designBodies = badgeBodies.slice(0, DESIGN_SKILLS.length);
       const engBodies = badgeBodies.slice(DESIGN_SKILLS.length);
-      const ballsPerSlot = Math.floor(ballBodies.length / badgeBodies.length);
+      const ballsPerSlot = Math.ceil(
+        ballBodies.length / Math.max(designBodies.length, engBodies.length)
+      );
       const spawnOrder = [];
       let bIdx = 0;
       const slots = Math.max(designBodies.length, engBodies.length);
@@ -230,7 +249,7 @@ export default function SkillBadges() {
       const mc = MouseConstraint.create(engine, {
         mouse,
         constraint: {
-          stiffness: 0.05,
+          stiffness: 0.2,
           damping: 0.3,
           angularStiffness: 0.1,
           render: { visible: false },
@@ -313,6 +332,7 @@ export default function SkillBadges() {
           const strength = KICK_STRENGTH * (1 - d / KICK_RADIUS) * (1 / (d * 0.04 + 1));
           const nx = dx / d;
           const ny = dy / d;
+          Sleeping.set(b, false);
           Body.setVelocity(b, {
             x: b.velocity.x + nx * strength,
             y: b.velocity.y + ny * strength - 4, // extra upward bias
@@ -371,33 +391,31 @@ export default function SkillBadges() {
         el.style.boxShadow = "none";
       });
 
-      let last = performance.now();
-
-      const loop = now => {
-        if (cancelled) return;
-        const delta = Math.min(now - last, 50);
-        last = now;
-        Engine.update(engine, delta);
-
-        // Sync badge DOM elements
+      // Put every element where its body is. Positions aren't rounded: whole pixels make
+      // slow movement step and shimmer.
+      const draw = () => {
         badgeBodies.forEach((body, i) => {
           const el = badgeRefsRef.current[i];
           if (!el) return;
-          const x = Math.round(body.position.x);
-          const y = Math.round(body.position.y);
-          const a = body.angle;
-          el.style.transform = `translate(${x}px,${y}px) rotate(${a}rad) translate(${-body._w / 2}px,${-body._h / 2}px)`;
+          const { x, y } = body.position;
+          el.style.transform = `translate(${x}px,${y}px) rotate(${body.angle}rad) translate(${-body._w / 2}px,${-body._h / 2}px)`;
         });
 
-        // Sync ball DOM elements
         ballBodies.forEach((body, i) => {
           const el = ballRefsRef.current[i];
           if (!el) return;
-          const x = Math.round(body.position.x);
-          const y = Math.round(body.position.y);
           const r = body._r;
-          el.style.transform = `translate(${x - r}px,${y - r}px)`;
+          el.style.transform = `translate(${body.position.x - r}px,${body.position.y - r}px)`;
         });
+
+        if (dynamiteBody && dynamiteState === "live" && dynamiteElRef.current) {
+          const { x, y } = dynamiteBody.position;
+          dynamiteElRef.current.style.transform = `translate(${x}px,${y}px) rotate(${dynamiteBody.angle}rad) translate(${-DYNAMITE_W / 2}px,${-DYNAMITE_H / 2}px)`;
+        }
+      };
+
+      const step = () => {
+        Engine.update(engine, STEP);
 
         // Grow blast shockwave body
         if (blastBody) {
@@ -410,13 +428,38 @@ export default function SkillBadges() {
           }
         }
 
-        // Sync dynamite
-        if (dynamiteBody && dynamiteState === "live" && dynamiteElRef.current) {
-          const x = Math.round(dynamiteBody.position.x);
-          const y = Math.round(dynamiteBody.position.y);
-          const a = dynamiteBody.angle;
-          dynamiteElRef.current.style.transform = `translate(${x}px,${y}px) rotate(${a}rad) translate(${-DYNAMITE_W / 2}px,${-DYNAMITE_H / 2}px)`;
+        // Anything thrown or blown out of the pit drops back in from the top.
+        for (const body of dynamiteBody ? [...allBodies, dynamiteBody] : allBodies) {
+          const { x, y } = body.position;
+          if (y < H + 200 && x > -200 && x < W + 200 && y > -3000) continue;
+          Sleeping.set(body, false);
+          Body.setPosition(body, {
+            x: INNER_PAD + 40 + Math.random() * Math.max(1, W - INNER_PAD * 2 - 80),
+            y: -60,
+          });
+          Body.setVelocity(body, { x: 0, y: 0 });
         }
+      };
+
+      let last = performance.now();
+      let owed = 0;
+      let running = false;
+
+      const loop = now => {
+        if (cancelled || !running) {
+          rafId = null;
+          return;
+        }
+        owed += Math.min(now - last, 100);
+        last = now;
+        let steps = 0;
+        while (owed >= STEP && steps < 3) {
+          step();
+          owed -= STEP;
+          steps++;
+        }
+        if (steps === 3) owed = 0;
+        draw();
 
         const isDynHovered =
           dynamiteBody &&
@@ -437,7 +480,33 @@ export default function SkillBadges() {
         rafId = requestAnimationFrame(loop);
       };
 
-      rafId = requestAnimationFrame(loop);
+      // Nothing falls until the pit is on screen, so the drop is seen, and the physics
+      // stops again whenever it's scrolled away.
+      let started = false;
+      const io = new IntersectionObserver(
+        ([entry]) => {
+          if (cancelled) return;
+          running = entry.isIntersecting;
+          if (!running) return;
+          if (!started) {
+            started = true;
+            // For reduced motion the pit is already full and at rest: the fall happens
+            // before anything is shown.
+            if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+              for (let i = 0; i < 900; i++) step();
+            }
+            draw();
+            badgeRefsRef.current.forEach(el => {
+              if (el) el.style.visibility = "visible";
+            });
+          }
+          last = performance.now();
+          if (rafId === null) rafId = requestAnimationFrame(loop);
+        },
+        { threshold: 0.2 }
+      );
+      io.observe(container);
+      cleanupFns.push(() => io.disconnect());
 
       // Reposition static walls when container resizes
       let resizeRaf = null;
@@ -452,6 +521,19 @@ export default function SkillBadges() {
           Body.setPosition(floor, { x: newW / 2, y: newH - INNER_PAD + WALL / 2 });
           Body.setPosition(wallL, { x: INNER_PAD - WALL / 2, y: newH / 2 });
           Body.setPosition(wallR, { x: newW - INNER_PAD + WALL / 2, y: newH / 2 });
+          // Keep everything inside the new walls, and let it settle again.
+          const narrower = newW < W;
+          W = newW;
+          H = newH;
+          allBodies.forEach(body => {
+            Sleeping.set(body, false);
+            if (!narrower) return;
+            const half = (body._w ?? body._r * 2) / 2;
+            const max = newW - INNER_PAD - half;
+            if (body.position.x > max) {
+              Body.setPosition(body, { x: Math.max(INNER_PAD + half, max), y: body.position.y });
+            }
+          });
         });
       });
       ro.observe(container);

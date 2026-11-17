@@ -137,10 +137,20 @@ short version:
   yellow for "What I owned", orange for "What I shared", blue for "What others did". Every
   note is the same size and sits on one shared grid (six columns on wide screens, four on
   tablets, two on phones). A group is as wide as its notes, so short groups share a row and
-  every note lines up with the ones above it. Callum asked for this in November 2026 because
+  every note lines up with the ones above it. A note is square but grows if its text needs
+  the room, and the rest of its group grows with it. Callum asked for this in November 2026 because
   the old layout (groups of different widths, notes wrapping on their own) looked uneven;
   keep the groups and the notes on the same columns and gaps. The summary uses the same
   paragraph style as the rest of the page.
+- `SideProjects`: the "Some side projects" cards on the home page, two across. Each is a film
+  of the live site being scrolled, 1280x800 (16:10) in `public/videos/<name>.mp4` with its first
+  frame as `<name>.jpg`. Callum asked for fresh recordings and bigger cards in November 2026.
+  The films play only while on screen and hold on the poster for reduced motion. Your Next
+  Tale's film is his bookcase page (`/u/callum`); the "Made in Framer" badge is hidden in the
+  three template films.
+- `SkillBadges`: the ball pit on About. It starts when it scrolls into view, runs in fixed
+  steps, puts things to rest once they settle, and takes only as many balls as half fill it
+  (fewer and smaller on phones). Badges are measured after fonts load; keep that.
 - `CaseStudySection` (optional `lead`, the problem statement: with one, the section
   is left aligned, the title a small label over the question in large type),
   `CaseStudyCards` / `CaseStudyCard` (`width="half" | "full"`), `CaseStudySlider`,
