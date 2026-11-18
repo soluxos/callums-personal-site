@@ -9,9 +9,15 @@
   pointer-events: none;
 }
 
-/* The wall's own colour shows before the light starts, and without WebGL. */
+/* Before the room starts, and without WebGL, each layer shows a still picture of the first
+   frame (posters.module.css), stretched to fill; the wall's own colour is under that. */
 .wall {
   background: #f3efea;
+}
+
+.wall,
+.veil {
+  background-size: 100% 100%;
 }
 
 .veil {

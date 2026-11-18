@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { grainTile } from "./grain";
 import { Life } from "./life";
 import styles from "./Daylight.module.css";
+import posters from "./posters.module.css";
 
 // The lit wall from callum-personal-site-2026 (its v4: window, blinds and the oak outside, the day
 // passing as you scroll), drawn behind every page in place of the cutting mat. Its light and
@@ -12,11 +13,17 @@ import styles from "./Daylight.module.css";
 // so nothing is drawn across a word, a card or a screen.
 //
 // The day runs down each page from first light at the top. With reduced motion nothing moves on
-// its own and the sun follows the scroll directly. Without WebGL the wall's plain colour shows
-// instead.
+// its own and the sun follows the scroll directly. Until the room has started, and without WebGL,
+// a still picture of the first frame is on the wall instead (posters.module.css), so the light is
+// there from the first paint.
 const FIRST = 1; // 06:12, first light
 const LAST = 4; // 17:35, the sun low and warm, still light: where an untinted wall stops
 const NIGHT = 6; // 23:10, moonlight and the lamp
+
+// The room (three.js and its shaders) starts loading as soon as this file runs, alongside the
+// page's own scripts, instead of waiting for the page to hydrate first. It still isn't part of
+// the page's bundle, so it doesn't hold anything up.
+const loadRoom = typeof window === "undefined" ? null : import("./room");
 
 // `tint` lays a colour over the wall and its shade (multiplied, so the light and the blinds
 // still show through it) and deepens the shade to suit. SiteShell passes the site's blue. The
@@ -48,8 +55,7 @@ export default function Daylight({ tint }) {
     let cleanup = () => {};
     let cancelled = false;
 
-    // three.js loads after the page, so it never holds up the first paint.
-    import("./room").then(({ DaylightRoom, dayAt }) => {
+    loadRoom.then(({ DaylightRoom, dayAt }) => {
       if (cancelled) return;
       try {
         room = new DaylightRoom(wallRef.current, veilRef.current);
@@ -117,10 +123,10 @@ export default function Daylight({ tint }) {
   // Fixed behind everything: the wall, the veil that lays its shade on it, and a film of grain.
   return (
     <>
-      <div ref={wallRef} className={`${styles.layer} ${styles.wall}`} aria-hidden="true" />
+      <div ref={wallRef} className={`${styles.layer} ${styles.wall} ${posters.wall}`} aria-hidden="true" />
       <div
         ref={veilRef}
-        className={`${styles.layer} ${styles.veil} ${tint ? styles.veilTinted : ""}`}
+        className={`${styles.layer} ${styles.veil} ${posters.veil} ${tint ? styles.veilTinted : ""}`}
         aria-hidden="true"
       />
       {tint && (

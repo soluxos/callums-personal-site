@@ -1,10 +1,14 @@
 // What goes on in the room from moment to moment, apart from the sun: the wind in the oak, and
-// the gusts a fast scroll or a moving pointer stirs up; the blinds opening as the page arrives; birds
+// the gusts a fast scroll or a moving pointer stirs up; birds
 // going past by day; the lamp coming on at dusk. `update` moves it all on by `dt` seconds, and the
-// room reads the fields it leaves behind. With `still` (reduced motion) nothing moves on its own:
-// the blinds start open and the lamp just comes on.
+// room reads the fields it leaves behind. With `still` (reduced motion) nothing moves on its own
+// and the lamp just comes on.
+//
+// The blinds are open from the first frame (`reveal` stays at 1). They used to turn open over the
+// first second and a half, which read as the wall being slow to load; Callum asked for the light
+// to be there straight away (November 2026). The first frame also has to match the still picture
+// of the wall that shows before the room has started (see Daylight.module.css).
 
-const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
 const random = (min, max) => min + Math.random() * (max - min);
 
 export class Life {
@@ -12,7 +16,7 @@ export class Life {
   age = 0;
   gust = 0;
   wind = 1;
-  reveal = 0;
+  reveal = 1;
   still = false;
   birds = [];
   nextFlock = random(5, 9);
@@ -33,7 +37,6 @@ export class Life {
     // How far the oak's branches and leaves move. The resting breeze is a little stronger than the
     // room's original (1.4 against 1), and it rises and falls slowly so the tree is never quite still.
     this.wind = still ? 0 : 1.4 + 1.6 * this.gust + 0.22 * Math.sin(t * 0.13) + 0.14 * Math.sin(t * 0.31 + 1.7);
-    this.reveal = still ? 1 : clamp(this.age / 1.6);
 
     this.updateBirds(dt, progress < 4.6 && !still, windowWidth / 2);
     this.updateLamp(dt, progress > 4.55, still);
