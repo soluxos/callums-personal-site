@@ -182,7 +182,13 @@ short version:
   (which part of the left side stays stuck, how far back the label leans, how tight its curl
   is, and the way it swings round on the way), and a pull that starts before the label is back
   down moves on from where it is. The spring's `restDelta` and `restSpeed` are set very small
-  on purpose: with the defaults the label stopped short and then jumped the last few pixels.
+  on purpose: with the defaults the label stopped short and then jumped the last few pixels. The
+  label is the card's shape, rounded corners included (`outline` in the component), so its
+  corners stay round as they lift; don't cut it from a plain rectangle. At its two left corners,
+  by where it stays stuck, the label has a neck: its top and bottom edges stop short with a
+  rounded shoulder and step in. Callum saw the card's left corners go from round to square as
+  the pull finished, because a label the card's exact shape lies back over them. With the neck,
+  the card keeps its round corners when the label is open. Keep it.
   `CaseStudyThumbnail` holds the peel and picks the logo and reel by slug from
   `src/components/case-study/reels/`. Callum's rules for reels, all learned the
   hard way:

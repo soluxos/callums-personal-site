@@ -99,13 +99,25 @@ const HOLDS = [
 // stays inside that. The rest of the label lies off the card.
 const PAD = 3;
 
-// How far the curl stands out past the line it lifts along.
-function reach(turn, bend) {
-  const rad = (turn * Math.PI) / 180;
-  const top = -Math.log(1 - Math.PI / 2 / rad);
+// The shape of the curl for a given `turn` (in radians) and `bend`: `across(d)` is where a point
+// of the label `d` past the line shows up, seen from above; `crestAt` is how far past the line
+// the label stands straight up, and `crest` how far out that is, the furthest its curl reaches.
+function curl(turn, bend) {
+  const table = [0];
   let sum = 0;
-  for (let u = STEP / 2; u < top; u += STEP) sum += Math.cos(rad * (1 - Math.exp(-u))) * STEP;
-  return bend * sum;
+  for (let i = 1; i <= LIMIT / STEP; i++) {
+    sum += Math.cos(turn * (1 - Math.exp(-(i - 0.5) * STEP))) * STEP;
+    table.push(sum);
+  }
+  const across = d => {
+    const u = Math.max(0, d) / bend;
+    if (u >= LIMIT) return bend * (table[table.length - 1] + Math.cos(turn) * (u - LIMIT));
+    const i = u / STEP;
+    const j = Math.floor(i);
+    return bend * (table[j] + (table[j + 1] - table[j]) * (i - j));
+  };
+  const crestAt = -Math.log(1 - Math.PI / 2 / turn) * bend;
+  return { across, crestAt, crest: across(crestAt) };
 }
 
 // Each pull also differs in how it gets there and how the label sits at the end, because the
@@ -134,10 +146,17 @@ function anOpening(angle) {
   // As far in as the line can sit with the curl still short of the nearest piece of the reel.
   // Pieces can run off the top and bottom of the card, so only the side padding is free.
   // It is measured from the corner the line is nearest: the top one, or the bottom one.
-  const m = Math.min(0, H * ny) + Math.max(0.5, PAD * nx - reach(turn, bend) - between(0.1, 0.5));
+  const { across, crestAt, crest } = curl((turn * Math.PI) / 180, bend);
+  const m = Math.min(0, H * ny) + Math.max(0.5, PAD * nx - crest - between(0.1, 0.5));
   // The point on that line nearest the middle of the card's left edge.
   const off = m - (H / 2) * ny;
-  return { angle, x: off * nx, y: H / 2 + off * ny, turn, bend, sway, pace };
+  // How long the label's neck is (see `outline`): long enough that, with the label lying back,
+  // its shoulders come to rest just clear of the card's left edge. `inside` is how far into the
+  // card the line is at whichever end of it is still on the card.
+  const inside = Math.max(0.5, m / nx, (m - H * ny) / nx);
+  let past = crestAt;
+  while (past < 30 && across(past) > -inside - 0.8) past += 0.05;
+  return { angle, x: off * nx, y: H / 2 + off * ny, turn, bend, sway, pace, neck: inside + past };
 }
 
 // With no pull to pick one (the first draw), the label opens along its side.
@@ -145,7 +164,7 @@ const OPEN = { ...anOpening(0), sway: 0 };
 
 // Part of the way from one opening to another. A pull that starts before the label has lain
 // back down moves from the opening it had to its new one, instead of jumping to it.
-const SHAPE = ["angle", "x", "y", "turn", "bend", "sway"];
+const SHAPE = ["angle", "x", "y", "turn", "bend", "sway", "neck"];
 const blend = (from, to, k) =>
   Object.fromEntries(SHAPE.map(key => [key, from[key] + (to[key] - from[key]) * k]));
 
@@ -157,19 +176,59 @@ const path = (there, back) =>
     ? `M${[...there, ...[...back].reverse()].map(([x, y]) => `${n(x)} ${n(y)}`).join("L")}Z`
     : "";
 
-// The card, cut by the line: the side where `keep` is true.
-function cut(nx, ny, m, lifted) {
-  const card = [
-    [0, 0],
-    [W, 0],
-    [W, H],
-    [0, H],
-  ];
+// The card's outline, with its rounded corners, and the label's. The label is the same shape as
+// the card it is stuck to, so the part that lifts has rounded corners too. The card's corners
+// are 16px whatever its size, so `radius` is that in the card's own units (cqw).
+//
+// The label differs from the card at its two left corners, the ones nearest where it stays
+// stuck. A label the card's exact shape, folded back along the left side, lies over the card's
+// left corners and squares them off: Callum saw the corners go from round to nothing as the pull
+// finished. So the label has a neck there. Its top and bottom edges stop `neck` in from the left
+// with a rounded shoulder, and step in by a little more than the corner's radius the rest of
+// the way to the edge. Folded back, the shoulders sit just off the card and the neck is all
+// that crosses its edge, between the corners, so the card keeps its round corners and the label
+// reads as a rounded piece of its own, joined to it. With `neck` 0 this is the card itself.
+const RADIUS = 2.4; // 16px on a card about 670px wide, until the real card is measured
+const FILLET = 0.8; // the inside corner where a shoulder meets the neck
+const outlines = new Map();
+function outline(radius, neck = 0) {
+  const key = `${radius.toFixed(2)} ${neck.toFixed(2)}`;
+  if (!outlines.has(key)) {
+    if (outlines.size > 300) outlines.clear();
+    const r = Math.min(radius, H / 4);
+    const points = [];
+    // An arc round (cx, cy), from one angle to another, in degrees.
+    const arc = (cx, cy, size, from, to) => {
+      for (let i = 0; i <= 8; i++) {
+        const turn = ((from + ((to - from) * i) / 8) * Math.PI) / 180;
+        points.push([cx + size * Math.cos(turn), cy + size * Math.sin(turn)]);
+      }
+    };
+    arc(W - r, r, r, -90, 0);
+    arc(W - r, H - r, r, 0, 90);
+    if (neck > 0) {
+      const step = r + FILLET; // how far the neck is in from the top and bottom
+      arc(neck + r, H - r, r, 90, 180);
+      arc(neck - FILLET, H - r, FILLET, 0, -90);
+      points.push([0, H - step], [0, step]);
+      arc(neck - FILLET, r, FILLET, 90, 0);
+      arc(neck + r, r, r, 180, 270);
+    } else {
+      arc(r, H - r, r, 90, 180);
+      arc(r, r, r, 180, 270);
+    }
+    outlines.set(key, points);
+  }
+  return outlines.get(key);
+}
+
+// The card, cut by the line: the lifted side of it, or the side still stuck down.
+function cut(nx, ny, m, lifted, card) {
   const side = ([x, y]) => (lifted ? 1 : -1) * (x * nx + y * ny - m);
   const out = [];
-  for (let i = 0; i < 4; i++) {
+  for (let i = 0; i < card.length; i++) {
     const p = card[i];
-    const q = card[(i + 1) % 4];
+    const q = card[(i + 1) % card.length];
     const dp = side(p);
     const dq = side(q);
     if (dp >= 0) out.push(p);
@@ -182,7 +241,9 @@ function cut(nx, ny, m, lifted) {
 }
 
 // Everything the peel needs to draw itself at one moment.
-function measure(t, open = OPEN) {
+function measure(t, open = OPEN, radius = RADIUS) {
+  const card = outline(radius);
+  const label = outline(radius, open.neck);
   const e = Math.max(0, t);
   // The sway is greatest in the middle of the pull and gone by either end.
   const sway = open.sway * Math.sin(Math.PI * Math.min(1, e)) ** 2;
@@ -197,66 +258,48 @@ function measure(t, open = OPEN) {
 
   const turn = (mix([TURN[0], open.turn], Math.min(1, e)) * Math.PI) / 180;
   const bend = mix([BEND[0], open.bend], Math.min(1, e));
-  const table = [0];
-  let sum = 0;
-  for (let i = 1; i <= LIMIT / STEP; i++) {
-    sum += Math.cos(turn * (1 - Math.exp(-(i - 0.5) * STEP))) * STEP;
-    table.push(sum);
-  }
-  const across = d => {
-    const u = Math.max(0, d) / bend;
-    if (u >= LIMIT) return bend * (table[table.length - 1] + Math.cos(turn) * (u - LIMIT));
-    const i = u / STEP;
-    const j = Math.floor(i);
-    return bend * (table[j] + (table[j + 1] - table[j]) * (i - j));
-  };
-  // Where the label stands straight up: the furthest out its curl reaches.
-  const crestAt = -Math.log(1 - Math.PI / 2 / turn) * bend;
-  const crest = across(crestAt);
+  const { across, crestAt, crest } = curl(turn, bend);
 
   // A point `a` along the line and `out` from it, back in the card's own x and y.
   const at = (a, out) => [(m + out) * nx + a * ux, (m + out) * ny + a * uy];
 
-  // The lifted part of the label, measured along the line (a) and out from it (d).
-  const lifted = cut(nx, ny, m, true).map(([x, y]) => [x * ux + y * uy, x * nx + y * ny - m]);
-  const from = Math.min(...lifted.map(p => p[0]));
-  const to = Math.max(...lifted.map(p => p[0]));
-  const stops = new Set(lifted.map(p => p[0]));
-  for (let i = 0; i <= 64; i++) stops.add(from + ((to - from) * i) / 64);
+  // The lifted part of a shape, as how far out from the line it runs (from `near` to `far`) at
+  // each point `a` along the line.
+  const spans = shape => {
+    const lifted = cut(nx, ny, m, true, shape).map(([x, y]) => [
+      x * ux + y * uy,
+      x * nx + y * ny - m,
+    ]);
+    const from = Math.min(...lifted.map(p => p[0]));
+    const to = Math.max(...lifted.map(p => p[0]));
+    const stops = new Set(lifted.map(p => p[0]));
+    for (let i = 0; i <= 64; i++) stops.add(from + ((to - from) * i) / 64);
+    const out = [];
+    for (const a of [...stops].sort((x, y) => x - y)) {
+      let near = Infinity;
+      let far = -Infinity;
+      for (let i = 0; i < lifted.length; i++) {
+        const p = lifted[i];
+        const q = lifted[(i + 1) % lifted.length];
+        if (p[0] === q[0] || a < Math.min(p[0], q[0]) || a > Math.max(p[0], q[0])) continue;
+        const d = p[1] + ((q[1] - p[1]) * (a - p[0])) / (q[0] - p[0]);
+        near = Math.min(near, d);
+        far = Math.max(far, d);
+      }
+      if (far < near) continue;
+      near = Math.max(0, near);
+      out.push({ a, near, far: Math.max(near, far) });
+    }
+    return out;
+  };
 
-  const outer = []; // the lifted label's outline, on the side the reel shows
-  const inner = []; // and on the side still stuck down
   const riseTop = []; // the label's front, where it climbs away from the card
   const riseFoot = [];
   const backTop = []; // the label's back, where it has come over
   const backEnd = [];
-  const reelNear = []; // what the lifted label leaves showing of the reel
-  const reelFar = [];
-
-  for (const a of [...stops].sort((x, y) => x - y)) {
-    // How much label there is at this point along the line.
-    let near = Infinity;
-    let far = -Infinity;
-    for (let i = 0; i < lifted.length; i++) {
-      const p = lifted[i];
-      const q = lifted[(i + 1) % lifted.length];
-      if (p[0] === q[0] || a < Math.min(p[0], q[0]) || a > Math.max(p[0], q[0])) continue;
-      const d = p[1] + ((q[1] - p[1]) * (a - p[0])) / (q[0] - p[0]);
-      near = Math.min(near, d);
-      far = Math.max(far, d);
-    }
-    if (far < near) continue;
-    near = Math.max(0, near);
-    far = Math.max(near, far);
-
+  for (const { a, near, far } of spans(label)) {
     const lo = across(near);
     const hi = across(far);
-    const top = near <= crestAt && far >= crestAt ? crest : Math.max(lo, hi);
-    outer.push(at(a, top));
-    inner.push(at(a, Math.min(lo, hi)));
-    reelNear.push(at(a, Math.max(top, near)));
-    reelFar.push(at(a, far));
-
     if (far <= crestAt) {
       riseFoot.push(at(a, lo));
       riseTop.push(at(a, hi));
@@ -271,13 +314,22 @@ function measure(t, open = OPEN) {
     }
   }
 
+  // What the lifted label leaves showing of the reel. This is worked out from the whole card,
+  // not the label's own outline, so the reel shows right into the card's corners.
+  const reelNear = [];
+  const reelFar = [];
+  for (const { a, near, far } of spans(card)) {
+    const top = near <= crestAt && far >= crestAt ? crest : Math.max(across(near), across(far));
+    reelNear.push(at(a, Math.max(top, near)));
+    reelFar.push(at(a, far));
+  }
+
   // The part of the label that has come over, back side up. Only this part is a separate
   // piece: where the label is still climbing it is the card's own surface, shaded.
   const over = [...backTop, ...[...backEnd].reverse()];
   const point = out => at(along, out).map(n);
 
   return {
-    whole: path(outer, inner),
     rise: path(riseTop, riseFoot),
     back: path(backTop, backEnd),
     // The card's surface, with the turned-over label cut out of it.
@@ -287,7 +339,7 @@ function measure(t, open = OPEN) {
     reel: `polygon(${cq([...reelNear, ...[...reelFar].reverse()])})`,
     // The label's front: the part still stuck down. Its print fades as it lifts, so the
     // label's back never passes over the logo.
-    front: `polygon(${cq(cut(nx, ny, m, false))})`,
+    front: `polygon(${cq(cut(nx, ny, m, false, card))})`,
     print: Math.max(0, Math.min(1, 1 - e / 0.26)),
     // Where the shading runs, measured out from the line.
     foot: point(0),
@@ -319,7 +371,9 @@ export default function CaseStudyThumbnail({ slug, title, surface }) {
   const draw = () => {
     const root = ref.current;
     if (!root) return;
-    const now = measure(peel.get(), opening());
+    // The card's 16px corners, in its own units.
+    const radius = root.clientWidth ? 1600 / root.clientWidth : RADIUS;
+    const now = measure(peel.get(), opening(), radius);
     const set = (name, apply) => root.querySelectorAll(`[data-peel="${name}"]`).forEach(apply);
     set("surface", el => (el.style.clipPath = now.surface));
     set("reel", el => (el.style.clipPath = now.reel));
@@ -370,6 +424,15 @@ export default function CaseStudyThumbnail({ slug, title, surface }) {
       });
     }
   };
+
+  // The label's corners follow the card's, which depend on how wide the card is.
+  useEffect(() => {
+    if (!ref.current) return undefined;
+    const sized = new ResizeObserver(draw);
+    sized.observe(ref.current);
+    return () => sized.disconnect();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // The whole card is the link, so listen on it: the caption under the thumbnail counts too.
   useEffect(() => {
