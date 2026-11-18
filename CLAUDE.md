@@ -35,9 +35,13 @@ text. `SiteShell` draws it (`Daylight` with a blue tint) and wraps the site in `
   the wall straight away, not to arrive after the page. Three things do that: a still picture
   of the first frame is inlined in `Daylight/posters.module.css` and shows before any script
   runs; the room (three.js) starts loading as soon as `Daylight.jsx` runs, not after hydration;
-  and the blinds are open from the first frame (they used to turn open over 1.6 seconds). If
-  the room's first frame changes, remake the pictures (the file's header says how), or the
-  wall will jump when the canvas takes over.
+  and the blinds are open from the first frame (they used to turn open over 1.6 seconds). The
+  picture must never be stretched: Callum saw it stretch and then snap when the room took over.
+  So the room lays the wall out from the middle of the screen, sized by its height alone (the
+  window's panes are a fixed width; see `resize` in `room.js`), and the picture is fitted to
+  the screen's height and centred. Keep both. The rainbow and the dust aren't in the picture
+  and ease in. If the room's first frame changes, remake the pictures (the file's header says
+  how), or the wall will jump when the canvas takes over.
 - **Text.** The grey text classes in the code (`text-[#484848]`, `text-[#6b6b6b]` and their
   neighbours) were written for a light wall. `.bluewall` in `src/app/globals.css` turns them
   white wherever they sit on the wall: the primary greys to full white, the secondary greys to

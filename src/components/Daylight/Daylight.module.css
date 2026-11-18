@@ -10,14 +10,18 @@
 }
 
 /* Before the room starts, and without WebGL, each layer shows a still picture of the first
-   frame (posters.module.css), stretched to fill; the wall's own colour is under that. */
+   frame (posters.module.css), fitted to the screen's height and centred, which is how the room
+   lays the wall out, so it isn't stretched and doesn't shift when the room takes over. The
+   wall's own colour is under that. */
 .wall {
   background: #f3efea;
 }
 
 .wall,
 .veil {
-  background-size: 100% 100%;
+  background-size: auto 100%;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .veil {

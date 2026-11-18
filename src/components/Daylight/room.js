@@ -659,6 +659,7 @@ export class DaylightRoom {
     this.windowAlong = new THREE.Vector3(Math.cos(YAW), 0, Math.sin(YAW));
     this.windowNormal = new THREE.Vector3(-Math.sin(YAW), 0, Math.cos(YAW));
     this.windowSpan = { half: 1, pane: 1 };
+    this.reach = 1;
     this.birdOrigin = this.windowOrigin.clone().addScaledVector(this.windowNormal, BIRD_OUT);
     this.boughOrigin = landing(BOUGH.x, BOUGH.y, BOUGH.reach);
     this.oakOrigin = landing(OAK.x, OAK.y, OAK.reach);
@@ -770,16 +771,22 @@ export class DaylightRoom {
     const viewW = (VIEW_H * w) / h;
     this.uniforms.scene.uView.value.set(viewW, VIEW_H);
     // The window's light fills the wall and runs past it either side, whatever the screen's shape
-    // (`margin` of its width, negative so there's no shade down the sides), and is split
-    // into an even number of panes so that a bar runs down the middle; a wider screen shows more
-    // of them. The window is tall enough that, slanting across the wall as its light does, it
-    // still runs off the top and bottom.
+    // (`margin` of its width, negative so there's no shade down the sides). Its panes are all one
+    // width, an even number of them so that a bar runs down the middle; a wider screen shows more
+    // of them. So everything on the wall is placed from the middle of the screen and sized by its
+    // height alone, and a wider or narrower screen only shows more or less of the same picture.
+    // The still picture that stands in before the room starts (posters.module.css) relies on
+    // that: it's fitted to the screen's height and centred, and lines up at any shape. The window
+    // is tall enough that, slanting across the wall as its light does, it still runs off the top
+    // and bottom.
     const [from, to] = this.avoid;
     let margin = WINDOW.margin * w;
     if (margin > from && margin < to) margin = margin - from < to - margin ? from : to;
-    const half = (viewW / 2) * (1 - (2 * margin) / w);
-    const panes = 2 * Math.max(1, Math.round(half / WINDOW.pane));
-    this.windowSpan = { half, pane: (2 * half) / panes };
+    // How far the light has to reach either side of the middle, and the window that covers it.
+    this.reach = (viewW / 2) * (1 - (2 * margin) / w);
+    const panes = 2 * Math.max(1, Math.ceil(this.reach / WINDOW.pane));
+    const half = (panes * WINDOW.pane) / 2;
+    this.windowSpan = { half, pane: WINDOW.pane };
     this.uniforms.scene.uWin.value.y = VIEW_H / 2 + 0.6 * half + 1;
     this.uniforms.mask.uPixel.value = VIEW_H / mh;
     this.uniforms.across.value.set(1 / mw, 0);
@@ -853,13 +860,17 @@ export class DaylightRoom {
 
     // Where the bevelled pane's rainbow lands: its spot on the window, carried along the bent light to the wall.
     const B = this.bent.set(L.x * PRISM.bend[0], L.y * PRISM.bend[1], L.z);
-    const q = this.prismPoint.copy(this.windowOrigin).addScaledVector(U, PRISM.u * s.uWin.value.x);
+    const q = this.prismPoint.copy(this.windowOrigin).addScaledVector(U, PRISM.u * this.reach * scale);
     q.y += PRISM.v;
     const spread = Math.hypot(B.x, B.y) || 1;
     const w = this.wall.finish.uniforms;
     w.uPrism.value.set(q.x - (B.x * q.z) / B.z, q.y - (B.y * q.z) / B.z, -B.x / spread, -B.y / spread);
-    w.uPrismStrength.value = 0.4 * day.prism * (1 - cloud);
-    w.uDust.value = life.still ? 0 : 0.55;
+    // The rainbow and the dust aren't in the still picture that stands in before the room starts
+    // (the rainbow's place depends on the screen's shape, and the dust drifts), so they ease in
+    // over the first moments instead of appearing with the first frame.
+    const arrived = Math.min(1, life.age / 1.5);
+    w.uPrismStrength.value = 0.4 * day.prism * (1 - cloud) * arrived;
+    w.uDust.value = life.still ? 0 : 0.55 * arrived;
 
     this.wall.render();
     this.veil.render();
