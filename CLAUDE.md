@@ -178,7 +178,11 @@ short version:
   is on screen. Callum's rules for the peel (November 2026): it has to read
   as a physical label, so its edges curl (no straight folds), it is matt and
   close to the card's own colour (not shiny), its shadow is faint, it is
-  allowed to overflow the card, and it never disappears when peeled.
+  allowed to overflow the card, and it never disappears when peeled. Every pull is different
+  (which part of the left side stays stuck, how far back the label leans, how tight its curl
+  is, and the way it swings round on the way), and a pull that starts before the label is back
+  down moves on from where it is. The spring's `restDelta` and `restSpeed` are set very small
+  on purpose: with the defaults the label stopped short and then jumped the last few pixels.
   `CaseStudyThumbnail` holds the peel and picks the logo and reel by slug from
   `src/components/case-study/reels/`. Callum's rules for reels, all learned the
   hard way:

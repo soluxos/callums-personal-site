@@ -75,7 +75,7 @@ const LINE = {
 // back over the line as it comes over the top. The label's edges trace that same curve, which
 // is what makes them curl.
 const TURN = [168, 142];
-const BEND = [3.2, 2.4]; // how far the tight part of the bend runs
+const BEND = [3.2, 2.4]; // how far the tight part of the bend runs (pulled back, each pull picks its own)
 const STEP = 0.02;
 const LIMIT = 8;
 
@@ -89,9 +89,8 @@ const between = (from, to) => from + Math.random() * (to - from);
 // only about 20px deep, so a steeper line would leave the label hanging by a corner.
 const HOLDS = [
   () => between(-0.5, 0.5), // the whole left side
-  () => between(-0.5, 0.5),
-  () => between(1.1, 3.4), // part of it, from the top corner
-  () => between(-3.4, -1.1), // or from the bottom one
+  () => between(1.4, 4.2), // part of it, from the top corner
+  () => between(-4.2, -1.4), // or from the bottom one
 ];
 
 // An opened label must leave the reel clear. The reel's pieces start 40px in from the card's
@@ -109,23 +108,46 @@ function reach(turn, bend) {
   return bend * sum;
 }
 
-function anOpening(angle = HOLDS[Math.floor(Math.random() * HOLDS.length)]()) {
-  const turn = between(130, 154);
+// Each pull also differs in how it gets there and how the label sits at the end, because the
+// place it ends up can't vary much (it has to stay in the card's padding). `turn` is how far
+// back the label leans, from standing well up to lying nearly flat off the card. `bend` is how
+// tight its curl is. `sway` is the way the hand goes: the line swings round early (the corner
+// is pulled up the card) or late (it is pulled straight across first), in degrees at the middle
+// of the pull. `pace` is how briskly it is pulled. A pull never picks the same kind of hold as
+// the one before it.
+let lastHold = -1;
+function anOpening(angle) {
+  if (angle === undefined) {
+    let hold = Math.floor(Math.random() * (HOLDS.length - 1));
+    if (hold >= lastHold) hold += 1;
+    if (lastHold < 0) hold = Math.floor(Math.random() * HOLDS.length);
+    lastHold = hold;
+    angle = HOLDS[hold]();
+  }
+  const turn = between(120, 158);
+  const bend = between(1.9, 3);
+  const sway = (Math.random() < 0.5 ? -1 : 1) * between(6, 16);
+  const pace = between(46, 72);
   const rad = (angle * Math.PI) / 180;
   const nx = Math.cos(rad);
   const ny = Math.sin(rad);
   // As far in as the line can sit with the curl still short of the nearest piece of the reel.
   // Pieces can run off the top and bottom of the card, so only the side padding is free.
   // It is measured from the corner the line is nearest: the top one, or the bottom one.
-  const m =
-    Math.min(0, H * ny) + Math.max(0.5, PAD * nx - reach(turn, BEND[1]) - between(0.1, 0.5));
+  const m = Math.min(0, H * ny) + Math.max(0.5, PAD * nx - reach(turn, bend) - between(0.1, 0.5));
   // The point on that line nearest the middle of the card's left edge.
   const off = m - (H / 2) * ny;
-  return { angle, x: off * nx, y: H / 2 + off * ny, turn };
+  return { angle, x: off * nx, y: H / 2 + off * ny, turn, bend, sway, pace };
 }
 
 // With no pull to pick one (the first draw), the label opens along its side.
-const OPEN = anOpening(0);
+const OPEN = { ...anOpening(0), sway: 0 };
+
+// Part of the way from one opening to another. A pull that starts before the label has lain
+// back down moves from the opening it had to its new one, instead of jumping to it.
+const SHAPE = ["angle", "x", "y", "turn", "bend", "sway"];
+const blend = (from, to, k) =>
+  Object.fromEntries(SHAPE.map(key => [key, from[key] + (to[key] - from[key]) * k]));
 
 const mix = ([from, to], t) => from + (to - from) * t;
 const n = value => value.toFixed(2);
@@ -162,7 +184,9 @@ function cut(nx, ny, m, lifted) {
 // Everything the peel needs to draw itself at one moment.
 function measure(t, open = OPEN) {
   const e = Math.max(0, t);
-  const angle = (mix([LINE.angle[0], open.angle], e) * Math.PI) / 180;
+  // The sway is greatest in the middle of the pull and gone by either end.
+  const sway = open.sway * Math.sin(Math.PI * Math.min(1, e)) ** 2;
+  const angle = ((mix([LINE.angle[0], open.angle], e) + sway) * Math.PI) / 180;
   // Out from the line, towards the lifted side, and along it.
   const nx = Math.cos(angle);
   const ny = Math.sin(angle);
@@ -172,7 +196,7 @@ function measure(t, open = OPEN) {
   const along = mix([LINE.x[0], open.x], e) * ux + mix([LINE.y[0], open.y], e) * uy;
 
   const turn = (mix([TURN[0], open.turn], Math.min(1, e)) * Math.PI) / 180;
-  const bend = mix(BEND, Math.min(1, e));
+  const bend = mix([BEND[0], open.bend], Math.min(1, e));
   const table = [0];
   let sum = 0;
   for (let i = 1; i <= LIMIT / STEP; i++) {
@@ -278,19 +302,24 @@ export default function CaseStudyThumbnail({ slug, title, surface }) {
   const ref = useRef(null);
   const id = useId().replace(/[^a-zA-Z0-9]/g, "");
   const peel = useMotionValue(0);
-  const opening = useRef(OPEN);
+  // The opening in use is somewhere between the last one and the one this pull picked.
+  const shift = useMotionValue(1);
+  const openings = useRef({ from: OPEN, to: OPEN });
+  const pulled = useRef(false);
   const reduced = useReducedMotion();
   const onScreen = useInView(ref, { amount: 0.8 });
   const touch = useRef(false);
   const Reel = REELS[slug];
   const logo = LOGOS[slug];
 
+  const opening = () => blend(openings.current.from, openings.current.to, shift.get());
+
   // Every part of the peel is redrawn together, straight onto the page, each time it moves, so
   // the label and the hole it leaves never drift a frame apart.
-  useMotionValueEvent(peel, "change", t => {
+  const draw = () => {
     const root = ref.current;
     if (!root) return;
-    const now = measure(t, opening.current);
+    const now = measure(peel.get(), opening());
     const set = (name, apply) => root.querySelectorAll(`[data-peel="${name}"]`).forEach(apply);
     set("surface", el => (el.style.clipPath = now.surface));
     set("reel", el => (el.style.clipPath = now.reel));
@@ -308,17 +337,36 @@ export default function CaseStudyThumbnail({ slug, title, surface }) {
     };
     set("climb", el => line(el, now.foot, now.crest));
     set("over", el => line(el, now.crest, now.flat));
-  });
+  };
+  useMotionValueEvent(peel, "change", draw);
+  useMotionValueEvent(shift, "change", draw);
 
   const move = open => {
-    // A fresh way of opening each time, chosen while the label is still down.
-    if (open && peel.get() < 0.05) opening.current = anOpening();
+    if (open === pulled.current) return;
+    pulled.current = open;
+    let pace = 80;
+    if (open) {
+      // A fresh way of opening for every pull. If the label is still partly up from the last
+      // one, it moves across from where it is.
+      const next = anOpening();
+      pace = next.pace;
+      openings.current = { from: opening(), to: next };
+      shift.set(0);
+      if (reduced) shift.set(1);
+      else animate(shift, 1, { duration: 0.5, ease: "easeInOut" });
+    }
     if (reduced) peel.set(open ? 1 : 0);
     else {
       animate(peel, open ? 1 : 0, {
         type: "spring",
-        stiffness: open ? 58 : 80,
-        damping: open ? 17 : 20,
+        stiffness: pace,
+        // Just past critical, so it settles without springing back.
+        damping: 2.25 * Math.sqrt(pace),
+        // The spring is over when the label is within a fraction of a pixel of its place and
+        // all but still. The defaults stop it about half a percent short and then put it in
+        // place, which showed as a small jump at the end of the pull.
+        restDelta: 0.0002,
+        restSpeed: 0.0005,
       });
     }
   };
