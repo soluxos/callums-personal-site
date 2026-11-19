@@ -133,6 +133,19 @@ short version:
 - **Section titles** are sentence case and must match the `sections` array exactly
   (the ruler builds its links by slugifying titles).
 
+## How pages arrive
+
+Callum saw the hero's type change and the page stutter on load (November 2026). Keep these:
+
+- **Fonts.** The title typeface and Satoshi Medium are preloaded in `src/app/layout.js`, and
+  the title typeface is `font-display: block`, so a heading is never drawn in a stand-in and
+  then swapped. Don't add `next/font/google` fonts; Geist was loaded and never used.
+- **Motion on arrival is CSS.** `src/app/template.js` fades every page in (`.page-in`) and
+  `FadeInUp` lifts a section as it fades (`.rise-in`), both in `globals.css`. Don't move them
+  back to Motion: its version waited for the page's scripts, stuttered while they ran, and
+  blinked off for one frame as it finished (opacity and movement ended on different clocks).
+- `PageTransition` only puts a new page at the top, before it is painted.
+
 ## Components worth knowing
 
 - `CaseStudyFullHero`: logo, title, a brief description (one or two sentences, about 30

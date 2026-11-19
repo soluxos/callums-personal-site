@@ -1,27 +1,16 @@
 "use client";
 
-import { AnimatePresence, motion } from "motion/react";
 import { usePathname } from "next/navigation";
-import { useEffect } from "react";
+import { useLayoutEffect } from "react";
 
+// Starts every page at the top. It runs before the new page is painted, so the page never
+// shows for a frame at the last page's scroll position. The fade itself is in template.js.
 export default function PageTransition({ children }) {
   const pathname = usePathname();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
 
-  return (
-    <AnimatePresence mode="wait">
-      {/* <motion.div
-        key={pathname}
-        animate={{ opacity: 1, y: 0 }}
-        initial={{ opacity: 0, y: 10 }}
-        exit={{ opacity: 0 }}
-        transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
-      > */}
-      {children}
-      {/* </motion.div> */}
-    </AnimatePresence>
-  );
+  return children;
 }

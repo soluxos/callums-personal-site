@@ -1,4 +1,3 @@
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navigation from "@/components/Navigation/Navigation";
 import DitherOverlay from "@/components/DitherOverlay/DitherOverlay";
@@ -16,16 +15,6 @@ import WipBanner from "@/components/WipBanner/WipBanner";
 import { PasswordGateProvider } from "@/contexts/PasswordGateContext";
 import { SITE_URL, pageMetadata } from "@/lib/metadata";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
 // What a search result or a shared link shows. Written for a recruiter or hiring
 // manager seeing the link out of context, so it says what I do and what I've done.
 export const metadata = {
@@ -40,10 +29,26 @@ export const metadata = {
   },
 };
 
+const FIRST_FONTS = ["/fonts/ppmondwest-regular-webfont.woff2", "/fonts/Satoshi-Medium.woff2"];
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <head>
+        {/* The two typefaces on the first screen are fetched with the page, so the text is
+            drawn in them the first time and never changes typeface in front of the reader. */}
+        {FIRST_FONTS.map(href => (
+          <link
+            key={href}
+            rel="preload"
+            href={href}
+            as="font"
+            type="font/woff2"
+            crossOrigin="anonymous"
+          />
+        ))}
+      </head>
+      <body className="antialiased">
         <SiteShell>
           <EditModeProvider>
             <PasswordGateProvider>

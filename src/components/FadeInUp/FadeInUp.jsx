@@ -1,20 +1,13 @@
-"use client";
-import { motion } from "motion/react";
-
-export default function FadeInUp({ children, className, delay = 0, style }) {
+// Lifts a section into place as it fades in. The motion is CSS (.rise-in in globals.css), so
+// it starts with the first paint. It used to be a Motion animation, which waited for the page's
+// scripts, stuttered while they ran and blinked off for a frame as it finished.
+export default function FadeInUp({ children, className = "", delay = 0, style }) {
   return (
-    <motion.div
-      className={className}
-      style={style}
-      initial={{ opacity: 0, y: 48 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{
-        duration: 0.7,
-        delay,
-        ease: [0.22, 1, 0.36, 1],
-      }}
+    <div
+      className={`rise-in ${className}`}
+      style={delay ? { "--rise-delay": `${delay}s`, ...style } : style}
     >
       {children}
-    </motion.div>
+    </div>
   );
 }

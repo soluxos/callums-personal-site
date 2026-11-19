@@ -132,7 +132,9 @@
     url("/fonts/ppmondwest-regular-webfont.woff") format("woff");
   font-weight: normal;
   font-style: normal;
-  font-display: swap;
+  /* Headings wait for this typeface (it is preloaded in layout.js) and are never drawn in a
+     stand-in first: the stand-in is a different width, so the title used to jump. */
+  font-display: block;
 }
 
 /* DepartureMono Font */
@@ -473,4 +475,36 @@
   font-weight: 100 800;
   font-display: swap;
   font-style: normal;
+}
+
+/* How a page arrives. template.js fades every page in, the same way on every route, and
+   FadeInUp lifts a section as it fades. Both are plain CSS, so they start with the first paint
+   and don't wait for, or stutter under, the page's scripts. They fill backwards only: once
+   they finish they leave nothing on the element (no stacking context, no transform). */
+@keyframes page-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+}
+
+.page-in {
+  animation: page-in 0.4s ease-out backwards;
+}
+
+.rise-in {
+  animation: rise-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+  animation-delay: var(--rise-delay, 0s);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rise-in {
+    animation-name: page-in;
+  }
 }
